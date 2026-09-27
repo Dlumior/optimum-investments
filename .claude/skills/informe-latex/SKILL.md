@@ -7,9 +7,14 @@ description: Estructura, reglas y compilación del documento técnico en informe
 
 - Compilar: `make report` (local → `latexmk -lualatex` → `informe_latex/out/main.pdf`). Requiere TeX Live local
   con `lualatex`, `latexmk` y `biber` instalados.
-  En VS Code: LaTeX Workshop, receta "LuaLaTeX (local)". Idioma: español (`babel` spanish, `es-tabla`, punto decimal).
+  En VS Code: LaTeX Workshop, receta "LuaLaTeX (local)". Idioma: español (`babel` spanish).
+- Formato: portada (`\cover{título}{autor}{subtítulo}` en `preamble.tex`, logo `figures/EPG.png`) + índice,
+  fuente `Liberation Serif` (clon métrico de Times New Roman — luaotfload no resuelve ese nombre localmente),
+  encabezado/pie con `fancyhdr`, títulos de sección grandes vía `titlesec`, enlaces con `hyperref`
+  (`colorlinks`, `urlcolor=blue`, el resto negro). No hay `cleveref`: usar `\ref{}`/`\label{}` directamente.
 - **Máximo 12 páginas** de cuerpo (secciones 01–07). Anexos A (instrucciones), B (uso de IA), C (pruebas) no cuentan.
-- Secciones en `sections/NN_nombre.tex`; una idea por párrafo; `\cref{}` para referencias.
+  Portada, índice y bibliografía no cuentan como cuerpo.
+- Secciones en `sections/NN_nombre.tex`; una idea por párrafo; `\ref{}` para referencias.
 - Contenido exigido: resumen ejecutivo, formulación, supuestos, función objetivo, restricciones, algoritmo,
   resultados, sensibilidad y **opinión del analista** (fortalezas/debilidades).
 - Métricas mínimas: rentabilidad esperada de activos, costo esperado de pasivos, PN esperado y su cambio,

@@ -1,17 +1,18 @@
-% Compilar:  make report   (o LaTeX Workshop -> receta "Docker LuaLaTeX")
+% Compilar:  make report   (o LaTeX Workshop -> receta "LuaLaTeX (local)")
 % Límite: 12 páginas de cuerpo (resumen ... opinión). Los anexos no cuentan.
 \documentclass[11pt]{article}
-\newcommand{\CaseId}{B} % <-- caso asignado
+\newcommand{\CaseId}{C} % <-- caso asignado (config/caso.yaml: caseId)
 \input{preamble}
 
-\title{Optimum Investments: optimización de riesgo patrimonial\\[4pt]
-       \large Caso OP01 --- Caso \CaseId}
-\author{Nombre Apellido}
-\date{\today}
-
 \begin{document}
-\maketitle
-\thispagestyle{empty}
+
+\cover
+  {MFIC44 Gestión Integral de Riesgos}
+  {Luis Ramirez Osorio}
+  {Optimum Investments S.A. - Caso OP01, Caso \CaseId}
+
+\tableofcontents
+\newpage
 
 \input{sections/01_resumen}
 \input{sections/02_datos_supuestos}

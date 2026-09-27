@@ -1,43 +1,62 @@
 % ---------------------------------------------------------------- idioma y fuentes
 \usepackage{fontspec}
-\usepackage[spanish,es-tabla,es-nodecimaldot,es-noshorthands]{babel}
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Mono}
+\setmainfont{Liberation Serif} % clon métrico de Times New Roman (luaotfload no resuelve ese nombre localmente)
+\usepackage[spanish]{babel}
 
 % ---------------------------------------------------------------- página
 \usepackage[a4paper,margin=2.5cm]{geometry}
-\usepackage{setspace}\onehalfspacing
+\usepackage{parskip}
 \usepackage{microtype}
-\usepackage{fancyhdr}
-\pagestyle{fancy}\fancyhf{}
-\lhead{\small Optimum Investments --- Caso \CaseId}\rhead{\small \thepage}
 
 % ---------------------------------------------------------------- matemáticas
-\usepackage{amsmath,amssymb,mathtools,bm}
-\usepackage[per-mode=symbol]{siunitx}
-\sisetup{group-separator={,},output-decimal-marker={.}}
+\usepackage{amsmath,amssymb,bm}
 
 % ---------------------------------------------------------------- figuras y tablas
 \usepackage{graphicx}
 \graphicspath{{figures/}}
-\usepackage{booktabs,longtable,tabularx,array,multirow}
-\usepackage{caption,subcaption}
+\usepackage{booktabs,longtable,array}
+\usepackage{caption}
 \captionsetup{font=small,labelfont=bf}
 \usepackage{float}
 \usepackage{xcolor}
-\usepackage{enumitem}
-\setlist{nosep}
 
 % ---------------------------------------------------------------- código y JSON
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible}
 
 % ---------------------------------------------------------------- bibliografía y enlaces
+\usepackage{csquotes}
 \usepackage[backend=biber,style=apa]{biblatex}
 \addbibresource{references.bib}
-\usepackage[hidelinks]{hyperref}
-\usepackage[spanish,nameinlink]{cleveref}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Optimum Investments --- Caso OP01 (Caso \CaseId)}
+}
+\usepackage{xparse}
+
+% ---------------------------------------------------------------- encabezado y pie de página
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Optimum Investments}}
+\fancyhead[R]{\textit{Caso OP01 --- Caso \CaseId}}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------------------------------------------------------------- títulos de sección
+\usepackage{titlesec}
+\titleformat{\section}[block]
+  {\normalfont\bfseries\fontsize{16pt}{18pt}\selectfont\color{black}}
+  {\thesection}{0.3em}{}
+\titleformat{\subsection}[block]
+  {\normalfont\bfseries\fontsize{14pt}{15pt}\selectfont}
+  {\thesubsection}{0.2em}{}
 
 % ---------------------------------------------------------------- notación del modelo
 \newcommand{\R}{\mathbb{R}}
@@ -50,3 +69,40 @@
 \newcommand{\M}{\mathbf{M}}
 \newcommand{\PEN}{S/\,}
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+% ---------------------------------------------------------------- portada
+\NewDocumentCommand{\cover}{mmm}{%
+  \begin{titlepage}
+    \vspace*{2\baselineskip}
+    \begin{center}
+        \includegraphics[height=4.2cm]{EPG.png}
+    \end{center}
+
+    \vspace*{4\baselineskip}
+
+    \begin{center}
+        \textbf{\uppercase{\fontsize{14pt}{14pt}\selectfont #1}}
+    \end{center}
+
+    \vspace*{2\baselineskip}
+
+    \begin{center}
+        \textbf{\fontsize{12pt}{12pt}\selectfont #3}
+    \end{center}
+
+    \vspace*{4\baselineskip}
+
+    \begin{center}
+        \textbf{\fontsize{12pt}{12pt}\selectfont Presentado por}
+    \end{center}
+    \begin{center}
+        \textbf{\fontsize{12pt}{12pt}\selectfont #2}
+    \end{center}
+
+    \vfill
+
+    \begin{center}
+        \textbf{\fontsize{12pt}{12pt}\selectfont Lima, \today}
+    \end{center}
+  \end{titlepage}
+}
