@@ -1,0 +1,19 @@
+\section{Formulación del problema}\label{sec:formulacion}
+% Fuente de verdad: docs/formulacion.md (se escribe ANTES del código).
+
+\subsection{Variables de decisión}
+\todo{Definir variables, dominio y unidades.}
+
+\subsection{Función objetivo}
+\begin{equation}
+  \max_{\bm{w}} \; \E[\text{PN}_T(\bm{w})] - \lambda\, \rho\big(\text{PN}_T(\bm{w})\big) - \text{TC}(\bm{w})
+  \label{eq:objetivo}
+\end{equation}
+\todo{Adaptar al caso asignado: $\rho$ = volatilidad o CVaR, costos, penalizaciones.}
+
+\subsection{Restricciones}
+\todo{Cuadro 4 + patrimonio mínimo \PEN120 mm, $P/A \le 85\%$, caja mínima \PEN80 mm, presupuestos, no negatividad.}
+
+\subsection{Modelo de riesgo}
+Aproximación local $\Delta V \approx \M\,\Delta F$ y $\SigmaV = \M \SigmaF \M^\top$, o
+revalorización completa por escenario. \todo{Justificar la elección.}

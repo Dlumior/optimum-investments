@@ -1,0 +1,8 @@
+\section{Instrucciones de ejecución}\label{app:instrucciones}
+\begin{lstlisting}[language=bash]
+python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
+.venv/bin/python -m optimum data   # Excel -> tablas limpias
+.venv/bin/python -m optimum json   # -> data/json/input.json
+.venv/bin/python -m optimum run    # -> data/json/output.json
+.venv/bin/python -m pytest -q      # pruebas
+\end{lstlisting}

@@ -1,0 +1,10 @@
+services:
+  latex:
+    build: ./informe_latex
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      HOME: /tmp
+    volumes:
+      - ./informe_latex:/work
+      - ./informe_latex/out:/work/out
+    command: latexmk -lualatex -interaction=nonstopmode -halt-on-error -output-directory=out main.tex

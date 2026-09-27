@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "james-yu.latex-workshop",
+    "tamasfe.even-better-toml",
+    "GrapeCity.gc-excelviewer",
+    "charliermarsh.ruff",
+    "anthropic.claude-code"
+  ]
+}

@@ -1,0 +1,52 @@
+% ---------------------------------------------------------------- idioma y fuentes
+\usepackage{fontspec}
+\usepackage[spanish,es-tabla,es-nodecimaldot,es-noshorthands]{babel}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+% ---------------------------------------------------------------- página
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}\onehalfspacing
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small Optimum Investments --- Caso \CaseId}\rhead{\small \thepage}
+
+% ---------------------------------------------------------------- matemáticas
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage[per-mode=symbol]{siunitx}
+\sisetup{group-separator={,},output-decimal-marker={.}}
+
+% ---------------------------------------------------------------- figuras y tablas
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{caption,subcaption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\setlist{nosep}
+
+% ---------------------------------------------------------------- código y JSON
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible}
+
+% ---------------------------------------------------------------- bibliografía y enlaces
+\usepackage[backend=biber,style=apa]{biblatex}
+\addbibresource{references.bib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[spanish,nameinlink]{cleveref}
+
+% ---------------------------------------------------------------- notación del modelo
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\CVaR}{\operatorname{CVaR}}
+\newcommand{\VaR}{\operatorname{VaR}}
+\newcommand{\SigmaF}{\bm{\Sigma}_F}
+\newcommand{\SigmaV}{\bm{\Sigma}_V}
+\newcommand{\M}{\mathbf{M}}
+\newcommand{\PEN}{S/\,}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}

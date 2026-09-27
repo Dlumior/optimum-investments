@@ -1,0 +1,30 @@
+# Parámetros del caso asignado. Este archivo alimenta a `make json`, que construye
+# data/json/input.json (contrato Anexo 1). El optimizador SOLO lee input.json:
+# ningún parámetro relevante puede quedar codificado dentro de las funciones.
+
+schemaVersion: "1.0"
+caseId: "B"            # <-- CAMBIAR al caso asignado: A, B, C, D o E
+valuationDate: "2025-12-31"
+horizonDate: "2026-12-31"   # en el Caso D se usa terminalDate
+baseCurrency: "PEN"
+
+# Restricciones comunes (texto del caso, debajo del Cuadro 4)
+commonConstraints:
+  minNetWorth: 120.0         # S/ mm
+  maxLiabilitiesToAssets: 0.85
+  minCash: 80.0              # S/ mm, solo si el caso decide sobre activos
+  assetBudget: 1000.0
+  liabilityBudget: 800.0
+  allowShort: false
+
+# Parámetros específicos. Los valores por defecto salen de la hoja Case_Assumptions;
+# lo que se escriba aquí los sobrescribe (y debe justificarse en docs/decisiones.md).
+caseParameters:
+  riskMeasure: "VOLATILITY"  # VOLATILITY | CVAR
+  # riskAversion: 0.5
+  # alpha: 0.95
+  # bootstrapCount: 500
+  # seed: 20260101
+
+# Semilla global para bootstrap/simulaciones (reproducibilidad)
+seed: 20251231

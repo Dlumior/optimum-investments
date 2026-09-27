@@ -1,0 +1,31 @@
+% Compilar:  make report   (o LaTeX Workshop -> receta "Docker LuaLaTeX")
+% Límite: 12 páginas de cuerpo (resumen ... opinión). Los anexos no cuentan.
+\documentclass[11pt]{article}
+\newcommand{\CaseId}{B} % <-- caso asignado
+\input{preamble}
+
+\title{Optimum Investments: optimización de riesgo patrimonial\\[4pt]
+       \large Caso OP01 --- Caso \CaseId}
+\author{Nombre Apellido}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\input{sections/01_resumen}
+\input{sections/02_datos_supuestos}
+\input{sections/03_formulacion}
+\input{sections/04_algoritmo}
+\input{sections/05_resultados}
+\input{sections/06_sensibilidad}
+\input{sections/07_opinion}
+
+\printbibliography
+
+\clearpage
+\appendix
+\input{appendices/A_instrucciones}
+\input{appendices/B_uso_ia}
+\input{appendices/C_pruebas}
+\end{document}

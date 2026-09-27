@@ -1,0 +1,16 @@
+\section{Datos y supuestos}\label{sec:datos}
+% Balance inicial (Cuadros 1-2), historia 2021-2025 (60 obs.), convenciones de curva,
+% definición de cambios de factores, spreads de calibración.
+\todo{Describir balance inicial y datos.}
+
+\paragraph{Convenciones.} Tasas spot efectivas anuales; tiempo ACT/365; interpolación
+lineal de la tasa cero entre nodos; nodo O/N en $t=0$. Cambios de factores: diferencia
+absoluta en tasas y log-retorno en tipo de cambio y renta variable.
+
+% Tabla generada por notebooks/05 con save_table() y figura por notebooks/00 con save_fig().
+\input{tables/balance_inicial}
+
+\begin{figure}[htbp]\centering
+  \includegraphics[width=\linewidth]{curvas_spot_historicas.pdf}
+  \caption{Curvas spot PEN y USD, 2021--2025 (nodos seleccionados).}\label{fig:curvas}
+\end{figure}
