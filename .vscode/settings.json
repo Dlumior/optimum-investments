@@ -8,23 +8,22 @@
   },
   "latex-workshop.latex.tools": [
     {
-      "name": "docker-compose-lualatex",
-      "command": "docker",
+      "name": "latexmk-lualatex",
+      "command": "latexmk",
       "args": [
-        "compose",
-        "-f",
-        "%WORKSPACE_FOLDER%/docker-compose.yml",
-        "run",
-        "--rm",
-        "latex"
+        "-lualatex",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-output-directory=out",
+        "%DOC%"
       ]
     }
   ],
   "latex-workshop.latex.recipes": [
     {
-      "name": "Docker LuaLaTeX",
+      "name": "LuaLaTeX (local)",
       "tools": [
-        "docker-compose-lualatex"
+        "latexmk-lualatex"
       ]
     }
   ],

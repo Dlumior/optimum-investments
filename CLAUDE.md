@@ -33,7 +33,7 @@ src/optimum/
   cli.py                    python -m optimum {data,json,run,all}
 notebooks/00..05            exploración → limpieza → valorización → riesgo → optimización → resultados
 tests/                      pytest (el hook Stop los corre si cambiaste .py)
-informe_latex/              documento (LuaLaTeX en Docker), ≤ 12 páginas de cuerpo
+informe_latex/              documento (LuaLaTeX local, latexmk), ≤ 12 páginas de cuerpo
 docs/                       formulacion.md, decisiones.md, ia/ (registro de uso de IA)
 ```
 

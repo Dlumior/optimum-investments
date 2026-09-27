@@ -38,8 +38,8 @@ notebooks:     ## Ejecuta todos los notebooks en orden (verifica reproducibilida
 	for nb in notebooks/[0-9]*.ipynb; do \
 	  $(PY) -m jupyter nbconvert --to notebook --execute --inplace "$$nb" || exit 1; done
 
-report:        ## Compila informe_latex/main.tex con Docker (LuaLaTeX)
-	UID=$$(id -u) GID=$$(id -g) docker compose run --rm latex
+report:        ## Compila informe_latex/main.tex con LuaLaTeX local (latexmk)
+	cd informe_latex && latexmk -lualatex -interaction=nonstopmode -halt-on-error -output-directory=out main.tex
 
 report-clean:  ## Limpia auxiliares de LaTeX
 	rm -rf informe_latex/out/*

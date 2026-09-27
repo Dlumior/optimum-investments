@@ -2,3 +2,6 @@
 {"ts": "2026-09-27T16:39:51", "session": "b86e5230-bab6-45fa-9a4e-0d2f93d112de", "prompt": "usemos uv para el proyecto"}
 {"ts": "2026-09-27T16:43:59", "session": "b86e5230-bab6-45fa-9a4e-0d2f93d112de", "prompt": "inicializa git"}
 {"ts": "2026-09-27T16:45:36", "session": "b86e5230-bab6-45fa-9a4e-0d2f93d112de", "prompt": "El caso que me toca resolver es el C"}
+{"ts": "2026-09-27T17:00:53", "session": "74467c82-5c93-493a-94c0-7333c93f84e8", "prompt": "Para compilar en latex estoy usando el compose sin embargo este descarga los 5 gb, como puedo evitar la descarga?. Tengo latex instalado localmente puedo usar lua latex?"}
+{"ts": "2026-09-27T17:02:51", "session": "74467c82-5c93-493a-94c0-7333c93f84e8", "prompt": "Sí, actualiza la skill para mencionar report-local, quitemos las configuraciones para compilarlo con el compose y todo sea de manera local"}
+{"ts": "2026-09-27T17:04:32", "session": "74467c82-5c93-493a-94c0-7333c93f84e8", "prompt": "haz commit de esto"}

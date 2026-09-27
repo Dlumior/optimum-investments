@@ -10,7 +10,7 @@ make data         # Excel → data/interim → data/processed (con validaciones)
 make json         # → data/json/input.json (caso definido en config/caso.yaml)
 make test         # pruebas
 make run          # → data/json/output.json   (cuando optimizer.solve esté implementado)
-make report       # informe_latex/out/main.pdf (LuaLaTeX en Docker)
+make report       # informe_latex/out/main.pdf (LuaLaTeX local, latexmk)
 make entrega      # ZIP en entrega/
 ```
 Sin `make`: `python -m venv .venv && .venv/bin/pip install -e ".[dev]"` y `.venv/bin/python -m optimum {data,json,run}`.
@@ -31,7 +31,6 @@ Sin `make`: `python -m venv .venv && .venv/bin/pip install -e ".[dev]"` y `.venv
 ├── scripts/                      Utilidades (anexo IA → LaTeX, generación de notebooks)
 ├── .claude/                      Configuración de Claude Code: settings, hooks, skills, agentes
 ├── CLAUDE.md                     Memoria/instrucciones del proyecto para Claude Code
-├── docker-compose.yml            Servicio `latex`
 └── Makefile · pyproject.toml
 ```
 

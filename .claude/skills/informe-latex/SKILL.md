@@ -1,12 +1,13 @@
 ---
 name: informe-latex
-description: Estructura, reglas y compilación del documento técnico en informe_latex/ (LuaLaTeX vía Docker). Úsalo al redactar o editar secciones del informe, anexos, o al compilar.
+description: Estructura, reglas y compilación del documento técnico en informe_latex/ (LuaLaTeX local con latexmk). Úsalo al redactar o editar secciones del informe, anexos, o al compilar.
 ---
 
 # Informe técnico (LaTeX)
 
-- Compilar: `make report` (docker compose → `latexmk -lualatex` → `informe_latex/out/main.pdf`).
-  En VS Code: LaTeX Workshop, receta "Docker LuaLaTeX". Idioma: español (`babel` spanish, `es-tabla`, punto decimal).
+- Compilar: `make report` (local → `latexmk -lualatex` → `informe_latex/out/main.pdf`). Requiere TeX Live local
+  con `lualatex`, `latexmk` y `biber` instalados.
+  En VS Code: LaTeX Workshop, receta "LuaLaTeX (local)". Idioma: español (`babel` spanish, `es-tabla`, punto decimal).
 - **Máximo 12 páginas** de cuerpo (secciones 01–07). Anexos A (instrucciones), B (uso de IA), C (pruebas) no cuentan.
 - Secciones en `sections/NN_nombre.tex`; una idea por párrafo; `\cref{}` para referencias.
 - Contenido exigido: resumen ejecutivo, formulación, supuestos, función objetivo, restricciones, algoritmo,
