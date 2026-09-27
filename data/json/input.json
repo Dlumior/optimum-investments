@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "caseId": "B",
+  "caseId": "C",
   "valuationDate": "2025-12-31",
   "horizonDate": "2026-12-31",
   "baseCurrency": "PEN",
@@ -6659,10 +6659,12 @@
   },
   "caseParameters": {
     "horizonDate": "2026-12-31",
-    "assetBudget": 1000.0,
-    "liabilityBudget": 800.0,
-    "riskAversionLambda": 0.5,
-    "riskMeasure": "VOLATILITY",
+    "cvarAlpha": 0.95,
+    "bootstrapProbability": 0.95,
+    "stressProbability": 0.05,
+    "riskAversionLambda": 0.25,
+    "riskMeasure": "CVAR",
+    "bootstrapCount": 500,
     "seed": 20251231
   }
 }

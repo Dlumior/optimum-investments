@@ -3,7 +3,7 @@
 # ningún parámetro relevante puede quedar codificado dentro de las funciones.
 
 schemaVersion: "1.0"
-caseId: "B"            # <-- CAMBIAR al caso asignado: A, B, C, D o E
+caseId: "C"            # <-- CAMBIAR al caso asignado: A, B, C, D o E
 valuationDate: "2025-12-31"
 horizonDate: "2026-12-31"   # en el Caso D se usa terminalDate
 baseCurrency: "PEN"
@@ -20,10 +20,10 @@ commonConstraints:
 # Parámetros específicos. Los valores por defecto salen de la hoja Case_Assumptions;
 # lo que se escriba aquí los sobrescribe (y debe justificarse en docs/decisiones.md).
 caseParameters:
-  riskMeasure: "VOLATILITY"  # VOLATILITY | CVAR
-  # riskAversion: 0.5
-  # alpha: 0.95
-  # bootstrapCount: 500
+  riskMeasure: "CVAR"        # VOLATILITY | CVAR — Caso C
+  bootstrapCount: 500        # escenarios históricos remuestreados; mínimo exigido: 100 (ver D-05)
+  # cvarAlpha, bootstrapProbability, stressProbability, riskAversionLambda:
+  # se toman de Case_Assumptions (caso C) vía _case_defaults; no se sobrescriben aquí.
   # seed: 20260101
 
 # Semilla global para bootstrap/simulaciones (reproducibilidad)
