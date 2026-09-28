@@ -64,6 +64,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado con corrección
 **Detalle:** El alumno propuso auditar antes de decidir LE_12M, y fue lo correcto: la auditoría (sin críticos) encontró que el reporte al horizonte estaba incompleto y que la mitad pasivos depende de D-13. El alumno eligió base con reporte + variante ENFORCE (D-20), reportar todos los grupos del Cuadro 4 al horizonte y dejar la sensibilidad D-13 para el notebook 05. La variante reproduce el cálculo independiente del auditor (costo 0.287 S/ mm con λ = 0.25).
 
+## P11 · 2026-09-28 · Notebook 04 (optimización)
+**Prompt:** "vamos con el notebook 04".
+**Resultado:** Aceptado (lectura pendiente de validación del alumno)
+**Detalle:** El notebook lee `output.json` (sin volver a optimizar) y exporta 4 figuras (posiciones, frontera λ–CVaR, composición por λ, distribución de ΔPN) y 5 tablas (posiciones, métricas, restricciones, barrido de λ, incumplimientos al horizonte). Al final regenera los escenarios y verifica que E[ΔPN] y el CVaR de `output.json` se reproducen con tolerancia 1e-6. La IA redactó un borrador de lectura y contrastó con las tablas las cifras que no salían directamente de ellas. Las ganancias en estrés llevan la advertencia de la auditoría I-1 (dependen de D-13).
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
