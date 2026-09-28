@@ -1,0 +1,2738 @@
+{
+  "base": {
+    "status": "OPTIMAL",
+    "objective": 1.1551269326158322,
+    "expectedNetWorthChange": 5.83453787472855,
+    "transactionCosts": 2.725,
+    "expectedTerminalNetWorth": 203.10953787472855,
+    "varLoss": 5.257340853430328,
+    "cvarLoss": 7.81764376845087,
+    "cvarAlpha": 0.95,
+    "netWorthVolatility": 7.032434708028923,
+    "stressLosses": {
+      "C_STRESS_1": -17.69830239871819,
+      "C_STRESS_2": 10.346287679512862,
+      "C_STRESS_3": -18.80451742692732,
+      "C_STRESS_4": -24.217777081956413
+    },
+    "tailStressShare": 0.2499999999999998,
+    "turnover": 960.0,
+    "distanceToBase": null,
+    "weights": {
+      "byCurrency": {
+        "ASSET": {
+          "PEN": 0.71,
+          "USD": 0.29
+        },
+        "LIABILITY": {
+          "PEN": 0.7625,
+          "USD": 0.23750000000000007
+        }
+      },
+      "byType": {
+        "ASSET": {
+          "BOND_FIXED": 0.35,
+          "BOND_FLOAT": 0.4,
+          "CASH": 0.2,
+          "EQUITY": 0.05
+        },
+        "LIABILITY": {
+          "BOND_FIXED": 0.44999999999999996,
+          "LOAN_FLOAT": 0.55
+        }
+      },
+      "byRateType": {
+        "ASSET": {
+          "FIXED": 0.6,
+          "FLOAT": 0.4
+        },
+        "LIABILITY": {
+          "FIXED": 0.44999999999999996,
+          "FLOAT": 0.55
+        }
+      }
+    },
+    "activeLimits": [
+      "ASSET:TYPE:CASH",
+      "ASSET:TYPE:FIXED_INCOME",
+      "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+      "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+      "LIABILITY:RATE_TYPE:FIXED",
+      "LIABILITY:RATE_TYPE:FLOAT",
+      "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+    ],
+    "positions": {
+      "A01": 200.0,
+      "A02": 350.0,
+      "A03": 160.0,
+      "A04": 0.0,
+      "A05": 240.0,
+      "A06": 50.0,
+      "L01": 280.0,
+      "L02": 39.99999999999994,
+      "L03": 180.0,
+      "L04": 110.0,
+      "L05": 140.0,
+      "L06": 50.00000000000006
+    }
+  },
+  "rateShocks": [
+    {
+      "rule": "FLAT",
+      "shock": "PEN+200",
+      "portfolio": "initial",
+      "assets": -14.96066400304727,
+      "liabilities": -32.22969564312908,
+      "netWorth": 17.269031640081806
+    },
+    {
+      "rule": "FLAT",
+      "shock": "PEN+200",
+      "portfolio": "optimal",
+      "assets": -28.2035661340798,
+      "liabilities": -25.73971753469374,
+      "netWorth": -2.4638485993860613
+    },
+    {
+      "rule": "FLAT",
+      "shock": "PEN+200",
+      "portfolio": "meanVariance",
+      "assets": -28.439081955530924,
+      "liabilities": -25.71809322965434,
+      "netWorth": -2.720988725876584
+    },
+    {
+      "rule": "FLAT",
+      "shock": "PEN-200",
+      "portfolio": "initial",
+      "assets": 16.66878707037,
+      "liabilities": 38.025937093086625,
+      "netWorth": -21.357150022716624
+    },
+    {
+      "rule": "FLAT",
+      "shock": "PEN-200",
+      "portfolio": "optimal",
+      "assets": 31.423160265370406,
+      "liabilities": 30.956700294157802,
+      "netWorth": 0.4664599712126041
+    },
+    {
+      "rule": "FLAT",
+      "shock": "PEN-200",
+      "portfolio": "meanVariance",
+      "assets": 31.685706132277673,
+      "liabilities": 30.931648933573122,
+      "netWorth": 0.754057198704551
+    },
+    {
+      "rule": "FLAT",
+      "shock": "USD+200",
+      "portfolio": "initial",
+      "assets": -16.325176904624527,
+      "liabilities": -12.783403469426787,
+      "netWorth": -3.54177343519774
+    },
+    {
+      "rule": "FLAT",
+      "shock": "USD+200",
+      "portfolio": "optimal",
+      "assets": -0.37375321104525483,
+      "liabilities": -12.890595191215652,
+      "netWorth": 12.516841980170398
+    },
+    {
+      "rule": "FLAT",
+      "shock": "USD+200",
+      "portfolio": "meanVariance",
+      "assets": -0.31124232649056893,
+      "liabilities": -12.87573966821116,
+      "netWorth": 12.56449734172059
+    },
+    {
+      "rule": "FLAT",
+      "shock": "USD-200",
+      "portfolio": "initial",
+      "assets": 18.988298038443617,
+      "liabilities": 14.635963321153412,
+      "netWorth": 4.352334717290205
+    },
+    {
+      "rule": "FLAT",
+      "shock": "USD-200",
+      "portfolio": "optimal",
+      "assets": 0.6112397790349503,
+      "liabilities": 14.69625762936073,
+      "netWorth": -14.08501785032578
+    },
+    {
+      "rule": "FLAT",
+      "shock": "USD-200",
+      "portfolio": "meanVariance",
+      "assets": 0.5090088458227822,
+      "liabilities": 14.687901541157972,
+      "netWorth": -14.17889269533519
+    },
+    {
+      "rule": "FLAT",
+      "shock": "ALL+200",
+      "portfolio": "initial",
+      "assets": -31.285840907671798,
+      "liabilities": -45.013099112555864,
+      "netWorth": 13.727258204884066
+    },
+    {
+      "rule": "FLAT",
+      "shock": "ALL+200",
+      "portfolio": "optimal",
+      "assets": -28.577319345125055,
+      "liabilities": -38.63031272590939,
+      "netWorth": 10.052993380784336
+    },
+    {
+      "rule": "FLAT",
+      "shock": "ALL+200",
+      "portfolio": "meanVariance",
+      "assets": -28.75032428202149,
+      "liabilities": -38.5938328978655,
+      "netWorth": 9.843508615844005
+    },
+    {
+      "rule": "FLAT",
+      "shock": "ALL-200",
+      "portfolio": "initial",
+      "assets": 35.65708510881362,
+      "liabilities": 52.66190041424004,
+      "netWorth": -17.00481530542642
+    },
+    {
+      "rule": "FLAT",
+      "shock": "ALL-200",
+      "portfolio": "optimal",
+      "assets": 32.03440004440536,
+      "liabilities": 45.65295792351853,
+      "netWorth": -13.618557879113169
+    },
+    {
+      "rule": "FLAT",
+      "shock": "ALL-200",
+      "portfolio": "meanVariance",
+      "assets": 32.19471497810046,
+      "liabilities": 45.61955047473109,
+      "netWorth": -13.424835496630635
+    },
+    {
+      "rule": "FLAT",
+      "shock": "SHORT+200",
+      "portfolio": "initial",
+      "assets": 6.23309885351361,
+      "liabilities": 10.28016600553525,
+      "netWorth": -4.04706715202164
+    },
+    {
+      "rule": "FLAT",
+      "shock": "SHORT+200",
+      "portfolio": "optimal",
+      "assets": 14.095046935959957,
+      "liabilities": 5.626663734730677,
+      "netWorth": 8.46838320122928
+    },
+    {
+      "rule": "FLAT",
+      "shock": "SHORT+200",
+      "portfolio": "meanVariance",
+      "assets": 9.857381118281525,
+      "liabilities": 6.562011794255336,
+      "netWorth": 3.295369324026189
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "PEN+200",
+      "portfolio": "initial",
+      "assets": -15.050183406232975,
+      "liabilities": -32.31661284583744,
+      "netWorth": 17.266429439604465
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "PEN+200",
+      "portfolio": "optimal",
+      "assets": -28.293085537265505,
+      "liabilities": -25.825617562157547,
+      "netWorth": -2.467467975107958
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "PEN+200",
+      "portfolio": "meanVariance",
+      "assets": -28.551059776695478,
+      "liabilities": -25.804037309798908,
+      "netWorth": -2.7470224668965706
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "PEN-200",
+      "portfolio": "initial",
+      "assets": 16.770652183694438,
+      "liabilities": 38.12444730301982,
+      "netWorth": -21.353795119325383
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "PEN-200",
+      "portfolio": "optimal",
+      "assets": 31.525025378694842,
+      "liabilities": 31.053992898242587,
+      "netWorth": 0.471032480452255
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "PEN-200",
+      "portfolio": "meanVariance",
+      "assets": 31.813126926394098,
+      "liabilities": 31.02899427075686,
+      "netWorth": 0.7841326556372366
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "USD+200",
+      "portfolio": "initial",
+      "assets": -16.345475971900328,
+      "liabilities": -12.85425341379296,
+      "netWorth": -3.491222558107367
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "USD+200",
+      "portfolio": "optimal",
+      "assets": -0.4085516120894843,
+      "liabilities": -12.92602016339874,
+      "netWorth": 12.517468551309255
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "USD+200",
+      "portfolio": "meanVariance",
+      "assets": -0.3402206333571198,
+      "liabilities": -12.91607412856035,
+      "netWorth": 12.57585349520323
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "USD-200",
+      "portfolio": "initial",
+      "assets": 19.01140950340897,
+      "liabilities": 14.720951953381501,
+      "netWorth": 4.290457550027469
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "USD-200",
+      "portfolio": "optimal",
+      "assets": 0.6508594332612704,
+      "liabilities": 14.738751945474775,
+      "netWorth": -14.087892512213504
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "USD-200",
+      "portfolio": "meanVariance",
+      "assets": 0.5420020427417346,
+      "liabilities": 14.736285074093706,
+      "netWorth": -14.194283031351972
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "ALL+200",
+      "portfolio": "initial",
+      "assets": -31.395659378133303,
+      "liabilities": -45.1708662596304,
+      "netWorth": 13.775206881497098
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "ALL+200",
+      "portfolio": "optimal",
+      "assets": -28.70163714935499,
+      "liabilities": -38.751637725556286,
+      "netWorth": 10.050000576201295
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "ALL+200",
+      "portfolio": "meanVariance",
+      "assets": -28.891280410052598,
+      "liabilities": -38.720111438359254,
+      "netWorth": 9.828831028306656
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "ALL-200",
+      "portfolio": "initial",
+      "assets": 35.78206168710341,
+      "liabilities": 52.84539925640132,
+      "netWorth": -17.063337569297914
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "ALL-200",
+      "portfolio": "optimal",
+      "assets": 32.17588481195611,
+      "liabilities": 45.79274484371736,
+      "netWorth": -13.616860031761249
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "ALL-200",
+      "portfolio": "meanVariance",
+      "assets": 32.35512896913583,
+      "liabilities": 45.76527934485057,
+      "netWorth": -13.410150375714736
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "SHORT+200",
+      "portfolio": "initial",
+      "assets": -3.1010509579116103,
+      "liabilities": -3.74247669297894,
+      "netWorth": 0.6414257350673296
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "SHORT+200",
+      "portfolio": "optimal",
+      "assets": -3.722766525624059,
+      "liabilities": -3.2347073611047827,
+      "netWorth": -0.4880591645192762
+    },
+    {
+      "rule": "PERIOD_FORWARD",
+      "shock": "SHORT+200",
+      "portfolio": "meanVariance",
+      "assets": -3.9170770256899536,
+      "liabilities": -3.2393360678106,
+      "netWorth": -0.6777409578793536
+    }
+  ],
+  "shadowPrices": [
+    {
+      "name": "LIABILITY:RATE_TYPE:FIXED+LIABILITY:RATE_TYPE:FLOAT",
+      "side": "LIABILITY",
+      "bound": "min+max",
+      "limit": 0.45,
+      "value": 0.44999999999999996,
+      "dualPerPp": 0.009865417683748608,
+      "finiteDiffPerPp": 0.0011074246442648317,
+      "finiteDiffSmallPerPp": 0.00872130327786369,
+      "relaxationPp": 5.0,
+      "relaxationSmallPp": 0.5
+    },
+    {
+      "name": "ASSET:TYPE:CASH",
+      "side": "ASSET",
+      "bound": "max",
+      "limit": 0.2,
+      "value": 0.2,
+      "dualPerPp": 0.19517493254288643,
+      "finiteDiffPerPp": 0.1469879154351524,
+      "finiteDiffSmallPerPp": 0.18885002972108822,
+      "relaxationPp": 5.0,
+      "relaxationSmallPp": 0.5
+    },
+    {
+      "name": "ASSET:TYPE:FIXED_INCOME",
+      "side": "ASSET",
+      "bound": "max",
+      "limit": 0.75,
+      "value": 0.75,
+      "dualPerPp": 0.39067236740603145,
+      "finiteDiffPerPp": 0.344512298314842,
+      "finiteDiffSmallPerPp": 0.38175150861222207,
+      "relaxationPp": 5.0,
+      "relaxationSmallPp": 0.5
+    },
+    {
+      "name": "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+      "side": "ASSET",
+      "bound": "max",
+      "limit": 0.35,
+      "value": 0.35,
+      "dualPerPp": 0.08714887462964448,
+      "finiteDiffPerPp": 0.07884149149889472,
+      "finiteDiffSmallPerPp": 0.08700342563289709,
+      "relaxationPp": 5.0,
+      "relaxationSmallPp": 0.5
+    },
+    {
+      "name": "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01",
+      "side": "LIABILITY",
+      "bound": "max",
+      "limit": 0.35,
+      "value": 0.35,
+      "dualPerPp": 0.022744405386804258,
+      "finiteDiffPerPp": 0.01202793742837267,
+      "finiteDiffSmallPerPp": 0.020698852823746172,
+      "relaxationPp": 5.0,
+      "relaxationSmallPp": 0.5
+    }
+  ],
+  "costs": [
+    {
+      "multiplier": 0.0,
+      "status": "OPTIMAL",
+      "objective": 7.9269016665014735,
+      "expectedNetWorthChange": 8.714442459957809,
+      "transactionCosts": 0.0,
+      "expectedTerminalNetWorth": 208.7144424599578,
+      "varLoss": 2.3591706042130127,
+      "cvarLoss": 3.1501631738253395,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 7.748128030027051,
+      "stressLosses": {
+        "C_STRESS_1": 2.3591706042130127,
+        "C_STRESS_2": -8.552684617113673,
+        "C_STRESS_3": -37.42265220577025,
+        "C_STRESS_4": -7.853140964185572
+      },
+      "tailStressShare": 0.20200000000000107,
+      "turnover": 1472.9218487473859,
+      "distanceToBase": 592.9218487473859,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.6041372045194757,
+            "USD": 0.3958627954805243
+          },
+          "LIABILITY": {
+            "PEN": 0.6007476611164608,
+            "USD": 0.3992523388835392
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.45,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.45,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 54.137204519475745,
+        "A04": 0.0,
+        "A05": 345.86279548052426,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 80.0,
+        "L03": 0.0,
+        "L04": 120.59812889316865,
+        "L05": 280.0,
+        "L06": 39.40187110683136
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 0.0,
+        "expectedTerminalNetWorth": 205.83453787472854,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    },
+    {
+      "multiplier": 0.5,
+      "status": "OPTIMAL",
+      "objective": 3.6016939567186363,
+      "expectedNetWorthChange": 7.4388325963614745,
+      "transactionCosts": 3.323861518057486,
+      "expectedTerminalNetWorth": 204.11497107830397,
+      "varLoss": 1.1192823870020447,
+      "cvarLoss": 2.053108486341404,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.095886927379888,
+      "stressLosses": {
+        "C_STRESS_1": 1.1192823870020447,
+        "C_STRESS_2": 1.1192823870020447,
+        "C_STRESS_3": -22.636154399706825,
+        "C_STRESS_4": -0.23376759258035484
+      },
+      "tailStressShare": 0.20200000000000107,
+      "turnover": 1104.7497525309527,
+      "distanceToBase": 346.5473731080318,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.70672813101331,
+            "USD": 0.29327186898669005
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.4846967263451555,
+            "LOAN_FLOAT": 0.5153032736548445
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.4846967263451555,
+            "FLOAT": 0.5153032736548445
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 140.8988102885395,
+        "L03": 34.48369452210848,
+        "L04": 110.0,
+        "L05": 212.3748762654764,
+        "L06": 22.242618923875654
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 1.3625,
+        "expectedTerminalNetWorth": 204.47203787472853,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    },
+    {
+      "multiplier": 1.0,
+      "status": "OPTIMAL",
+      "objective": 1.1551269326158322,
+      "expectedNetWorthChange": 5.83453787472855,
+      "transactionCosts": 2.725,
+      "expectedTerminalNetWorth": 203.10953787472855,
+      "varLoss": 5.257340853430328,
+      "cvarLoss": 7.81764376845087,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 7.032434708028923,
+      "stressLosses": {
+        "C_STRESS_1": -17.69830239871819,
+        "C_STRESS_2": 10.346287679512862,
+        "C_STRESS_3": -18.80451742692732,
+        "C_STRESS_4": -24.217777081956413
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 960.0,
+      "distanceToBase": 0.0,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 39.99999999999994,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.10953787472855,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    },
+    {
+      "multiplier": 2.0,
+      "status": "OPTIMAL",
+      "objective": -0.29686120701855456,
+      "expectedNetWorthChange": 3.296211426157693,
+      "transactionCosts": 1.4412547979476087,
+      "expectedTerminalNetWorth": 201.8549566282101,
+      "varLoss": 2.722327833673191,
+      "cvarLoss": 8.607271340914556,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 5.321393007818427,
+      "stressLosses": {
+        "C_STRESS_1": -11.57199435432986,
+        "C_STRESS_2": 24.74719386260731,
+        "C_STRESS_3": -0.48451549127988613,
+        "C_STRESS_4": -19.27655074503714
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 566.0727994136024,
+      "distanceToBase": 393.9272005863976,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7,
+            "USD": 0.3
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.3869636002931988,
+            "BOND_FLOAT": 0.36303639970680124,
+            "CASH": 0.2,
+            "EQUITY": 0.04999999999999994
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.5875,
+            "LOAN_FLOAT": 0.4125
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6369636002931988,
+            "FLOAT": 0.36303639970680124
+          },
+          "LIABILITY": {
+            "FIXED": 0.5875,
+            "FLOAT": 0.4125
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 36.963600293198816,
+        "A05": 203.03639970680123,
+        "A06": 49.99999999999994,
+        "L01": 120.0,
+        "L02": 150.0,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 100.0
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 5.45,
+        "expectedTerminalNetWorth": 200.38453787472855,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    },
+    {
+      "multiplier": 4.0,
+      "status": "OPTIMAL",
+      "objective": -1.7100835934955407,
+      "expectedNetWorthChange": 3.2880396809432666,
+      "transactionCosts": 2.756522186282137,
+      "expectedTerminalNetWorth": 200.53151749466113,
+      "varLoss": 3.2833676271365198,
+      "cvarLoss": 8.96640435262668,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 5.396269220815991,
+      "stressLosses": {
+        "C_STRESS_1": -10.723726558677761,
+        "C_STRESS_2": 23.842439510867962,
+        "C_STRESS_3": 0.854214770254913,
+        "C_STRESS_4": -18.76203563044798
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 548.0745980403053,
+      "distanceToBase": 411.9254019596947,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7,
+            "USD": 0.3
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.3959627009798473,
+            "BOND_FLOAT": 0.3540372990201527,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.5875,
+            "LOAN_FLOAT": 0.4125
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6459627009798473,
+            "FLOAT": 0.3540372990201527
+          },
+          "LIABILITY": {
+            "FIXED": 0.5875,
+            "FLOAT": 0.4125
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 45.962700979847355,
+        "A05": 194.03729902015266,
+        "A06": 50.0,
+        "L01": 120.0,
+        "L02": 150.0,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 100.0
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 10.9,
+        "expectedTerminalNetWorth": 194.93453787472853,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    }
+  ],
+  "alphas": [
+    {
+      "alpha": 0.95,
+      "status": "OPTIMAL",
+      "objective": 1.1551269326158322,
+      "expectedNetWorthChange": 5.83453787472855,
+      "transactionCosts": 2.725,
+      "expectedTerminalNetWorth": 203.10953787472855,
+      "varLoss": 5.257340853430328,
+      "cvarLoss": 7.81764376845087,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 7.032434708028923,
+      "stressLosses": {
+        "C_STRESS_1": -17.69830239871819,
+        "C_STRESS_2": 10.346287679512862,
+        "C_STRESS_3": -18.80451742692732,
+        "C_STRESS_4": -24.217777081956413
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 960.0,
+      "distanceToBase": 0.0,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 39.99999999999994,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.10953787472855,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    },
+    {
+      "alpha": 0.975,
+      "status": "OPTIMAL",
+      "objective": 0.9280566200262652,
+      "expectedNetWorthChange": 5.978008555982421,
+      "transactionCosts": 3.0237160708662203,
+      "expectedTerminalNetWorth": 202.9542924851162,
+      "varLoss": 7.207831925633531,
+      "cvarLoss": 8.104943460359738,
+      "cvarAlpha": 0.975,
+      "netWorthVolatility": 7.166890101387369,
+      "stressLosses": {
+        "C_STRESS_1": -18.159467021420774,
+        "C_STRESS_2": 7.207831925633531,
+        "C_STRESS_3": -21.87324309224215,
+        "C_STRESS_4": -21.907104840641843
+      },
+      "tailStressShare": 0.31600000000000067,
+      "turnover": 960.0,
+      "distanceToBase": 59.715305683736105,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7731534801258428,
+            "USD": 0.22684651987415716
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.4606534801258428,
+            "LOAN_FLOAT": 0.5393465198741572
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.4606534801258428,
+            "FLOAT": 0.5393465198741572
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 69.85765284186799,
+        "L03": 158.66513125880627,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 41.47721589932573
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.10953787472855,
+        "varLoss": 7.199244110570138,
+        "cvarLoss": 9.50534234486271,
+        "cvarAlpha": 0.975,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.4999999999999996
+      }
+    },
+    {
+      "alpha": 0.99,
+      "status": "OPTIMAL",
+      "objective": 0.717898559904786,
+      "expectedNetWorthChange": 5.869007963450387,
+      "transactionCosts": 2.8445569344127803,
+      "expectedTerminalNetWorth": 203.0244510290376,
+      "varLoss": 8.640165879761106,
+      "cvarLoss": 9.226209876531277,
+      "cvarAlpha": 0.99,
+      "netWorthVolatility": 7.243848480705987,
+      "stressLosses": {
+        "C_STRESS_1": -19.37803872507746,
+        "C_STRESS_2": 8.640165879761106,
+        "C_STRESS_3": -22.081482471370506,
+        "C_STRESS_4": -23.451569761878737
+      },
+      "tailStressShare": 0.24000000000000069,
+      "turnover": 960.0000000000001,
+      "distanceToBase": 37.38146472357152,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7739860036438576,
+            "USD": 0.22601399635614247
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.46148600364385756,
+            "LOAN_FLOAT": 0.5385139963561424
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.46148600364385756,
+            "FLOAT": 0.5385139963561424
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 58.6907323617857,
+        "L03": 170.49807055330032,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 40.81119708491397
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.83453787472855,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.10953787472855,
+        "varLoss": 10.346287679512862,
+        "cvarLoss": 10.629263526589817,
+        "cvarAlpha": 0.99,
+        "netWorthVolatility": 7.032434708028923,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.81
+      }
+    }
+  ],
+  "stressWeight": [
+    {
+      "stressProbability": 0.05,
+      "status": "OPTIMAL",
+      "objective": 1.155126932615833,
+      "expectedNetWorthChange": 5.834537874728551,
+      "transactionCosts": 2.725,
+      "expectedTerminalNetWorth": 203.10953787472855,
+      "varLoss": 5.257340853430328,
+      "cvarLoss": 7.81764376845087,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 7.032434708028924,
+      "stressLosses": {
+        "C_STRESS_1": -17.69830239871819,
+        "C_STRESS_2": 10.346287679512862,
+        "C_STRESS_3": -18.80451742692732,
+        "C_STRESS_4": -24.217777081956413
+      },
+      "tailStressShare": 0.24999999999999983,
+      "turnover": 960.0,
+      "distanceToBase": 0.0,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 39.99999999999994,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.834537874728551,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.10953787472855,
+        "varLoss": 5.257340853430328,
+        "cvarLoss": 7.81764376845087,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.032434708028924,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.24999999999999983
+      }
+    },
+    {
+      "stressProbability": 0.1,
+      "status": "OPTIMAL",
+      "objective": 1.6885379313497477,
+      "expectedNetWorthChange": 6.5646963191109835,
+      "transactionCosts": 2.8372525330876055,
+      "expectedTerminalNetWorth": 203.7274437860234,
+      "varLoss": 6.231563709890764,
+      "cvarLoss": 8.155623418694518,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 9.013845906602718,
+      "stressLosses": {
+        "C_STRESS_1": -23.289983261207198,
+        "C_STRESS_2": 6.231563709890764,
+        "C_STRESS_3": -26.14625422546554,
+        "C_STRESS_4": -29.236598600016798
+      },
+      "tailStressShare": 0.06400000000000038,
+      "turnover": 1016.9359487721882,
+      "distanceToBase": 58.23144033760532,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.6815320256139059,
+            "USD": 0.3184679743860941
+          },
+          "LIABILITY": {
+            "PEN": 0.7633096822283857,
+            "USD": 0.2366903177716144
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.45080968222838563,
+            "LOAN_FLOAT": 0.5491903177716143
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.45080968222838563,
+            "FLOAT": 0.5491903177716143
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 131.5320256139059,
+        "A04": 0.0,
+        "A05": 268.4679743860941,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 40.64774578270849,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 49.35225421729151
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 6.190276792217691,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.4652767922177,
+        "varLoss": 6.110603436778746,
+        "cvarLoss": 8.970425564445778,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.660462397221087,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.49999999999999967
+      }
+    },
+    {
+      "stressProbability": 0.2,
+      "status": "OPTIMAL",
+      "objective": 4.198380885022539,
+      "expectedNetWorthChange": 12.427218252169784,
+      "transactionCosts": 3.1149999999999998,
+      "expectedTerminalNetWorth": 209.31221825216977,
+      "varLoss": 16.614191528539152,
+      "cvarLoss": 20.45534946858899,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 21.633088410879367,
+      "stressLosses": {
+        "C_STRESS_1": -51.61862268258049,
+        "C_STRESS_2": -19.313920668667077,
+        "C_STRESS_3": -61.96624044371637,
+        "C_STRESS_4": -50.85158477126325
+      },
+      "tailStressShare": 0.0,
+      "turnover": 1180.0,
+      "distanceToBase": 380.0000000000001,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.55,
+            "USD": 0.45
+          },
+          "LIABILITY": {
+            "PEN": 0.8,
+            "USD": 0.2
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.4,
+            "BOND_FLOAT": 0.35,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.4875,
+            "LOAN_FLOAT": 0.5125
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.65,
+            "FLOAT": 0.35
+          },
+          "LIABILITY": {
+            "FIXED": 0.4875,
+            "FLOAT": 0.5125
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A03",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A05",
+        "LIABILITY:CURRENCY:PEN",
+        "LIABILITY:CURRENCY:USD",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 0.0,
+        "A04": 50.0,
+        "A05": 350.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 70.0,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 20.0
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 6.901754627195979,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 204.17675462719598,
+        "varLoss": 10.346287679512862,
+        "cvarLoss": 10.393946769546877,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 8.739477988291807,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.9680000000000001
+      }
+    }
+  ],
+  "stressLeaveOneOut": [
+    {
+      "dropped": "C_STRESS_1",
+      "status": "OPTIMAL",
+      "objective": 1.1061352071723274,
+      "expectedNetWorthChange": 6.167590355879178,
+      "transactionCosts": 3.353952443830929,
+      "expectedTerminalNetWorth": 202.81363791204825,
+      "varLoss": 5.122011048658653,
+      "cvarLoss": 6.830010819503688,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.9861008740610995,
+      "stressLosses": {
+        "C_STRESS_2": 5.122011048658653,
+        "C_STRESS_3": -18.965614201371707,
+        "C_STRESS_4": -18.86487586745922
+      },
+      "tailStressShare": 0.1640000000000011,
+      "turnover": 960.0,
+      "distanceToBase": 84.27520155871763,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7627222548471038,
+            "USD": 0.2372777451528962
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.45022225484710376,
+            "LOAN_FLOAT": 0.5497777451528962
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.45022225484710376,
+            "FLOAT": 0.5497777451528962
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 82.13760077935875,
+        "L03": 138.04020309832427,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 49.82219612231697
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.749459123200285,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.0244591232003,
+        "varLoss": 5.283770226381002,
+        "cvarLoss": 8.24126456149327,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.133615297134919,
+        "stressLosses": {
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.804517426927333,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.33333333333333304
+      }
+    },
+    {
+      "dropped": "C_STRESS_2",
+      "status": "OPTIMAL",
+      "objective": 2.8021959918095627,
+      "expectedNetWorthChange": 4.941481736819679,
+      "transactionCosts": 2.003563047925814,
+      "expectedTerminalNetWorth": 202.93791868889386,
+      "varLoss": -0.10163038221128495,
+      "cvarLoss": 0.5428907883372113,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 3.292372361226074,
+      "stressLosses": {
+        "C_STRESS_1": -6.185444164055411,
+        "C_STRESS_3": -0.10163038221128495,
+        "C_STRESS_4": -8.520644088553103
+      },
+      "tailStressShare": 0.1260000000000011,
+      "turnover": 848.1019682362178,
+      "distanceToBase": 306.6788154923921,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.8,
+            "USD": 0.2
+          },
+          "LIABILITY": {
+            "PEN": 0.7699388528854886,
+            "USD": 0.2300611471145114
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.529174259682745,
+            "LOAN_FLOAT": 0.470825740317255
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.529174259682745,
+            "FLOAT": 0.470825740317255
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:CURRENCY:PEN",
+        "ASSET:CURRENCY:USD",
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 250.0,
+        "A04": 0.0,
+        "A05": 150.0,
+        "A06": 50.0,
+        "L01": 224.05098411810891,
+        "L02": 103.339407746196,
+        "L03": 180.0,
+        "L04": 108.56069044408595,
+        "L05": 140.0,
+        "L06": 44.048917691609134
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 6.21686895783747,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.49186895783748,
+        "varLoss": 4.2558247568501635,
+        "cvarLoss": 6.369511988409175,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.980808818618304,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_3": -18.804517426927333,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.0
+      }
+    },
+    {
+      "dropped": "C_STRESS_3",
+      "status": "OPTIMAL",
+      "objective": 1.0265689511253657,
+      "expectedNetWorthChange": 6.076581707645918,
+      "transactionCosts": 3.3351231040616143,
+      "expectedTerminalNetWorth": 202.7414586035843,
+      "varLoss": 5.291847261131487,
+      "cvarLoss": 6.8595586098357515,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.8654880372203,
+      "stressLosses": {
+        "C_STRESS_1": -14.135427439559699,
+        "C_STRESS_2": 5.291847261131487,
+        "C_STRESS_4": -19.02039410483949
+      },
+      "tailStressShare": 0.278000000000001,
+      "turnover": 960.0,
+      "distanceToBase": 81.34974720821528,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 80.67487360410759,
+        "L03": 139.32512639589237,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.731022206063467,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.00602220606348,
+        "varLoss": 5.283770226381002,
+        "cvarLoss": 8.24126456149327,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.101206406385473,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.33333333333333304
+      }
+    },
+    {
+      "dropped": "C_STRESS_4",
+      "status": "OPTIMAL",
+      "objective": 1.0781284516056324,
+      "expectedNetWorthChange": 6.341499615369303,
+      "transactionCosts": 3.9525080862196393,
+      "expectedTerminalNetWorth": 202.38899152914968,
+      "varLoss": 3.9474523000581208,
+      "cvarLoss": 5.243452310176124,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.2593994272457,
+      "stressLosses": {
+        "C_STRESS_1": -9.274631996356128,
+        "C_STRESS_2": 3.9474523000581208,
+        "C_STRESS_3": -17.701021302261875
+      },
+      "tailStressShare": 0.1640000000000011,
+      "turnover": 960.0,
+      "distanceToBase": 298.89753552414714,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.7494487677620736,
+            "USD": 0.25055123223792647
+          },
+          "LIABILITY": {
+            "PEN": 0.7926779938414543,
+            "USD": 0.20732200615854565
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.4801779938414543,
+            "LOAN_FLOAT": 0.5198220061585457
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.4801779938414543,
+            "FLOAT": 0.5198220061585457
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 199.44876776207352,
+        "A04": 0.0,
+        "A05": 200.55123223792648,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 150.0,
+        "L03": 94.14239507316347,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 25.857604926836537
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.640801211812982,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.91580121181298,
+        "varLoss": 5.283770226381002,
+        "cvarLoss": 8.24126456149327,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.897216500572037,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.804517426927326
+        },
+        "tailStressShare": 0.33333333333333304
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "seed": 1,
+      "outOfSample": {
+        "expectedNetWorthChange": 5.635226127484625,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.91022612748463,
+        "varLoss": 5.747444661526615,
+        "cvarLoss": 7.934100551890011,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.081413932093246,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      },
+      "status": "OPTIMAL",
+      "objective": 0.9615771502097545,
+      "expectedNetWorthChange": 5.607776997638275,
+      "transactionCosts": 2.725,
+      "expectedTerminalNetWorth": 202.88277699763827,
+      "varLoss": 4.736039373450872,
+      "cvarLoss": 7.68479938971408,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.496623634033193,
+      "stressLosses": {
+        "C_STRESS_1": -14.412374485832814,
+        "C_STRESS_2": 12.820892355722691,
+        "C_STRESS_3": -14.488315088192687,
+        "C_STRESS_4": -21.19119516526579
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 959.9999999999998,
+      "distanceToBase": 34.55240494677483,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.7272762024733873,
+            "USD": 0.27272379752661263
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05000000000000006
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 177.27620247338737,
+        "A04": 0.0,
+        "A05": 222.7237975266126,
+        "A06": 50.00000000000006,
+        "L01": 280.0,
+        "L02": 39.99999999999994,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      }
+    },
+    {
+      "seed": 2,
+      "outOfSample": {
+        "expectedNetWorthChange": 5.681219681394213,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.95621968139423,
+        "varLoss": 5.618627964178536,
+        "cvarLoss": 7.740790604402039,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.001447189804462,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      },
+      "status": "OPTIMAL",
+      "objective": 1.049168887965299,
+      "expectedNetWorthChange": 6.095550371626971,
+      "transactionCosts": 3.4254105523838683,
+      "expectedTerminalNetWorth": 202.6701398192431,
+      "varLoss": 5.492160651747657,
+      "cvarLoss": 6.4838837251112125,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.610027959857777,
+      "stressLosses": {
+        "C_STRESS_1": -12.349000231996065,
+        "C_STRESS_2": 5.492160651747657,
+        "C_STRESS_3": -17.25971393156329,
+        "C_STRESS_4": -17.09147129647446
+      },
+      "tailStressShare": 0.20200000000000107,
+      "turnover": 960.0,
+      "distanceToBase": 106.62873436678785,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.7166203303578027,
+            "USD": 0.28337966964219724
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 166.62033035780274,
+        "A04": 0.0,
+        "A05": 233.37966964219726,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 86.69403682559113,
+        "L03": 133.30596317440882,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      }
+    },
+    {
+      "seed": 3,
+      "outOfSample": {
+        "expectedNetWorthChange": 5.6045898611216245,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.87958986112164,
+        "varLoss": 5.426540404096064,
+        "cvarLoss": 7.820440149751575,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.993201908934986,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      },
+      "status": "OPTIMAL",
+      "objective": 0.9383441734897242,
+      "expectedNetWorthChange": 5.594235246769665,
+      "transactionCosts": 2.725,
+      "expectedTerminalNetWorth": 202.86923524676968,
+      "varLoss": 5.182616739509875,
+      "cvarLoss": 7.723564293119764,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.713320420506222,
+      "stressLosses": {
+        "C_STRESS_1": -16.090874666760143,
+        "C_STRESS_2": 11.55682798582162,
+        "C_STRESS_3": -16.693094559487715,
+        "C_STRESS_4": -22.73721760685238
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 960.0,
+      "distanceToBase": 16.902529632343743,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.7184512648161718,
+            "USD": 0.28154873518382817
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05000000000000003
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 168.45126481617186,
+        "A04": 0.0,
+        "A05": 231.54873518382814,
+        "A06": 50.00000000000003,
+        "L01": 280.0,
+        "L02": 39.99999999999994,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      }
+    },
+    {
+      "seed": 4,
+      "outOfSample": {
+        "expectedNetWorthChange": 5.480967372572886,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.75596737257288,
+        "varLoss": 4.424291652789666,
+        "cvarLoss": 7.341572786022752,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.580543895601564,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      },
+      "status": "OPTIMAL",
+      "objective": 1.0155574664197697,
+      "expectedNetWorthChange": 6.035721648898251,
+      "transactionCosts": 3.623478702701579,
+      "expectedTerminalNetWorth": 202.41224294619667,
+      "varLoss": 3.9273017035924624,
+      "cvarLoss": 5.586741919107609,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.137558498680836,
+      "stressLosses": {
+        "C_STRESS_1": -11.091449079627544,
+        "C_STRESS_2": 3.9273017035924624,
+        "C_STRESS_3": -17.158038393704196,
+        "C_STRESS_4": -15.311264027587
+      },
+      "tailStressShare": 0.20200000000000107,
+      "turnover": 960.0,
+      "distanceToBase": 134.0989413032288,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.7171508904715092,
+            "USD": 0.2828491095284909
+          },
+          "LIABILITY": {
+            "PEN": 0.7625,
+            "USD": 0.23750000000000007
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 167.15089047150914,
+        "A04": 0.0,
+        "A05": 232.84910952849086,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 99.8985801801052,
+        "L03": 120.10141981989474,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 50.00000000000006
+      }
+    },
+    {
+      "seed": 5,
+      "outOfSample": {
+        "expectedNetWorthChange": 5.995994304049306,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 203.2709943040493,
+        "varLoss": 4.838910220108108,
+        "cvarLoss": 7.491676111539195,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.910048812215055,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      },
+      "status": "OPTIMAL",
+      "objective": 1.4415046237930045,
+      "expectedNetWorthChange": 6.403490516942826,
+      "transactionCosts": 3.3746387553392627,
+      "expectedTerminalNetWorth": 203.02885176160356,
+      "varLoss": 4.916066974829729,
+      "cvarLoss": 6.3493885512422334,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 6.745702559543562,
+      "stressLosses": {
+        "C_STRESS_1": -14.06555478225939,
+        "C_STRESS_2": 4.916066974829729,
+        "C_STRESS_3": -19.126240605172192,
+        "C_STRESS_4": -18.70084332191454
+      },
+      "tailStressShare": 0.20200000000000107,
+      "turnover": 960.0,
+      "distanceToBase": 88.06911502187648,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7632771148089151,
+            "USD": 0.23672288519108498
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.450777114808915,
+            "LOAN_FLOAT": 0.549222885191085
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.450777114808915,
+            "FLOAT": 0.549222885191085
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 84.03455751093819,
+        "L03": 136.58713433619383,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 49.37830815286799
+      }
+    }
+  ],
+  "drift": [
+    {
+      "variant": "ALL_ZERO",
+      "status": "OPTIMAL",
+      "objective": -2.6028870644868323,
+      "expectedNetWorthChange": 2.3561379490999506,
+      "transactionCosts": 2.6792716658820934,
+      "expectedTerminalNetWorth": 199.67686628321786,
+      "varLoss": 4.872447499391729,
+      "cvarLoss": 9.119013390818754,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 5.111628177013374,
+      "stressLosses": {
+        "C_STRESS_1": -8.926306124589509,
+        "C_STRESS_2": 19.672440358503124,
+        "C_STRESS_3": -7.1926922270159,
+        "C_STRESS_4": -12.423950198703768
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 960.0,
+      "distanceToBase": 181.4042452624355,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.7824107889840549,
+            "USD": 0.21758921101594514
+          },
+          "LIABILITY": {
+            "PEN": 0.7853641670589535,
+            "USD": 0.2146358329410465
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.4728641670589535,
+            "LOAN_FLOAT": 0.5271358329410465
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.4728641670589535,
+            "FLOAT": 0.5271358329410465
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 232.41078898405488,
+        "A04": 0.0,
+        "A05": 167.58921101594512,
+        "A06": 50.0,
+        "L01": 280.0,
+        "L02": 58.291333647162816,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 31.708666352837188
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 2.4992979770447183,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 199.7742979770447,
+        "varLoss": 8.05401872113557,
+        "cvarLoss": 9.931520521247617,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.9779698315826755,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    }
+  ],
+  "extraStress": [
+    {
+      "scenario": "C_STRESS_PEN_UP",
+      "status": "OPTIMAL",
+      "objective": 0.7421398704478217,
+      "expectedNetWorthChange": 5.054233709321938,
+      "transactionCosts": 2.4994474086677325,
+      "expectedTerminalNetWorth": 202.55478630065423,
+      "varLoss": 1.019601922115065,
+      "cvarLoss": 7.250585720825527,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 5.133646425206776,
+      "stressLosses": {
+        "C_STRESS_1": -7.490809704608996,
+        "C_STRESS_2": 24.858663458731193,
+        "C_STRESS_3": -1.9078993648146465,
+        "C_STRESS_4": -7.946736160519023,
+        "C_STRESS_PEN_UP": 1.019601922115065
+      },
+      "tailStressShare": 0.36250000000000027,
+      "turnover": 948.6773054413867,
+      "distanceToBase": 270.08656371394204,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.8,
+            "USD": 0.2
+          },
+          "LIABILITY": {
+            "PEN": 0.7835619612736936,
+            "USD": 0.2164380387263064
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.5063041023212137,
+            "LOAN_FLOAT": 0.4936958976787863
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.5063041023212137,
+            "FLOAT": 0.4936958976787863
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:CURRENCY:PEN",
+        "ASSET:CURRENCY:USD",
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 250.0,
+        "A04": 0.0,
+        "A05": 150.0,
+        "A06": 50.0,
+        "L01": 274.33865272069335,
+        "L02": 85.04328185697098,
+        "L03": 180.0,
+        "L04": 87.46763444129054,
+        "L05": 140.0,
+        "L06": 33.15043098104513
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 5.502038742084144,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.77703874208416,
+        "varLoss": 6.110603436778746,
+        "cvarLoss": 11.695052391741637,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 7.610908009387429,
+        "stressLosses": {
+          "C_STRESS_1": -17.69830239871819,
+          "C_STRESS_2": 10.346287679512862,
+          "C_STRESS_3": -18.80451742692732,
+          "C_STRESS_4": -24.217777081956413,
+          "C_STRESS_PEN_UP": 21.12113165431298
+        },
+        "tailStressShare": 0.4999999999999996
+      }
+    }
+  ],
+  "floatingCouponRule": [
+    {
+      "rule": "PERIOD_FORWARD",
+      "status": "OPTIMAL",
+      "objective": 0.3019271693184393,
+      "expectedNetWorthChange": 4.347698660502978,
+      "transactionCosts": 2.2250000000000005,
+      "expectedTerminalNetWorth": 202.12269866050298,
+      "varLoss": 2.4484441081226933,
+      "cvarLoss": 7.2830859647381505,
+      "cvarAlpha": 0.95,
+      "netWorthVolatility": 5.106403085035928,
+      "stressLosses": {
+        "C_STRESS_1": -6.69690498400567,
+        "C_STRESS_2": 18.82828693330336,
+        "C_STRESS_3": -0.8761237176163945,
+        "C_STRESS_4": -15.411745917609707
+      },
+      "tailStressShare": 0.2499999999999998,
+      "turnover": 860.0000000000001,
+      "distanceToBase": 99.99999999999989,
+      "weights": {
+        "byCurrency": {
+          "ASSET": {
+            "PEN": 0.71,
+            "USD": 0.29
+          },
+          "LIABILITY": {
+            "PEN": 0.7,
+            "USD": 0.3
+          }
+        },
+        "byType": {
+          "ASSET": {
+            "BOND_FIXED": 0.35,
+            "BOND_FLOAT": 0.4,
+            "CASH": 0.2,
+            "EQUITY": 0.05
+          },
+          "LIABILITY": {
+            "BOND_FIXED": 0.44999999999999996,
+            "LOAN_FLOAT": 0.55
+          }
+        },
+        "byRateType": {
+          "ASSET": {
+            "FIXED": 0.6,
+            "FLOAT": 0.4
+          },
+          "LIABILITY": {
+            "FIXED": 0.44999999999999996,
+            "FLOAT": 0.55
+          }
+        }
+      },
+      "activeLimits": [
+        "ASSET:TYPE:CASH",
+        "ASSET:TYPE:FIXED_INCOME",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A02",
+        "ASSET:CONCENTRATION:SINGLE_POSITION:A04",
+        "LIABILITY:RATE_TYPE:FIXED",
+        "LIABILITY:RATE_TYPE:FLOAT"
+      ],
+      "positions": {
+        "A01": 200.0,
+        "A02": 350.0,
+        "A03": 160.0,
+        "A04": 0.0,
+        "A05": 240.0,
+        "A06": 50.0,
+        "L01": 230.00000000000006,
+        "L02": 39.99999999999994,
+        "L03": 180.0,
+        "L04": 110.0,
+        "L05": 140.0,
+        "L06": 100.0
+      },
+      "basePortfolio": {
+        "expectedNetWorthChange": 4.819364415727775,
+        "transactionCosts": 2.725,
+        "expectedTerminalNetWorth": 202.09436441572777,
+        "varLoss": 5.269023452488687,
+        "cvarLoss": 8.119576757538011,
+        "cvarAlpha": 0.95,
+        "netWorthVolatility": 6.520331215141373,
+        "stressLosses": {
+          "C_STRESS_1": -16.73952792034931,
+          "C_STRESS_2": 11.336536739961701,
+          "C_STRESS_3": -5.786931836324442,
+          "C_STRESS_4": -23.198488367638625
+        },
+        "tailStressShare": 0.2499999999999998
+      }
+    }
+  ],
+  "meta": {
+    "caseId": "C",
+    "riskAversionLambda": 0.25,
+    "baseSeed": 20251231,
+    "config": {
+      "rateShocks": [
+        {
+          "id": "PEN+200",
+          "currencies": [
+            "PEN"
+          ],
+          "shift": 0.02
+        },
+        {
+          "id": "PEN-200",
+          "currencies": [
+            "PEN"
+          ],
+          "shift": -0.02
+        },
+        {
+          "id": "USD+200",
+          "currencies": [
+            "USD"
+          ],
+          "shift": 0.02
+        },
+        {
+          "id": "USD-200",
+          "currencies": [
+            "USD"
+          ],
+          "shift": -0.02
+        },
+        {
+          "id": "ALL+200",
+          "currencies": [
+            "PEN",
+            "USD"
+          ],
+          "shift": 0.02
+        },
+        {
+          "id": "ALL-200",
+          "currencies": [
+            "PEN",
+            "USD"
+          ],
+          "shift": -0.02
+        },
+        {
+          "id": "SHORT+200",
+          "currencies": [
+            "PEN",
+            "USD"
+          ],
+          "shift": 0.02,
+          "bucket": "short"
+        }
+      ],
+      "limitRelaxation": 0.05,
+      "limitRelaxationSmall": 0.005,
+      "costMultipliers": [
+        0.0,
+        0.5,
+        1.0,
+        2.0,
+        4.0
+      ],
+      "cvarAlphas": [
+        0.95,
+        0.975,
+        0.99
+      ],
+      "stressProbabilities": [
+        0.05,
+        0.1,
+        0.2
+      ],
+      "stressLeaveOneOut": true,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "driftVariants": {
+        "ALL_ZERO": {
+          "rates": "ZERO",
+          "fx": "ZERO",
+          "equity": "ZERO"
+        }
+      },
+      "extraStress": [
+        {
+          "scenario_id": "C_STRESS_PEN_UP",
+          "probability": 0.0125,
+          "pen_parallel": 0.03,
+          "usd_parallel": 0.015,
+          "fx_pct": -0.2,
+          "equity_pct": -0.25,
+          "note": "Espejo de C_STRESS_1 con apreciación del PEN (sensibilidad, fuera del caso base)"
+        }
+      ],
+      "floatingCouponRules": [
+        "PERIOD_FORWARD"
+      ]
+    },
+    "runtimeSeconds": 369.9669675999903
+  }
+}

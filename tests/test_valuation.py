@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from optimum.curves import ZeroCurve, implied_forward
+from optimum.curves import ZeroCurve, implied_forward, year_fraction
 from optimum.io.json_contract import load_input
 
 try:
@@ -222,6 +222,104 @@ def test_unknown_reference_factor_raises(doc, spreads):
             row["reference_factor"] = "PEN_FWD_S9"
     with pytest.raises(ValueError, match="PEN_FWD_S9"):
         value_at_t0(bad, spreads)
+
+
+# ------------------------------------------- 10. regla de cupones flotantes (D-22, §11 S9)
+CURVE_UP = np.array([0.04, 0.041, 0.043, 0.047, 0.053, 0.06])
+
+
+def _fwd_by_hand(curve: ZeroCurve, t1: float, t2: float) -> float:
+    """Forward efectiva anual [(1+z2)^t2 / (1+z1)^t1]^(1/(t2−t1)) − 1."""
+    z1, z2 = float(curve.zero(t1)), float(curve.zero(t2))
+    return ((1 + z2) ** t2 / (1 + z1) ** t1) ** (1 / (t2 - t1)) - 1
+
+
+def _float_cf(pay_dates, spread=0.01) -> pd.DataFrame:
+    """Flotante de juguete indexado a PEN_FWD_S1, reset semestral."""
+    n = len(pay_dates)
+    return pd.DataFrame(
+        {
+            "instrument_id": ["F1"] * n,
+            "period": range(1, n + 1),
+            "payment_date": pd.to_datetime(pay_dates),
+            "coupon_type": ["FLOAT"] * n,
+            "reference_factor": ["PEN_FWD_S1"] * n,
+            "spread": [spread] * n,
+            "projected_coupon_rate": [0.0] * n,
+        }
+    )
+
+
+def _state(rates) -> MarketState:
+    return MarketState.from_curves({"PEN": ZeroCurve("PEN", TENORS, np.asarray(rates, float))}, 3.4, 100.0)
+
+
+def test_period_forward_rule_by_hand_as_of_t0():
+    """Fijación 2028-06-30, pago 2028-12-31, info en t0: cupón = f(t0; fix−t0, pago−t0) + spread."""
+    st = _state(CURVE_UP)
+    cf = _float_cf(["2028-12-31"])
+    rates = coupon_rates(cf, 6, T0, lambda d: st, rule="PERIOD_FORWARD", as_of=T0)
+    t1 = float(year_fraction(T0, pd.Timestamp("2028-06-30")))
+    t2 = float(year_fraction(T0, pd.Timestamp("2028-12-31")))
+    assert rates[0] == pytest.approx(_fwd_by_hand(st.curves["PEN"], t1, t2) + 0.01, abs=1e-12)
+
+
+def test_period_forward_rule_uses_information_date():
+    """as_of = tH. Cupón fijado en 2026-06-30 < tH: tasa del período vista en su fijación (estado A, desde 0).
+    Cupón fijado en 2028-06-30 > tH: forward vista en tH (estado B)."""
+    a, b = _state(CURVE_UP), _state(CURVE_UP + 0.01)
+    market_at = lambda d: a if pd.Timestamp(d) < TH else b  # noqa: E731
+    cf = _float_cf(["2026-12-31", "2028-12-31"])
+    rates = coupon_rates(cf, 6, T0, market_at, rule="PERIOD_FORWARD", as_of=TH)
+    fix1, pay1 = pd.Timestamp("2026-06-30"), pd.Timestamp("2026-12-31")
+    fix2, pay2 = pd.Timestamp("2028-06-30"), pd.Timestamp("2028-12-31")
+    exp1 = float(a.curves["PEN"].zero(float(year_fraction(fix1, pay1))))  # f(0, τ) = z(τ)
+    exp2 = _fwd_by_hand(b.curves["PEN"], float(year_fraction(TH, fix2)), float(year_fraction(TH, pay2)))
+    np.testing.assert_allclose(rates, [exp1 + 0.01, exp2 + 0.01], atol=1e-12)
+
+
+def test_period_forward_uses_no_future_information():
+    """Auditoría M-6: con as_of = tH, un cupón fijado dentro del año solo consulta el mercado en su fijación, y los
+    fijados después de tH, el de tH; nunca fechas posteriores."""
+    st = _state(CURVE_UP)
+    asked = []
+
+    def market_at(d):
+        asked.append(pd.Timestamp(d))
+        return st
+
+    cf = _float_cf(["2026-12-31", "2027-06-30", "2029-12-31"])
+    coupon_rates(cf, 6, T0, market_at, rule="PERIOD_FORWARD", as_of=TH)
+    assert asked == [pd.Timestamp("2026-06-30"), TH, TH]
+
+
+def test_flat_rule_is_default_and_rules_agree_on_flat_curve():
+    st_up, st_flat = _state(CURVE_UP), _state(np.full(6, 0.05))
+    cf = _float_cf(["2027-12-31", "2030-12-31"])
+    default = coupon_rates(cf, 6, T0, lambda d: st_up)
+    flat = coupon_rates(cf, 6, T0, lambda d: st_up, rule="FLAT", as_of=T0)
+    np.testing.assert_allclose(default, flat, atol=0)
+    np.testing.assert_allclose(default, st_up.forwards["PEN_FWD_S1"] + 0.01, atol=1e-12)
+    pf = coupon_rates(cf, 6, T0, lambda d: st_flat, rule="PERIOD_FORWARD", as_of=T0)
+    np.testing.assert_allclose(pf, 0.05 + 0.01, atol=1e-12)
+
+
+def test_unknown_coupon_rule_raises():
+    with pytest.raises(ValueError, match="FOO"):
+        coupon_rates(_float_cf(["2027-12-31"]), 6, T0, lambda d: _state(CURVE_UP), rule="FOO", as_of=T0)
+
+
+def test_period_forward_calibration_reproduces_market_value(doc):
+    """Con PERIOD_FORWARD los spreads se recalibran y V0 = market_value_pen; los flotantes cambian de spread."""
+    d = copy.deepcopy(doc)
+    d["caseParameters"]["floatingCouponRule"] = "PERIOD_FORWARD"
+    sp = calibrate_spreads(d)
+    v = value_at_t0(d, sp)
+    for inst in d["instruments"]:
+        assert v[inst["id"]] == pytest.approx(inst["market_value_pen"], abs=1e-6), inst["id"]
+    base = calibrate_spreads(doc)
+    floats = [i["id"] for i in doc["instruments"] if i["reference_factor"]]
+    assert any(abs(sp[i] - base[i]) > 1e-6 for i in floats)
 
 
 # ----------------------------------------------------------------------- helpers

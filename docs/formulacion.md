@@ -248,3 +248,50 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
   - Casos INFEASIBLE, reportados como error: equity máx. < 5 % (piso implícito), `minCash` > 200, grupo vacío con
     `min_weight` > 0.
   - Todo `constraintChecks` en `ok`.
+
+## 11. Sensibilidades (etapa v, notebook 05, D-21, D-22)
+Todas las grillas salen de `caseParameters.sensitivities` (input.json ← `config/caso.yaml`). Cada variante se arma
+sobre una **copia** del documento (`with_overrides`) y se resuelve con el mismo optimizador; los resultados van a
+`data/json/sensitivity.json` (`python -m optimum sensitivity`), no a `output.json`. La matriz $r_{k,s}$ se reutiliza
+siempre que la variante no cambie los escenarios ni la valorización (S2–S5).
+
+Por variante se reporta: status, $E[\Delta PN]$, TC, $E[PN_T]$, VaR y CVaR$_\alpha$, volatilidad, pérdida en cada estrés,
+pesos por moneda y tipo, límites activos, rotación $\sum_k |x_k - x^0_k|$ y distancia $\sum_k |x_k - x^*_k|$ al óptimo base.
+Una variante infactible se registra con su status y sin métricas; nunca detiene la corrida.
+
+- **S1 · Tasas ±Δ (evaluación instantánea, sin reoptimizar).** Para las carteras inicial, óptima y media-varianza:
+  $\Delta PN = \sum_{k} \pm\,[V_k(t_0; \text{curva} + \delta) - V_k(t_0)]$ con `valuation.value_at_t0` (revalorización
+  completa, spreads calibrados fijos, flotantes reproyectados con la curva desplazada). Shocks de
+  `rateShocks`: paralelo por moneda y, con `bucket`, solo un tramo de `stressTenors` (transición por t·s(t), D-11 v2).
+  Caja y renta variable no cambian (el shock es solo de tasas). Se reporta ΔV de activos, de pasivos y ΔPN, con la
+  regla de cupones base y con cada una de `floatingCouponRules`: el tramo corto depende de D-13 (D-23, I-2).
+- **S2 · Precios sombra.** Dual $\mu_g \ge 0$ de cada cota de peso activa en el LP base:
+  ganancia de objetivo por 1 pp de relajación $= \mu_g \cdot B_{lado} / 100$ (S/ mm por pp). Se contrasta con
+  diferencias finitas al relajar `limitRelaxationSmall` (0.5 pp, ≈ pendiente local) y `limitRelaxation` (5 pp,
+  ganancia media del tramo). El valor óptimo es cóncavo y lineal por tramos en el límite: el dual es la pendiente local y
+  el paso grande da menos si la pendiente cae (D-23, M-1). Las **cotas gemelas** (mismo lado y dimensión, miembros
+  complementarios, min + max = 1) son la misma restricción y se relajan juntas en una fila con la suma de duales (I-3).
+  El dual mide la relajación de **esa** restricción con las demás fijas; en los presupuestos (igualdades) no
+  equivale a subir $B_A$ en el input, porque las cotas de peso son fracciones de $B_A$ y se mueven con él
+  (juguete: dual 0.029 vs diferencia finita 0.038). Por eso S2 reporta solo cotas de peso.
+- **S3 · Costos.** $c_k \to m \cdot c_k$, $m \in$ `costMultipliers`.
+- **S4 · Confianza.** $\alpha \in$ `cvarAlphas` (≥ 0.95 por enunciado); λ fijo.
+- **S5 · Peso de la cola.** Para $P \in$ `stressProbabilities`: $p_j^{estrés} \leftarrow P \cdot p_j / \sum_i p_i$
+  (se conservan las proporciones entre estrés) y $p_s^{boot} = (1 - P)/N_B$. *Dejar uno fuera*: se elimina el estrés
+  $j$ y su probabilidad se reparte proporcionalmente entre los demás, para mantener la probabilidad conjunta (≥ 5 %).
+  Eso sube el peso de los demás estrés; por eso cada fila trae `basePortfolio` ($x^*$ con la medida de la variante)
+  además de la cartera reoptimizada (D-23, M-2). Con P alto los estrés, que deprecian todos el PEN, pasan a ser
+  fuente de ganancia: se lee junto con S8 (M-4).
+- **S6 · Muestreo.** Para cada semilla de `seeds`: (a) la cartera óptima base evaluada con los escenarios de esa
+  semilla (fuera de muestra, §9.4); (b) reoptimización con esa semilla (estabilidad de las posiciones). Solo se
+  remuestrea el bootstrap: no mide sobreajuste respecto de los estrés, que son los mismos (M-3).
+- **S7 · Deriva.** Cada variante de `driftVariants` reemplaza `caseParameters.drift` (p. ej. todo ZERO, §9.6).
+- **S8 · Estrés extra.** Cada escenario de `extraStress` se agrega a `stressScenarios` con su probabilidad;
+  `stressProbability` sube en esa cantidad y `bootstrapProbability` baja lo mismo. Base: espejo de C_STRESS_1 con
+  `fx_pct` = −0.20 (apreciación del PEN), p = 0.0125 (D-21, §9.8).
+- **S9 · Regla de cupones flotantes** (`floatingCouponRule`, D-22). FLAT (base, D-13): cupón = nivel del factor de
+  referencia en la fijación + spread. PERIOD_FORWARD: con fecha de información $d = \min(\tau_{fix}, t_{as\,of})$,
+  cupón $= f(d;\, \tau_{fix} - d,\, \tau_{pago} - d)$ + spread, donde $f$ es la forward implícita efectiva anual de la
+  curva spot de la moneda del factor en el estado $F(d)$, y $t_{as\,of}$ es la fecha de valorización ($t_0$ al calibrar,
+  $t_H$ al horizonte). Los spreads se recalibran para que $V_0$ = `market_value_pen` bajo cada regla.
+- **λ** ya está en `analysis.lambdaSweep` (notebook 04); el informe lo cita.

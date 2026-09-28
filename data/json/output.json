@@ -766,7 +766,7 @@
     "name": "HIGHS",
     "status": "optimal",
     "iterations": 167,
-    "time": 0.011709451675415039
+    "time": 0.011303901672363281
   },
   "riskAversionLambda": 0.25,
   "horizonMaturityLimits": "REPORT",

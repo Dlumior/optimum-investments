@@ -69,6 +69,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado (lectura pendiente de validación del alumno)
 **Detalle:** El notebook lee `output.json` (sin volver a optimizar) y exporta 4 figuras (posiciones, frontera λ–CVaR, composición por λ, distribución de ΔPN) y 5 tablas (posiciones, métricas, restricciones, barrido de λ, incumplimientos al horizonte). Al final regenera los escenarios y verifica que E[ΔPN] y el CVaR de `output.json` se reproducen con tolerancia 1e-6. La IA redactó un borrador de lectura y contrastó con las tablas las cifras que no salían directamente de ellas. Las ganancias en estrés llevan la advertencia de la auditoría I-1 (dependen de D-13).
 
+## P12 · 2026-09-28 · Sensibilidades S1-S9: formulación, pruebas primero e implementación
+**Prompt:** "propón las sensibilidades"; "dale, implementa".
+**Resultado:** Aceptado (el alumno eligió evaluación instantánea para ±200 pb, switch de cupones, salida separada y estrés espejo)
+**Detalle:** La IA propuso nueve sensibilidades (formulación §11, D-21, D-22) y escribió 23 pruebas antes del código (precio sombra 0.0162 S/ mm por pp calculado a mano en el juguete, ΔV de bonos fijos por fórmula, forward por período en forma cerrada, invariantes contra la base). Se implementaron `sensitivity.py`, los duales con nombre en `optimizer.py`, `floatingCouponRule` en `valuation.py` y `python -m optimum sensitivity`. El caso base no cambia (objetivo idéntico). Al verificar los signos de los duales, la IA vio que el dual del presupuesto de activos (0.029) no coincide con subir $B_A$ en el input (0.038), porque las cotas de peso escalan con $B_A$; por eso S2 solo reporta cotas de peso.
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
@@ -105,3 +110,8 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Prompt:** "dale, implementa" (optimizer.py).
 **Resultado:** Corregido
 **Detalle:** La IA solo revisaba al horizonte los grupos MATURITY, con los montos de t0, aunque la solución está pegada a varios límites que el mercado desplaza (renta fija ≤ 75 % se incumple con probabilidad 0.68). Además midió los plazos como días/365·12, y por el año bisiesto L02 entraba en GT_36M al horizonte cuando por calendario le quedan exactamente 36 meses. Lo detectó el subagente `auditor-financiero` (I-2 y menor 1). Se corrigió reportando todos los grupos con tenencias en t_H y causa estructural/mercado, y usando meses calendario. Se agregaron pruebas a mano para ambos casos (D-20).
+
+## E07 · 2026-09-28 · Cifras de estrés mal atribuidas y precios sombra engañosos
+**Prompt:** "vamos con el notebook 04"; "propón las sensibilidades" / "dale, implementa".
+**Resultado:** Corregido
+**Detalle:** (1) En la lectura del notebook 04, la IA presentó las ganancias en estrés con la regla de forward por período (0.9 y 15.4) como si fueran de la cartera óptima base, y afirmó que "la mitad activos es robusta". En realidad eran de la cartera reoptimizada con esa regla; la cartera base da 5.8 y 23.2, y el mayor cambio viene de un activo (A05). (2) En S2, la IA relajaba cada cota por separado, y los límites fijo ≥ 45 % y flotante ≤ 55 % son la misma restricción: la diferencia finita de cada uno daba 0 y sugería que el límite no costaba nada. Además, el docstring decía que "manda la diferencia finita", cuando la brecha con el dual venía de la curvatura. La propia IA notó la discrepancia (1) al leer los resultados, pero no la resolvió. Lo aclaró el subagente `auditor-financiero`, reproduciendo ambas cifras por instrumento. Se corrigió el texto, las cotas gemelas se relajan juntas, se agregó una diferencia finita de 0.5 pp y la cartera base evaluada en cada variante (D-23).

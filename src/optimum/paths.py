@@ -25,6 +25,7 @@ TABLES = REPORT / "tables"
 RAW_EXCEL = RAW / "Optimum_Investments_DatosCaso.xlsx"
 INPUT_JSON = JSON_DIR / "input.json"
 OUTPUT_JSON = JSON_DIR / "output.json"
+SENSITIVITY_JSON = JSON_DIR / "sensitivity.json"  # sensibilidades (D-21), fuera del contrato del Anexo 1
 CASE_CONFIG = CONFIG / "caso.yaml"
 
 

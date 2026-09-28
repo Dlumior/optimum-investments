@@ -45,6 +45,37 @@ caseParameters:
   # Límites de vencimiento medidos desde el horizonte (D-20): REPORT = solo se reportan (lectura literal del
   # enunciado: los límites se exigen en t0); ENFORCE = se imponen. output.json trae siempre la variante opuesta.
   horizonMaturityLimits: "REPORT"
+  # Regla de proyección de cupones flotantes (D-22): FLAT = nivel del factor de referencia (D-13, base);
+  # PERIOD_FORWARD = forward implícita del período fijación → pago. Solo se cambia en la sensibilidad S9.
+  floatingCouponRule: "FLAT"
+  # Sensibilidades (formulación §11, D-21) → data/json/sensitivity.json con `python -m optimum sensitivity`.
+  sensitivities:
+    rateShocks:                  # S1: evaluación instantánea en t0, sin reoptimizar
+      - { id: "PEN+200", currencies: ["PEN"], shift: 0.02 }
+      - { id: "PEN-200", currencies: ["PEN"], shift: -0.02 }
+      - { id: "USD+200", currencies: ["USD"], shift: 0.02 }
+      - { id: "USD-200", currencies: ["USD"], shift: -0.02 }
+      - { id: "ALL+200", currencies: ["PEN", "USD"], shift: 0.02 }
+      - { id: "ALL-200", currencies: ["PEN", "USD"], shift: -0.02 }
+      - { id: "SHORT+200", currencies: ["PEN", "USD"], shift: 0.02, bucket: "short" }
+    limitRelaxation: 0.05        # S2: relajación para contrastar los precios sombra (5 pp, ganancia media del tramo)
+    limitRelaxationSmall: 0.005  # S2: paso chico (0.5 pp) ≈ pendiente local, comparable con el dual (auditoría M-1)
+    costMultipliers: [0.0, 0.5, 1.0, 2.0, 4.0]   # S3
+    cvarAlphas: [0.95, 0.975, 0.99]              # S4 (≥ 95 % por enunciado)
+    stressProbabilities: [0.05, 0.10, 0.20]      # S5 (≥ 5 % por enunciado)
+    stressLeaveOneOut: true                      # S5
+    seeds: [1, 2, 3, 4, 5]                       # S6
+    driftVariants:                               # S7
+      ALL_ZERO: { rates: "ZERO", fx: "ZERO", equity: "ZERO" }
+    extraStress:                                 # S8: espejo de C_STRESS_1 con apreciación del PEN (D-21)
+      - scenario_id: "C_STRESS_PEN_UP"
+        probability: 0.0125
+        pen_parallel: 0.03
+        usd_parallel: 0.015
+        fx_pct: -0.20
+        equity_pct: -0.25
+        note: "Espejo de C_STRESS_1 con apreciación del PEN (sensibilidad, fuera del caso base)"
+    floatingCouponRules: ["PERIOD_FORWARD"]      # S9
 
 # Semilla global para bootstrap/simulaciones (reproducibilidad)
 seed: 20251231

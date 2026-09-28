@@ -3,7 +3,7 @@ PY      ?= .venv/bin/python
 CASE    ?= $(shell grep -E '^caseId:' config/caso.yaml | sed -E 's/.*"(.)".*/\1/')
 ZIP     := entrega/OP01_Caso$(CASE)_$(shell date +%Y%m%d).zip
 
-.PHONY: help setup data json run all test lint fmt notebooks report report-clean entrega clean
+.PHONY: help setup data json run sensitivity all test lint fmt notebooks report report-clean entrega clean
 
 help:          ## Lista los objetivos
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-13s %s\n", $$1, $$2}'
@@ -22,6 +22,9 @@ json:          ## processed + config/caso.yaml -> data/json/input.json
 
 run:           ## input.json -> optimizador -> output.json
 	$(PY) -m optimum run
+
+sensitivity:   ## input.json -> sensibilidades S1-S9 -> data/json/sensitivity.json (5-8 min)
+	$(PY) -m optimum sensitivity
 
 all: data json run   ## Pipeline completo
 

@@ -6702,6 +6702,112 @@
       5.0
     ],
     "horizonMaturityLimits": "REPORT",
+    "floatingCouponRule": "FLAT",
+    "sensitivities": {
+      "rateShocks": [
+        {
+          "id": "PEN+200",
+          "currencies": [
+            "PEN"
+          ],
+          "shift": 0.02
+        },
+        {
+          "id": "PEN-200",
+          "currencies": [
+            "PEN"
+          ],
+          "shift": -0.02
+        },
+        {
+          "id": "USD+200",
+          "currencies": [
+            "USD"
+          ],
+          "shift": 0.02
+        },
+        {
+          "id": "USD-200",
+          "currencies": [
+            "USD"
+          ],
+          "shift": -0.02
+        },
+        {
+          "id": "ALL+200",
+          "currencies": [
+            "PEN",
+            "USD"
+          ],
+          "shift": 0.02
+        },
+        {
+          "id": "ALL-200",
+          "currencies": [
+            "PEN",
+            "USD"
+          ],
+          "shift": -0.02
+        },
+        {
+          "id": "SHORT+200",
+          "currencies": [
+            "PEN",
+            "USD"
+          ],
+          "shift": 0.02,
+          "bucket": "short"
+        }
+      ],
+      "limitRelaxation": 0.05,
+      "limitRelaxationSmall": 0.005,
+      "costMultipliers": [
+        0.0,
+        0.5,
+        1.0,
+        2.0,
+        4.0
+      ],
+      "cvarAlphas": [
+        0.95,
+        0.975,
+        0.99
+      ],
+      "stressProbabilities": [
+        0.05,
+        0.1,
+        0.2
+      ],
+      "stressLeaveOneOut": true,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "driftVariants": {
+        "ALL_ZERO": {
+          "rates": "ZERO",
+          "fx": "ZERO",
+          "equity": "ZERO"
+        }
+      },
+      "extraStress": [
+        {
+          "scenario_id": "C_STRESS_PEN_UP",
+          "probability": 0.0125,
+          "pen_parallel": 0.03,
+          "usd_parallel": 0.015,
+          "fx_pct": -0.2,
+          "equity_pct": -0.25,
+          "note": "Espejo de C_STRESS_1 con apreciación del PEN (sensibilidad, fuera del caso base)"
+        }
+      ],
+      "floatingCouponRules": [
+        "PERIOD_FORWARD"
+      ]
+    },
     "seed": 20251231
   }
 }

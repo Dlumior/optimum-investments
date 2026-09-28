@@ -231,21 +231,33 @@ def _horizon_maturity_groups(data: ProblemData) -> list[dict]:
     return [g for g in data.horizon_groups if g["dimension"] == "MATURITY"]
 
 
-def _feasible_set(data: ProblemData, z: cp.Variable, horizon_maturity: str) -> list:
-    """Presupuestos, pesos, caja mínima, PN0 y P/A0 (§6). Las posiciones ≥ 0 van en el dominio de z.
-    Con ENFORCE se imponen además los grupos MATURITY con la pertenencia medida desde tH (D-20)."""
+def _feasible_set(data: ProblemData, z: cp.Variable, horizon_maturity: str) -> list[tuple[str, object, float]]:
+    """Presupuestos, pesos, caja mínima, PN0 y P/A0 (§6), como (nombre, restricción, escala del dual). Las
+    posiciones ≥ 0 van en el dominio de z. Con ENFORCE se imponen además los grupos MATURITY con la pertenencia
+    medida desde tH (D-20; nombre con sufijo @tH).
+
+    Escala: dual × escala = ganancia de objetivo (S/ mm) por unidad de relajación del parámetro del input (1.0 de
+    peso en los grupos; 1 S/ mm en montos; 1.0 de ratio en P/A). En los presupuestos (igualdades) el signo es el de
+    subir el presupuesto."""
     a = _mask(data, [i for i in data.ids if data.side[i] == "ASSET"])
     assets, liabs = a @ z, (1.0 - a) @ z
-    cons = [assets == data.asset_budget, liabs == data.liability_budget]
-    enforced = data.groups + (_horizon_maturity_groups(data) if horizon_maturity == "ENFORCE" else [])
+    cons = [
+        ("assetBudget", assets == data.asset_budget, 1.0),
+        ("liabilityBudget", liabs == data.liability_budget, 1.0),
+    ]
+    enforced = data.groups + (
+        [{**g, "name": f"{g['name']}@tH"} for g in _horizon_maturity_groups(data)]
+        if horizon_maturity == "ENFORCE"
+        else []
+    )
     for g in enforced:
         total = _mask(data, g["members"]) @ z
         b = data.budget(g["side"])
-        cons += [total >= g["min"] * b, total <= g["max"] * b]
+        cons += [(f"{g['name']}:min", total >= g["min"] * b, b), (f"{g['name']}:max", total <= g["max"] * b, b)]
     cons += [
-        _mask(data, data.cash_ids) @ z >= data.min_cash,
-        assets - liabs >= data.min_net_worth,
-        liabs <= data.max_liabilities_to_assets * assets,
+        ("minCash", _mask(data, data.cash_ids) @ z >= data.min_cash, 1.0),
+        ("minNetWorth", assets - liabs >= data.min_net_worth, 1.0),
+        ("maxLiabilitiesToAssets", liabs <= data.max_liabilities_to_assets * assets, data.asset_budget),
     ]
     return cons
 
@@ -256,12 +268,15 @@ def solve_data(
     mode: str = "cvar",
     min_net_return: float | None = None,
     horizon_maturity: str | None = None,
+    duals: bool = False,
 ) -> dict:
     """Resuelve el problema. mode="cvar": max E[ΔPN] − λ·CVaR − TC (LP, λ = data.lam si es None).
     mode="variance": min Var(ΔPN) s.a. E[ΔPN] − TC ≥ min_net_return (QP, §9.3).
 
     Devuelve status, positions (pd.Series S/ mm, None si no es óptimo), objective, cvar_lp (ζ + Σ p u/(1−α),
-    solo con λ > 0), transaction_cost y solver. Nunca lanza por infactibilidad.
+    solo con λ > 0), transaction_cost y solver. Con `duals=True` agrega `duals`: {nombre: ganancia de objetivo por
+    unidad de relajación} de cada restricción de `_feasible_set` (S2, formulación §11). Nunca lanza por
+    infactibilidad.
     """
     lam = data.lam if lam is None else float(lam)
     horizon_maturity = horizon_maturity or data.horizon_maturity
@@ -272,7 +287,8 @@ def solve_data(
     dpn = r.T @ cp.multiply(data.sign, z)
     expected = data.probs @ dpn
     tc = data.cost.loc[data.ids].to_numpy() @ (up + down)
-    cons = _feasible_set(data, z, horizon_maturity) + [z - data.x0.loc[data.ids].to_numpy() == up - down]
+    named = _feasible_set(data, z, horizon_maturity)
+    cons = [c for _, c, _ in named] + [z - data.x0.loc[data.ids].to_numpy() == up - down]
 
     cvar = None
     if mode == "cvar":
@@ -319,7 +335,15 @@ def solve_data(
     out["objective"] = float(problem.value)
     if cvar is not None and lam > 0:
         out["cvar_lp"] = float(cvar.value)
+    if duals:
+        out["duals"] = {name: _dual_gain(c) * scale for name, c, scale in named}
     return out
+
+
+def _dual_gain(con) -> float:
+    """Dual de cvxpy como ganancia del objetivo (Maximize) por unidad de relajación de la restricción. En las
+    desigualdades cvxpy entrega μ ≥ 0; en las igualdades, el signo corresponde a subir el lado derecho."""
+    return float(np.asarray(con.dual_value).ravel()[0])
 
 
 # --------------------------------------------------------------------- evaluación

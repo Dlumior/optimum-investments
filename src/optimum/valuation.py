@@ -6,7 +6,8 @@ Convenciones (docs/formulacion.md §7.4; decisiones D-10, D-12, D-13):
 - Fijo: flujos contractuales de cashFlows.
 - Flotante (D-13): cupón = nivel del factor de referencia (p. ej. PEN_FWD_S2) en la fecha de fijación + spread
   contractual; monto = tasa × nocional / frecuencia. Fijación = pago − reset_months (fin de mes si el pago lo es).
-  Los cupones fijados en t0 o antes conservan la proyección base.
+  Los cupones fijados en t0 o antes conservan la proyección base. Alternativa PERIOD_FORWARD (D-22, solo para la
+  sensibilidad S9): forward implícita del período fijación → pago; se elige con `floatingCouponRule`.
 - Forwards: siempre implícitas de la curva spot del estado (D-10), nunca shockeadas por separado.
 - Trayectoria dentro del año (D-12): F(τ) = F0 + θΔ, θ = (τ − t0)/(tH − t0) acotado a [0, 1].
 - Montos en moneda nativa hasta la conversión final a PEN con el FX del estado (soles por dólar).
@@ -26,6 +27,7 @@ from scipy.optimize import brentq
 from optimum.curves import NODE_YEARS, SEGMENT_BOUNDS, ZeroCurve, implied_forward, year_fraction
 
 PAYMENTS_PER_YEAR = {"ANNUAL": 1, "SEMIANNUAL": 2, "QUARTERLY": 4, "MONTHLY": 12}
+COUPON_RULES = ("FLAT", "PERIOD_FORWARD")  # floatingCouponRule (D-13 base, D-22)
 FX_FACTOR = "FX_PENUSD"
 EQUITY_FACTOR = "EQUITY_USD"
 
@@ -128,13 +130,21 @@ def _fixing_date(payment: pd.Timestamp, months: int) -> pd.Timestamp:
     return fix + pd.offsets.MonthEnd(0) if payment.is_month_end else fix
 
 
-def coupon_rates(cf: pd.DataFrame, reset_months, t0, market_at: MarketAt) -> np.ndarray:
+def coupon_rates(
+    cf: pd.DataFrame, reset_months, t0, market_at: MarketAt, rule: str = "FLAT", as_of=None
+) -> np.ndarray:
     """Tasa de cupón por período (decimal) de un instrumento, en el orden de `cf`.
 
-    FIXED: tasa contractual. FLOAT: si la fijación es ≤ t0, la proyección base (ya fijada); si no,
-    nivel del factor de referencia en `market_at(fijación)` + spread contractual (D-13).
+    FIXED: tasa contractual. FLOAT: si la fijación es ≤ t0, la proyección base (ya fijada); si no, según `rule`:
+    - FLAT (D-13): nivel del factor de referencia en `market_at(fijación)` + spread contractual.
+    - PERIOD_FORWARD (D-22): con d = min(fijación, as_of), forward implícita efectiva anual de la curva de la moneda
+      del factor en `market_at(d)` entre fijación − d y pago − d (años ACT/365) + spread. `as_of` es la fecha de
+      valorización (t0 al calibrar, tH al horizonte); por defecto t0.
     """
+    if rule not in COUPON_RULES:
+        raise ValueError(f"floatingCouponRule desconocida: {rule} (válidas: {', '.join(COUPON_RULES)})")
     t0 = pd.Timestamp(t0)
+    as_of = t0 if as_of is None else pd.Timestamp(as_of)
     rates = cf["projected_coupon_rate"].to_numpy(dtype=float).copy()
     is_float = (cf["coupon_type"] == "FLOAT").to_numpy()
     if not is_float.any():
@@ -146,23 +156,36 @@ def coupon_rates(cf: pd.DataFrame, reset_months, t0, market_at: MarketAt) -> np.
         fix = _fixing_date(pd.Timestamp(row["payment_date"]), int(reset_months))
         if fix <= t0:
             continue
-        state = market_at(fix)
         ref = row["reference_factor"]
-        if ref not in state.forwards:
-            raise ValueError(f"Factor de referencia desconocido {ref} en {row['instrument_id']}")
-        rates[n] = state.forwards[ref] + float(row["spread"])
+        if rule == "FLAT":
+            state = market_at(fix)
+            if ref not in state.forwards:
+                raise ValueError(f"Factor de referencia desconocido {ref} en {row['instrument_id']}")
+            rates[n] = state.forwards[ref] + float(row["spread"])
+        else:
+            d = min(fix, as_of)
+            state = market_at(d)
+            if ref not in state.forwards:
+                raise ValueError(f"Factor de referencia desconocido {ref} en {row['instrument_id']}")
+            curve = state.curves[ref.split("_")[0]]
+            t1 = float(year_fraction(d, fix))
+            t2 = float(year_fraction(d, pd.Timestamp(row["payment_date"])))
+            rates[n] = implied_forward(curve, t1, t2) + float(row["spread"])
     return rates
 
 
-def instrument_flows(inst: Mapping, cf: pd.DataFrame, t0, market_at: MarketAt) -> pd.DataFrame:
-    """Flujos en moneda nativa (payment_date, amount): contractuales si es fijo, reproyectados si es flotante."""
+def instrument_flows(
+    inst: Mapping, cf: pd.DataFrame, t0, market_at: MarketAt, rule: str = "FLAT", as_of=None
+) -> pd.DataFrame:
+    """Flujos en moneda nativa (payment_date, amount): contractuales si es fijo, reproyectados si es flotante
+    con la regla `rule` y fecha de información `as_of` (ver `coupon_rates`)."""
     amount = cf["total_cash_flow"].to_numpy(dtype=float).copy()
     is_float = (cf["coupon_type"] == "FLOAT").to_numpy()
     if is_float.any():
         freq = PAYMENTS_PER_YEAR.get(inst["frequency"])
         if freq is None:
             raise ValueError(f"Frecuencia no soportada en {inst['id']}: {inst['frequency']}")
-        rates = coupon_rates(cf, inst["reset_months"], t0, market_at)
+        rates = coupon_rates(cf, inst["reset_months"], t0, market_at, rule, as_of)
         coupon = rates * cf["notional_native"].to_numpy(dtype=float) / freq
         amount[is_float] = coupon[is_float] + cf["principal_cash_flow"].to_numpy(dtype=float)[is_float]
     return pd.DataFrame({"payment_date": pd.to_datetime(cf["payment_date"]).to_numpy(), "amount": amount})
@@ -173,6 +196,14 @@ def horizon_dates(doc: Mapping) -> tuple[pd.Timestamp, pd.Timestamp]:
     """(t0, tH): `valuationDate` y el horizonte (`caseParameters.horizonDate` o `horizonDate`)."""
     t_h = doc.get("caseParameters", {}).get("horizonDate") or doc["horizonDate"]
     return pd.Timestamp(doc["valuationDate"]), pd.Timestamp(t_h)
+
+
+def coupon_rule(doc: Mapping) -> str:
+    """`caseParameters.floatingCouponRule` (FLAT si falta, D-22)."""
+    rule = doc.get("caseParameters", {}).get("floatingCouponRule") or "FLAT"
+    if rule not in COUPON_RULES:
+        raise ValueError(f"floatingCouponRule desconocida: {rule} (válidas: {', '.join(COUPON_RULES)})")
+    return rule
 
 
 def base_state(doc: Mapping) -> MarketState:
@@ -214,12 +245,13 @@ def calibrate_spreads(doc: Mapping) -> dict[str, float]:
     check_positive_values(doc)
     t0, _ = horizon_dates(doc)
     state0 = base_state(doc)
+    rule = coupon_rule(doc)
     cfs = _cash_flows_by_instrument(doc)
     spreads = {}
     for inst in doc["instruments"]:
         if not _is_flow_instrument(inst, cfs):
             continue
-        flows = instrument_flows(inst, cfs[inst["id"]], t0, lambda d: state0)
+        flows = instrument_flows(inst, cfs[inst["id"]], t0, lambda d: state0, rule, t0)
         curve, fx = state0.curves[inst["currency"]], state0.fx_to_pen(inst["currency"])
         target = float(inst["market_value_pen"])
         args = (flows, curve, t0, fx, target)
@@ -248,6 +280,7 @@ def value_at_t0(
     t0, _ = horizon_dates(doc)
     state0 = base_state(doc)
     state = state0.shocked(delta or {})
+    rule = coupon_rule(doc)
     cfs = _cash_flows_by_instrument(doc)
     values = {}
     for inst in doc["instruments"]:
@@ -260,7 +293,7 @@ def value_at_t0(
                 float(inst["market_value_pen"]) * state.equity_index / state0.equity_index * fx_ratio
             )
         elif iid in cfs:
-            flows = instrument_flows(inst, cfs[iid], t0, lambda d: state)
+            flows = instrument_flows(inst, cfs[iid], t0, lambda d: state, rule, t0)
             values[iid] = present_value(flows, state.curves[ccy], t0, spreads[iid]) * state.fx_to_pen(ccy)
         else:
             raise ValueError(f"Instrumento sin flujos ni tipo valorizable: {iid}")
@@ -281,6 +314,7 @@ def horizon_value_and_flows(
     path = market_path(state0, delta, t0, t_h)
     state_h = path(t_h)
     tau = float(year_fraction(t0, t_h))
+    rule = coupon_rule(doc)
     cfs = _cash_flows_by_instrument(doc)
     rows = {}
     for inst in doc["instruments"]:
@@ -295,7 +329,7 @@ def horizon_value_and_flows(
             growth = state_h.equity_index / state0.equity_index
             rows[iid] = (float(inst["market_value_pen"]) * growth * fx_ratio, 0.0)
         elif iid in cfs:
-            flows = instrument_flows(inst, cfs[iid], t0, path)
+            flows = instrument_flows(inst, cfs[iid], t0, path, rule, t_h)
             in_year = (flows["payment_date"] > t0) & (flows["payment_date"] <= t_h)
             received = sum(
                 a * path(d).fx_to_pen(ccy)

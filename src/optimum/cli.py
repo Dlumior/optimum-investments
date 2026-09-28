@@ -3,6 +3,7 @@
 data      Excel (raw) -> interim -> processed
 json      processed + config/caso.yaml -> data/json/input.json (validado)
 run       input.json -> optimizador -> output.json  (a implementar en optimizer.py)
+sensitivity  input.json -> sensibilidades S1-S9 -> sensitivity.json (5-8 min, D-21)
 all       data + json + run
 """
 
@@ -58,6 +59,17 @@ def cmd_run(args: argparse.Namespace) -> None:
         sys.exit(f"El problema no tiene solución óptima (status {out['status']}); output.json sin posiciones.")
 
 
+def cmd_sensitivity(args: argparse.Namespace) -> None:
+    from optimum.io.json_contract import load_input, write_json
+    from optimum.sensitivity import run_all
+
+    out = run_all(load_input(args.input))
+    write_json(out, args.output)
+    if "error" in out:
+        sys.exit(out["error"])
+    print(f"{args.output} OK ({out['meta']['runtimeSeconds']:.0f} s)")
+
+
 def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(prog="optimum")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -67,6 +79,10 @@ def main(argv: list[str] | None = None) -> None:
     r.add_argument("--input", default=paths.INPUT_JSON, type=paths.Path)
     r.add_argument("--output", default=paths.OUTPUT_JSON, type=paths.Path)
     r.set_defaults(func=cmd_run)
+    s = sub.add_parser("sensitivity")
+    s.add_argument("--input", default=paths.INPUT_JSON, type=paths.Path)
+    s.add_argument("--output", default=paths.SENSITIVITY_JSON, type=paths.Path)
+    s.set_defaults(func=cmd_sensitivity)
     a = sub.add_parser("all")
     a.set_defaults(
         func=lambda ns: (cmd_data(ns), cmd_json(ns), cmd_run(ns)),

@@ -184,5 +184,57 @@ aparta del texto del enunciado y, por simetría, obligaría a imponer también l
   pago (la caja efectiva es 200 − 2.7 = 197.3). No cambia ningún límite activo.
 - Para el informe: E[ΔPN] = 5.83 oculta el TC. E − TC = 3.11 < 3.96 de la posición inicial: el óptimo cede 0.85 de
   valor esperado para bajar el CVaR de 50.1 a 7.8. Con λ ≥ 2, E − TC ≤ 0.
-- Pendiente (etapa de sensibilidades, notebook 05): la mitad pasivos (L01/L06) y las ganancias en C_STRESS_3/4
-  dependen de la regla de cupones flotantes D-13 (auditoría I-1); la mitad activos es robusta. Sensibilidad §9.7.
+- Resuelto en la etapa de sensibilidades (S9, D-23): las ganancias en C_STRESS_3/4 dependen de la regla de cupones
+  flotantes D-13. Las posiciones de activos son robustas a la regla, pero su resultado en estrés no (A05).
+
+## D-21 · 2026-09-28 · Diseño de las sensibilidades (formulación §11)
+- **S1, tasas ±200 pb:** evaluación instantánea en $t_0$ de carteras fijas (inicial, óptima, media-varianza), por
+  revalorización completa con spreads calibrados fijos. **No se reoptimiza** con la curva base desplazada: eso cambia
+  $V_0$ y obliga a decidir si se recalibran los spreads. Decidido por el alumno.
+- **Salida en `data/json/sensitivity.json`** (`python -m optimum sensitivity`), separada de `output.json`: la
+  corrida completa tarda de 5 a 8 min, `make run` sigue siendo rápido y `output.json` respeta el Anexo 1. Decidido por el alumno.
+- **Grillas en `caseParameters.sensitivities`** (regla 2: nada codificado en `src/`).
+- **S5:** al cambiar la probabilidad conjunta del estrés se conservan las proporciones entre escenarios; al dejar uno
+  fuera se reparte su probabilidad entre los demás, para no bajar del 5 % que exige el enunciado.
+- **S8, estrés de apreciación del PEN:** espejo de C_STRESS_1 (+300/+150 pb, equity −25 %) con `fx_pct` = −0.20 y
+  p = 0.0125, fuera del caso base. Aísla el signo del FX (auditoría I-4: los cuatro estrés deprecian el PEN).
+  Decidido por el alumno. La probabilidad conjunta del estrés pasa a 6.25 %; el efecto del peso de la cola se estudia
+  aparte en S5.
+- **S2, precios sombra:** duales del LP, contrastados con diferencias finitas por la posible degeneración.
+
+## D-22 · 2026-09-28 · Switch de la regla de cupones flotantes (`floatingCouponRule`)
+Parámetro nuevo `caseParameters.floatingCouponRule` ∈ {FLAT, PERIOD_FORWARD}; si falta, FLAT (D-13, caso base).
+PERIOD_FORWARD proyecta cada cupón con la forward implícita del período (fijación → pago) de la curva de la moneda
+del factor, vista con la información disponible en $\min(\tau_{fix}, t_{as\,of})$ (formulación §11, S9). Motivo:
+auditoría I-1/I-2 del optimizador (la mitad pasivos del óptimo y las ganancias en C_STRESS_3/4 dependen de D-13).
+Se usa solo en la sensibilidad S9; los spreads se recalibran con cada regla. Decidido por el alumno.
+**Precisiones de la auditoría de sensibilidades (I-4, M-5):**
+- PERIOD_FORWARD cambia dos cosas en los flotantes indexados a S2 (A03, L04): la proyección temporal y el **plazo del
+  índice**, que pasa de la forward 1Y–3Y del contrato a la tasa del período (3–6 meses). En los indexados a S1 (L01,
+  A05, L06) el plazo casi no cambia. Una tercera lectura (forward del segmento contractual vista en
+  min(fijación, as_of)) da 3.7 en C_STRESS_3 y 26.9 en C_STRESS_4 para x*: la conclusión no cambia (C3 frágil, C4
+  robusta). No se implementa; queda como alternativa descartada. Decidido por el alumno.
+- El monto del cupón es tasa × nocional / frecuencia con tasa efectiva anual (la convención del Excel y de FLAT): con
+  PERIOD_FORWARD un flotante sin spread no vale exactamente la par (≈ 2.3 pb por trimestre con f = 5 %). En $V_0$ lo
+  absorbe el spread calibrado; por escenario es de segundo orden.
+
+## D-23 · 2026-09-28 · Auditoría de las sensibilidades
+Sin errores de código críticos. Se aplicó (decidido por el alumno):
+- **I-1:** la discrepancia 0.9 / 15.4 (auditoría anterior) frente a 5.8 / 23.2 (S9) no era un error: la primera es la
+  cartera reoptimizada con PERIOD_FORWARD y la segunda es x* evaluada con esa regla. Se corrigió el texto del
+  notebook 04 y de D-20.
+- **I-2:** S1 se reporta con cada regla de cupones. SHORT+200 sobre x* da +8.47 con FLAT y −0.49 con PERIOD_FORWARD:
+  el resultado del tramo corto es un efecto de D-13. Los paralelos son robustos (diferencias ≤ 0.06).
+- **I-3:** cotas gemelas (mismo lado y dimensión, miembros complementarios, min + max = 1, p. ej. pasivo fijo ≥ 45 %
+  y flotante ≤ 55 %) se relajan juntas en una sola fila; su dual es la suma. Antes la diferencia finita de cada una
+  por separado daba 0 y sugería que el límite no costaba nada.
+- **M-1:** la brecha entre dual y diferencia finita de 5 pp viene de la curvatura (valor óptimo cóncavo y lineal por
+  tramos), no de la degeneración: el dual es la pendiente local. Se agregó una diferencia finita de 0.5 pp
+  (`limitRelaxationSmall`).
+- **M-2:** toda variante reoptimizada trae `basePortfolio` (x* evaluada con la medida de la variante), para separar
+  el efecto de la medida del de reoptimizar. Al dejar un estrés fuera, los demás ganan peso (C_STRESS_2 pasa de 1.25 %
+  a 1.67 %).
+- **M-3:** S6 solo remuestrea el bootstrap: no mide sobreajuste respecto de los escenarios de estrés.
+- **M-4:** con P = 0.20 los estrés (todos deprecian el PEN) se vuelven fuente de ganancia; se lee junto con S8.
+- **M-6:** cuatro pruebas nuevas: S8 concatenado = recálculo completo, cotas gemelas, signo de un pasivo flotante en
+  S1, y PERIOD_FORWARD sin información futura.
