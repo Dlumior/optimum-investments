@@ -91,3 +91,27 @@ Es la convención del Excel: reproduce `projected_coupon_rate` y los spreads de 
 literal de "forward del segmento de referencia + spread". Alternativa descartada: forward implícita por período según
 la estructura de plazos, que se aparta de la base del Excel e impide validar contra la hoja. Consecuencia
 documentada: L06 queda expuesto solo al tramo S1 USD durante 10 años, como indica su contrato. Elegida por el alumno.
+
+## D-14 · 2026-09-27 · Sensibilidades locales solo como chequeo; sin PCA
+El Caso C usa revalorización completa (§7.4). `risk.sensitivities` (diferencias finitas centrales sobre
+`value_at_t0`, bump de 1 pb en tasas y 1 % en log-FX/equity) solo sirve para el chequeo de coherencia que exige la skill
+`modelo-riesgo`: volatilidad del PN local (M Σ Mᵀ) vs. revalorización completa. Se elimina `pca`: la singularidad
+de la covarianza ya se muestra con sus autovalores (notebook 00) y el modelo no simula desde Σ. Elegido por el alumno.
+
+## D-15 · 2026-09-27 · Consistencia horizonte–bootstrap
+`bootstrapBlockLength × bootstrapBlocksPerScenario` (meses) debe coincidir con los meses entre `valuationDate` y
+`horizonDate`. Si no coinciden, `build_scenarios` lanza un error en vez de reescalar en silencio. La deriva anual μ se
+escala por (b·m)/12 (hoy = 1). Elegido por el alumno.
+
+## D-16 · 2026-09-27 · Los overrides de estrés son shifts, no niveles
+`*_short_override` y `*_long_override` de `stressScenarios` se leen como **cambios** (0.04 = +400 pb) que
+reemplazan al shift paralelo en los nodos del tramo (D-11), no como niveles de tasa. Leídos como nivel, 4 % casi no
+movería el tramo corto PEN (ON = 4.03 %), lo que contradice la nota "Shock concentrado en tasas cortas".
+Confirmado por el alumno.
+
+## D-09 v3 · 2026-09-28 · Centrar las ventanas del bootstrap, no los meses
+Al implementar `risk.py` se vio que centrar los cambios mensuales no deja al bootstrap por bloques con media cero:
+sin vuelta circular, los meses de los extremos de la muestra entran en menos ventanas. El sesgo exacto (sobre las 54
+ventanas, 2 bloques) era +1.2 % en equity, −30 pb en PEN ON, −13 pb en USD ON y −0.19 % en FX. Se centran las
+sumas de las ventanas, con lo que E[shock] = 0 exacto y la media del bootstrap = μ. Alternativas descartadas: bootstrap
+circular (5 de 59 ventanas unirían dic-2025 con ene-2021) o documentar el sesgo. Elegido por el alumno. Error E04.

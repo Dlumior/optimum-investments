@@ -113,9 +113,12 @@ En `constraintChecks`, los grupos vacíos y los redundantes se marcan como no vi
 ## 7. Modelo de riesgo y escenarios
 ### 7.1 Bootstrap por bloques móviles (D-09)
 1. **Cambios mensuales** de los 24 factores: Δ absoluta en tasas, log-retorno en FX y equity (D-02).
-2. **Centrado** de cada factor (resta de la media muestral).
-3. **Escenario:** se concatenan $m$ = 2 bloques de $b$ = 6 meses consecutivos, con inicio sorteado entre las
-   $T-b+1$ ventanas y la semilla `seed`. Los cambios se suman para obtener el shock a 12 meses. Esto conserva la
+2. **Ventanas:** suma de los cambios de cada una de las $T-b+1$ ventanas de $b$ = 6 meses consecutivos.
+   **Se centran las ventanas** (se resta la media de las sumas), no los meses: sin vuelta circular, los meses de
+   los extremos entran en menos ventanas y centrar los meses dejaba un sesgo de media (+1.2 % en equity, −30 pb
+   en PEN ON; D-09 v3, E04).
+3. **Escenario:** se suman $m$ = 2 ventanas centradas, con inicio sorteado uniforme y la semilla `seed`, para
+   obtener el shock a 12 meses. Esto conserva la
    persistencia: la razón de varianzas a 12 m es 5.1 en PEN ON, 6.9 en USD ON, 3.8 en equity y 2.1 en FX.
 4. **Deriva anual** $\mu$ (D-06), sumada al shock centrado:
    - tasas: `ZERO` → 0, sin proyectar el ciclo alcista 2021-25;
@@ -210,7 +213,7 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
   - Signo de pasivos: si sube $V$ del pasivo, baja ΔPN.
 - **Escenarios:**
   - $\sum p_s = 1$ con tolerancia.
-  - Shock nulo da carry puro; centrado da media 0 antes de la deriva.
+  - Shock nulo da carry puro; las ventanas centradas dan media esperada 0 antes de la deriva (juguete asimétrico).
   - Misma semilla, mismos escenarios.
   - σ de los escenarios de tasas en el orden de σ de los cambios históricos a 12 m (no de σ√12 mensual).
   - En un estrés de subida corta, ningún cupón flotante cae.

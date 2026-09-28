@@ -39,6 +39,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado
 **Detalle:** Los tres notebooks seguían siendo la plantilla y no se habían ejecutado. La IA los completó sin agregar lógica fuera de `src/`. 00: hojas, series de tasas, FX y equity, tabla de persistencia (autocorrelación y razón de varianzas a 12 m, que reproduce las cifras de D-09), autovalores de la covarianza y hallazgos enlazados a D-xx. 01: pipeline, controles (cambios vs. Excel 7.6e-16, balance 1,000/800/200, estrés = 5 %) y construcción y validación de input.json, sin cambios respecto de la versión previa. 02: curvas, forwards (0.0 pb), spreads calibrados vs. Excel, carry sin shock por instrumento y sensibilidad del PN por revalorización (PEN +100 pb: +9.1; USD +100 pb: −1.9; FX +10 %: +27.0; equity −10 %: −22.0 S/ mm). Figuras y tablas nuevas: `fx_equity_historico`, `autovalores_covarianza`, `sensibilidad_pn_shocks`, `persistencia_factores`, `spreads_calibrados` y `carry_base`. La IA corrigió en el notebook una frase propia que atribuía la diferencia de spreads a una convención de conteo de días sin haberlo verificado.
 
+## P06 · 2026-09-28 · Modelo de riesgo (risk.py) y notebook 03
+**Prompt:** "vamos con el plan de risk"; "estoy de acuerdo con las recomendaciones"; "continuemos con la implementación".
+**Resultado:** Aceptado con corrección
+**Detalle:** Plan → decisiones D-14 a D-16 (el alumno aceptó las recomendaciones) → 29 tests escritos antes del código → implementación. Al revisar las salidas, la IA detectó un sesgo de media en su propia formulación del bootstrap (E04); el alumno eligió centrar las ventanas (D-09 v3) y se agregaron 2 tests. Resultados: 504 escenarios, σ del bootstrap a 12 m entre 0.86 y 1.09 veces la histórica, R de 12 × 504 en unos 45 s. Posición inicial: E[ΔPN] = +4.0, σ = 25.4, VaR95 = 42.5 y CVaR95 = 50.1 S/ mm; 25 % de la probabilidad de la cola viene del estrés. Coherencia (D-14): σ local con Σ bootstrap = 24.9 vs. 25.2 por revalorización completa; con Σ i.i.d. × 12 da 12.8, lo que confirma la persistencia. En el notebook 03 queda para el alumno la sección "Lectura".
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
@@ -60,3 +65,8 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Prompt:** Formulación base del Caso C.
 **Resultado:** Corregido
 **Detalle:** La IA afirmó que, con cambios centrados, E[ΔPN] "sale del carry y de las forwards". En realidad, la curva esperada al horizonte es la de t0 (roll-down) y el centrado elimina toda prima de equity y FX. Además propuso que la caja devengue la ON de t0 mientras los cupones flotantes del año se reproyectan con el escenario, incluido el cupón ya fijado antes de t0. Esa asimetría sesga la solución contra la deuda flotante. Lo detectó el auditor-financiero.
+
+## E04 · 2026-09-28 · Centrado mensual en un bootstrap por bloques (D-09 v3)
+**Prompt:** "continuemos con la implementación" (risk.py).
+**Resultado:** Corregido
+**Detalle:** La formulación que propuso la IA centraba cada cambio mensual y asumía que así el bootstrap quedaba con media cero ("centrado da media 0 antes de la deriva"). Con bloques móviles no circulares eso es falso: los meses de los extremos entran en menos ventanas, y la suma esperada de un bloque pondera más el tramo central de la muestra. Se detectó al revisar los resultados de la implementación: el rendimiento medio del equity (8.3 %) no cuadraba con la deriva (6.0 %). Un cálculo exacto sobre las 54 ventanas mostró que el sesgo no era ruido: +1.2 % en equity y −30 pb en PEN ON. Los tests iniciales no lo detectaron porque el juguete [1, 2, 3, 4] es simétrico. Se corrigió centrando las ventanas, con dos tests nuevos (juguete asimétrico y media del bootstrap = μ dentro de 3 errores estándar) que fallaron antes de corregir el código.
