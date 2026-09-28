@@ -34,6 +34,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado
 **Detalle:** Plan → 18 tests (tests/test_valuation.py, escritos antes del código) → implementación. El alumno eligió la proyección plana del factor de referencia para los flotantes (D-13). Resultados: V0 = market_value_pen en los 12 instrumentos, spreads calibrados entre 0.34 y 0.64 pb por debajo de la hoja (sesgo sistemático, probablemente por una convención de conteo de días distinta en el Excel; la hoja es solo referencia), forwards recalculadas = Excel. La IA escribió el módulo de tests para que se omita mientras faltara la interfaz, porque el hook de cierre bloquea con tests en rojo. Pendiente: demo en el notebook 02 y auditoría.
 
+## P05 · 2026-09-27 · Cierre de los notebooks 00, 01 y 02
+**Prompt:** "y los notebooks en que momento se realiza?"; "cierra primero los notebooks 00, 01 y 02".
+**Resultado:** Aceptado
+**Detalle:** Los tres notebooks seguían siendo la plantilla y no se habían ejecutado. La IA los completó sin agregar lógica fuera de `src/`. 00: hojas, series de tasas, FX y equity, tabla de persistencia (autocorrelación y razón de varianzas a 12 m, que reproduce las cifras de D-09), autovalores de la covarianza y hallazgos enlazados a D-xx. 01: pipeline, controles (cambios vs. Excel 7.6e-16, balance 1,000/800/200, estrés = 5 %) y construcción y validación de input.json, sin cambios respecto de la versión previa. 02: curvas, forwards (0.0 pb), spreads calibrados vs. Excel, carry sin shock por instrumento y sensibilidad del PN por revalorización (PEN +100 pb: +9.1; USD +100 pb: −1.9; FX +10 %: +27.0; equity −10 %: −22.0 S/ mm). Figuras y tablas nuevas: `fx_equity_historico`, `autovalores_covarianza`, `sensibilidad_pn_shocks`, `persistencia_factores`, `spreads_calibrados` y `carry_base`. La IA corrigió en el notebook una frase propia que atribuía la diferencia de spreads a una convención de conteo de días sin haberlo verificado.
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
