@@ -24,9 +24,9 @@ SEGMENT_BOUNDS = {
 
 
 def year_fraction(start, end) -> np.ndarray:
-    """ACT/365 entre fechas (escalares o arrays)."""
+    """ACT/365 entre fechas (escalares, arrays, DatetimeIndex o pd.Series)."""
     delta = pd.to_datetime(end) - pd.Timestamp(start)
-    days = np.asarray(getattr(delta, "days", delta), dtype=float)
+    days = np.asarray(pd.to_timedelta(delta) / pd.Timedelta(days=1), dtype=float)
     return days / 365.0
 
 

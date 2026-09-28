@@ -36,3 +36,11 @@ def test_forward_1y_equals_spot_1y(curve):
 
 def test_act365():
     assert year_fraction("2025-12-31", "2026-12-31") == pytest.approx(1.0)
+
+
+def test_act365_accepts_series():
+    """Hallazgo del auditor: con pd.Series devolvía nanosegundos/365 en vez de años."""
+    import pandas as pd
+
+    ends = pd.Series(pd.to_datetime(["2026-12-31", "2027-12-31"]))
+    assert np.allclose(year_fraction("2025-12-31", ends), [1.0, 2.0])

@@ -6665,6 +6665,42 @@
     "riskAversionLambda": 0.25,
     "riskMeasure": "CVAR",
     "bootstrapCount": 500,
+    "bootstrapBlockLength": 6,
+    "bootstrapBlocksPerScenario": 2,
+    "drift": {
+      "rates": "ZERO",
+      "fx": "IRP",
+      "equity": "HISTORICAL"
+    },
+    "stressTenors": {
+      "short": {
+        "nodes": [
+          "ON",
+          "1Y"
+        ],
+        "transition": [
+          "3Y"
+        ]
+      },
+      "long": {
+        "nodes": [
+          "10Y",
+          "20Y"
+        ],
+        "transition": [
+          "5Y"
+        ]
+      }
+    },
+    "lambdaGrid": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ],
     "seed": 20251231
   }
 }

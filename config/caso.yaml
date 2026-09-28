@@ -25,6 +25,23 @@ caseParameters:
   # cvarAlpha, bootstrapProbability, stressProbability, riskAversionLambda:
   # se toman de Case_Assumptions (caso C) vía _case_defaults; no se sobrescriben aquí.
   # seed: 20260101
+  # Bootstrap por bloques móviles: cada escenario anual = blocksPerScenario bloques de
+  # bootstrapBlockLength meses consecutivos (6 × 2 = 12 meses). Ver D-09.
+  bootstrapBlockLength: 6
+  bootstrapBlocksPerScenario: 2
+  # Deriva anual esperada por tipo de factor (ver D-06):
+  #   ZERO = cambios centrados; HISTORICAL = media histórica; IRP = paridad de tasas (solo FX).
+  drift:
+    rates: "ZERO"
+    fx: "IRP"
+    equity: "HISTORICAL"
+  # Nodos de los tramos de Stress_Scenarios_C: override completo en `nodes`, y en `transition`
+  # el promedio entre el override y el shift paralelo (evita escalones en la curva). Ver D-11.
+  stressTenors:
+    short: { nodes: ["ON", "1Y"], transition: ["3Y"] }
+    long: { nodes: ["10Y", "20Y"], transition: ["5Y"] }
+  # Grilla del barrido de aversión al riesgo (pregunta 4 del Caso C).
+  lambdaGrid: [0.0, 0.1, 0.25, 0.5, 1.0, 2.0, 5.0]
 
 # Semilla global para bootstrap/simulaciones (reproducibilidad)
 seed: 20251231
