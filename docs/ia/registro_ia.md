@@ -49,6 +49,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado con corrección
 **Detalle:** El subagente auditor-financiero no encontró errores críticos. Reprodujo las cifras y verificó var_cvar contra un LP de Rockafellar–Uryasev (diferencia < 1e-13). Hallazgos importantes: I-1 transición del estrés (→ D-11 v2, E05), I-2 riesgo de modelo de D-13 y I-4 sesgo de los estrés hacia USD (ambos pasan a sensibilidades en formulación §9), e I-3 posición 0 (→ validación). También 8 menores. Correcciones con 14 tests nuevos; los que dependían de valores fijos de input.json ahora se derivan del doc. Efecto en los resultados: ΔPN en C_STRESS_3 pasa de −22.3 a −23.3 y en C_STRESS_4 de −7.8 a −8.5; VaR y CVaR sin cambio (42.5 / 50.1). D-17 registra las correcciones de robustez.
 
+## P08 · 2026-09-28 · Lectura del notebook 03
+**Prompt:** "agrega la lectura al notebook".
+**Resultado:** Aceptado con corrección
+**Detalle:** La IA redactó un borrador de lectura (marcado para validación del alumno) con la descomposición de cada estrés por factor. Antes de entregarlo verificó las afirmaciones que no salían de una tabla y corrigió tres. La principal: había descrito la cola del bootstrap como "caída de tasas y equity", pero es el régimen de 2022, con tasas al alza, apreciación del PEN (FX −5 %) y equity −18 %. Esto refuerza el hallazgo I-4 de la auditoría. Las otras dos fueron el rango de subestimación de σ·√12 y el peor escenario, que eran cifras anteriores a D-09 v3.
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
