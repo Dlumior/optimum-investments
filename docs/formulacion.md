@@ -126,10 +126,17 @@ En `constraintChecks`, los grupos vacíos y los redundantes se marcan como no vi
    - equity: `HISTORICAL` → 12 × media del log-retorno mensual.
 5. **Probabilidad:** $p_s = \text{bootstrapProbability}/N_B$.
 
-### 7.2 Escenarios de estrés (D-11)
-- **Tasas.** Shift paralelo por moneda. El override reemplaza el shift en los nodos del tramo
-  (`stressTenors.short.nodes` = ON, 1Y; `long.nodes` = 10Y, 20Y). En los nodos de transición (3Y, 5Y) el shift es el
-  promedio entre override y paralelo, para evitar escalones que produzcan forwards implícitas absurdas.
+### 7.2 Escenarios de estrés (D-11 v2, D-16)
+- **Tasas.** Shift paralelo por moneda. El override (un shift, D-16) reemplaza al paralelo en los nodos del tramo
+  (`stressTenors.short.nodes` = ON, 1Y; `long.nodes` = 10Y, 20Y). En los nodos de transición (3Y, 5Y) se interpola
+  linealmente $t\,s(t)$ entre los nodos fijos vecinos:
+  $$t\,s(t) = t_a s_a + (t_b s_b - t_a s_a)\,\frac{t - t_a}{t_b - t_a}.$$
+  Así la forward implícita cambia lo mismo en todos los segmentos de la transición. El cambio **medio** de la forward
+  entre $t_a$ y $t_b$, $\frac{t_b s_b - t_a s_a}{t_b - t_a}$, lo fijan los datos del estrés y ninguna regla lo evita.
+  En C_STRESS_3, con +400 pb en 1Y y +50 pb en 5Y, las forwards 1Y-5Y caen −37.5 pb en promedio. Los flotantes
+  indexados a S2 (A03, L04) cobran o pagan menos en ese estrés (D-11 v2, E05).
+- **Validación.** Los tramos no comparten nodos, todo `*_override` corresponde a un tramo definido y `*_parallel`
+  es obligatorio.
 - **FX y equity.** $\Delta\ln FX = \ln(1 + \texttt{fx\_pct})$ y $\Delta\ln E = \ln(1 + \texttt{equity\_pct})$. No se
   les suma deriva.
 - **Probabilidad.** $p_s$ = `probability` (0.0125). Se valida con tolerancia que $\sum_{E} p_s$ = `stressProbability`
@@ -152,7 +159,7 @@ con $\theta = (\tau - t_0)/(t_H - t_0)$. Con una regla única para tasa corta, c
 | Flujos posteriores a $t_H$ | se proyectan y descuentan a $t_H$ con el mercado $F(t_H)$ más $\sigma_k$ |
 | Caja | devenga la ON de la trayectoria: $ON_0 + \tfrac12 \Delta ON_s$ (tasa simple, ACT/365) |
 | Flujos USD del año | se convierten con $FX(\tau_{pago})$ |
-| Equity | $V_0\, e^{\Delta\ln E_s}$, sin dividendos |
+| Equity | $V_0\, e^{\Delta\ln E_s}\cdot FX_s/FX_0$ si está en USD, sin dividendos |
 | Devengo de cupón | convención de `cashFlows` (tasa × nocional / frecuencia) |
 | Flujos cobrados o pagados en el año | no se reinvierten |
 
@@ -179,7 +186,7 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
 | S3 | Solo `restructuring_cost`, simétrico | La hoja Transaction_Costs lo indica para B/C; evita el doble cobro | D-08 |
 | S4 | Bloques móviles 6 × 2 | Conserva la persistencia sin repetir solo 49 ventanas | D-09 |
 | S5 | Forwards implícitas de la spot shockeada | Coherencia sin arbitraje | D-10 |
-| S6 | Tramos del estrés ON-1Y y 10Y-20Y, con transición | El Excel no los define; se evitan escalones | D-11 |
+| S6 | Tramos del estrés ON-1Y y 10Y-20Y, con transición por $t\,s(t)$ lineal | El Excel no los define; reparte parejo el cambio de forward que imponen los datos | D-11 v2 |
 | S7 | Trayectoria lineal del mercado dentro del año | Trato simétrico de caja y deuda flotante | D-12 |
 | S8 | Spread de calibración constante; flujos sin reinvertir | No hay datos de dinámica de spreads; efecto de segundo orden | D-10 |
 | S9 | TC fuera de $L_s$ | Es un costo cierto en $t_0$, no un riesgo | D-08 |
@@ -203,6 +210,11 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
    sobreajuste del CVaR en muestra.
 5. **Posición inicial:** métricas sin optimizar.
 6. **Sensibilidades:** definición de los tramos de estrés y deriva (todo centrado vs mixto).
+7. **Riesgo de modelo de los flotantes (auditoría I-2):** con D-13, L06 y A05 dependen de la tasa corta USD durante
+   toda su vida (en C_STRESS_3, L06 explica −21.3 de −22.3 S/ mm). Sensibilidad con cupón = forward implícita por
+   período (fijación → pago).
+8. **Sesgo del conjunto de estrés (auditoría I-4):** los cuatro estrés deprecian el PEN; ninguno castiga una posición
+   larga en USD. Sensibilidad con un estrés de apreciación del PEN, fuera de input.json y sin cambiar el caso base.
 
 ## 10. Pruebas que validan la formulación
 - **Curvas y fechas:** `year_fraction` acepta escalares, arrays y `pd.Series` (hallazgo I6, ya corregido).
@@ -216,7 +228,8 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
   - Shock nulo da carry puro; las ventanas centradas dan media esperada 0 antes de la deriva (juguete asimétrico).
   - Misma semilla, mismos escenarios.
   - σ de los escenarios de tasas en el orden de σ de los cambios históricos a 12 m (no de σ√12 mensual).
-  - En un estrés de subida corta, ningún cupón flotante cae.
+  - En un estrés de subida corta, los flotantes indexados a un segmento dentro del tramo corto (S1) no reducen sus
+    flujos; los indexados al segmento de transición (S2) sí (consecuencia documentada de D-11 v2).
   - `fx_pct` = 0.2 da $FX_s/FX_0$ = 1.2.
   - Cobertura USD perfecta: ΔPN insensible a FX.
 - **CVaR:**

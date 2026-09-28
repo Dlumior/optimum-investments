@@ -169,7 +169,8 @@ def instrument_flows(inst: Mapping, cf: pd.DataFrame, t0, market_at: MarketAt) -
 
 
 # ------------------------------------------------------------------- lectura del doc
-def _dates(doc: Mapping) -> tuple[pd.Timestamp, pd.Timestamp]:
+def horizon_dates(doc: Mapping) -> tuple[pd.Timestamp, pd.Timestamp]:
+    """(t0, tH): `valuationDate` y el horizonte (`caseParameters.horizonDate` o `horizonDate`)."""
     t_h = doc.get("caseParameters", {}).get("horizonDate") or doc["horizonDate"]
     return pd.Timestamp(doc["valuationDate"]), pd.Timestamp(t_h)
 
@@ -196,9 +197,22 @@ def _is_flow_instrument(inst: Mapping, cfs: Mapping) -> bool:
 
 
 # ---------------------------------------------------------------------- calibración
+SPREAD_BRACKET = (-0.05, 0.50)  # intervalo de búsqueda numérica del spread (no es un parámetro del caso)
+
+
+def check_positive_values(doc: Mapping) -> None:
+    """`market_value_pen` es a la vez precio de calibración y posición inicial: debe ser > 0 en todo instrumento."""
+    bad = [i["id"] for i in doc["instruments"] if not float(i["market_value_pen"] or 0.0) > 0]
+    if bad:
+        raise ValueError(
+            f"market_value_pen debe ser > 0 (se usa para calibrar el precio y como base de r): {', '.join(bad)}"
+        )
+
+
 def calibrate_spreads(doc: Mapping) -> dict[str, float]:
     """Spread (decimal) por instrumento con flujos tal que V0 · FX0 = market_value_pen (tolerancia 1e-12)."""
-    t0, _ = _dates(doc)
+    check_positive_values(doc)
+    t0, _ = horizon_dates(doc)
     state0 = base_state(doc)
     cfs = _cash_flows_by_instrument(doc)
     spreads = {}
@@ -208,9 +222,14 @@ def calibrate_spreads(doc: Mapping) -> dict[str, float]:
         flows = instrument_flows(inst, cfs[inst["id"]], t0, lambda d: state0)
         curve, fx = state0.curves[inst["currency"]], state0.fx_to_pen(inst["currency"])
         target = float(inst["market_value_pen"])
-        spreads[inst["id"]] = brentq(
-            _pricing_gap, -0.05, 0.50, args=(flows, curve, t0, fx, target), xtol=1e-14
-        )
+        args = (flows, curve, t0, fx, target)
+        lo, hi = SPREAD_BRACKET
+        if _pricing_gap(lo, *args) * _pricing_gap(hi, *args) > 0:
+            raise ValueError(
+                f"No se puede calibrar {inst['id']}: el spread que da V0 = {target:,.2f} S/ mm está fuera de "
+                f"[{lo:.0%}, {hi:.0%}]. Revisar market_value_pen y sus flujos."
+            )
+        spreads[inst["id"]] = brentq(_pricing_gap, lo, hi, args=args, xtol=1e-14)
     return spreads
 
 
@@ -226,7 +245,7 @@ def value_at_t0(
 
     Caja: nocional × FX. Equity: market_value_pen × (E/E0) × (FX/FX0 si es USD).
     """
-    t0, _ = _dates(doc)
+    t0, _ = horizon_dates(doc)
     state0 = base_state(doc)
     state = state0.shocked(delta or {})
     cfs = _cash_flows_by_instrument(doc)
@@ -257,7 +276,7 @@ def horizon_value_and_flows(
     - flows: flujos cobrados/pagados en (t0, tH], cada uno convertido con FX(τ_pago); sin reinversión.
     Caja: devenga ON0 + ½ΔON (tasa simple ACT/365) y se reporta en value_h. Equity: sin dividendos.
     """
-    t0, t_h = _dates(doc)
+    t0, t_h = horizon_dates(doc)
     state0 = base_state(doc)
     path = market_path(state0, delta, t0, t_h)
     state_h = path(t_h)

@@ -115,3 +115,26 @@ sin vuelta circular, los meses de los extremos de la muestra entran en menos ven
 ventanas, 2 bloques) era +1.2 % en equity, −30 pb en PEN ON, −13 pb en USD ON y −0.19 % en FX. Se centran las
 sumas de las ventanas, con lo que E[shock] = 0 exacto y la media del bootstrap = μ. Alternativas descartadas: bootstrap
 circular (5 de 59 ventanas unirían dic-2025 con ene-2021) o documentar el sesgo. Elegido por el alumno. Error E04.
+
+## D-11 v2 · 2026-09-28 · Transición del estrés por interpolación de t·s(t)
+La auditoría (I-1) mostró que la justificación de D-11 v1 era falsa. El promedio en 3Y/5Y no evitaba las forwards
+absurdas, solo las movía: en C_STRESS_3 la forward PEN S3 caía −210 pb con todas las spot al alza, y en C_STRESS_4
+la S4 subía +428 pb. Además, interpolar s(t) linealmente es idéntico al promedio en el tramo corto, porque la curva ya
+interpola linealmente la tasa cero.
+El cambio medio de la forward entre dos nodos fijos, (t_b·s_b − t_a·s_a)/(t_b − t_a), lo fijan los datos del estrés.
+En C_STRESS_3 es −37.5 pb entre 1Y y 5Y. Ninguna transición lo evita; solo se puede elegir cómo se reparte.
+**v2 (elegida por el alumno):** en los nodos de transición se interpola linealmente t·s(t) entre los nodos fijos
+vecinos, de modo que la forward cambia lo mismo en todos los segmentos de la transición. Resultados:
+- C_STRESS_3: S2/S3 PEN = −35/−38 pb (antes +138/−210).
+- C_STRESS_4: S3/S4 = +413/+409 pb (antes +367/+428).
+Consecuencia: en C_STRESS_3, los flotantes indexados a PEN S2 (A03, L04) reducen levemente sus flujos del año.
+Se valida que los tramos sean disjuntos, que no haya overrides sin tramo y que exista `*_parallel` (auditoría M-2).
+Error E05.
+
+## D-17 · 2026-09-28 · Robustez de la capa de riesgo (auditoría I-3, M-1, M-3, M-4, M-5)
+- `market_value_pen` sigue siendo a la vez precio de calibración y posición inicial, pero se exige > 0 con un error
+  que nombra el instrumento. Separar precio y posición queda para cuando lo requiera el optimizador.
+- La historia se corta en `valuationDate` para no usar información futura.
+- La deriva IRP usa z(τ) al plazo del horizonte.
+- `var_cvar` exige α, sin valor por defecto.
+- La calibración informa el instrumento si el spread cae fuera del intervalo de búsqueda.

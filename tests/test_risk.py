@@ -156,6 +156,29 @@ def test_drift_values(doc):
     assert mu["EQUITY_USD"] == pytest.approx(12 * ch["EQUITY_USD"].mean(), abs=1e-15)  # HISTORICAL
 
 
+def test_history_ignores_dates_after_valuation(doc):
+    """M-1: filas posteriores a valuationDate no deben entrar (información futura)."""
+    d = copy.deepcopy(doc)
+    future = copy.deepcopy(d["marketHistory"][-1])
+    future["date"] = "2026-01-31"
+    future["equityIndex"] *= 1.5
+    d["marketHistory"].append(future)
+    assert history_from_doc(d).index.max() == pd.Timestamp(doc["valuationDate"])
+    assert drift(d, factor_changes(d))["EQUITY_USD"] == pytest.approx(
+        drift(doc, factor_changes(doc))["EQUITY_USD"]
+    )
+
+
+def test_drift_irp_uses_horizon_tenor(doc):
+    """M-3: con horizonte de 2 años, la IRP usa z(2Y) de cada curva (tasa anual por paridad a ese plazo)."""
+    from optimum.valuation import base_state
+
+    d = _with_params(doc, horizonDate="2027-12-31")
+    curves = base_state(d).curves
+    expected = math.log((1 + float(curves["PEN"].zero(2.0))) / (1 + float(curves["USD"].zero(2.0))))
+    assert drift(d, factor_changes(d))["FX_PENUSD"] == pytest.approx(expected, abs=1e-15)
+
+
 def test_drift_unknown_type_raises(doc):
     bad = _with_params(doc, drift={"rates": "ZERO", "fx": "MAGIA", "equity": "HISTORICAL"})
     with pytest.raises(ValueError):
@@ -170,31 +193,97 @@ def test_stress_shape_and_forwards_zero(stress, doc):
     assert np.allclose(stress[fwd], 0.0)  # se recalculan desde la spot shockeada (D-10)
 
 
-def test_stress_parallel_fx_equity(stress):
-    s1 = stress.loc["C_STRESS_1"]
-    assert np.allclose([s1[f"PEN_SPOT_{n}"] for n in SPOT_NODES], 0.03)
-    assert np.allclose([s1[f"USD_SPOT_{n}"] for n in SPOT_NODES], 0.015)
-    assert math.exp(s1["FX_PENUSD"]) == pytest.approx(1.20)
-    assert math.exp(s1["EQUITY_USD"]) == pytest.approx(0.75)
+def test_stress_matches_doc_fields(stress, doc):
+    """Derivado de input.json (no de valores fijos): paralelo fuera de tramos y transiciones, override en los nodos
+    del tramo cuando existe, y ln(1 + pct) en FX y equity."""
+    tenors = doc["caseParameters"]["stressTenors"]
+    transition = {n for spec in tenors.values() for n in spec.get("transition", [])}
+    for s in doc["stressScenarios"]:
+        row = stress.loc[s["scenario_id"]]
+        for ccy in ["PEN", "USD"]:
+            c, par = ccy.lower(), s[f"{ccy.lower()}_parallel"]
+            for n in SPOT_NODES:
+                bucket = next((b for b, spec in tenors.items() if n in spec["nodes"]), None)
+                override = s.get(f"{c}_{bucket}_override") if bucket else None
+                if override is not None:
+                    assert row[f"{ccy}_SPOT_{n}"] == pytest.approx(override, abs=1e-15)
+                elif n not in transition or all(s.get(f"{c}_{b}_override") is None for b in tenors):
+                    assert row[f"{ccy}_SPOT_{n}"] == pytest.approx(par, abs=1e-15)
+        assert math.exp(row["FX_PENUSD"]) == pytest.approx(1 + (s["fx_pct"] or 0.0))
+        assert math.exp(row["EQUITY_USD"]) == pytest.approx(1 + (s["equity_pct"] or 0.0))
 
 
-def test_stress_short_override_with_transition(stress):
-    """D-11 + D-16: el override es un shift que reemplaza al paralelo en ON y 1Y; 3Y = promedio."""
-    s3 = stress.loc["C_STRESS_3"]
-    expected_pen = {"ON": 0.04, "1Y": 0.04, "3Y": 0.0225, "5Y": 0.005, "10Y": 0.005, "20Y": 0.005}
-    expected_usd = {"ON": 0.035, "1Y": 0.035, "3Y": 0.02, "5Y": 0.005, "10Y": 0.005, "20Y": 0.005}
+def _toy_stress(doc, tenors=None, **fields):
+    """Doc con un único estrés de juguete (sin FX ni equity); `fields` sobrescribe los shifts."""
+    d = copy.deepcopy(doc)
+    scen = {"scenario_id": "T", "probability": 0.05, "pen_parallel": 0.005, "usd_parallel": 0.0}
+    scen.update({f"{c}_{b}_override": None for c in ["pen", "usd"] for b in ["short", "long"]})
+    scen.update({"fx_pct": 0.0, "equity_pct": 0.0, **fields})
+    d["stressScenarios"] = [scen]
+    if tenors is not None:
+        d["caseParameters"]["stressTenors"] = tenors
+    return d
+
+
+def test_stress_short_transition_interpolates_t_times_s(doc):
+    """D-11 v2: en la transición se interpola t·s(t) entre el último nodo del tramo y el primero fuera de él.
+    Corto (ON, 1Y) = +400 pb, 5Y = paralelo +50 pb: 3·s(3) = 1·0.04 + (5·0.005 − 1·0.04)·(3 − 1)/(5 − 1)
+    → s(3) = 0.0325/3 = 0.0108333."""
+    row = stress_shocks(_toy_stress(doc, pen_short_override=0.04)).loc["T"]
+    expected = {"ON": 0.04, "1Y": 0.04, "3Y": 0.0325 / 3, "5Y": 0.005, "10Y": 0.005, "20Y": 0.005}
     for n in SPOT_NODES:
-        assert s3[f"PEN_SPOT_{n}"] == pytest.approx(expected_pen[n], abs=1e-15)
-        assert s3[f"USD_SPOT_{n}"] == pytest.approx(expected_usd[n], abs=1e-15)
+        assert row[f"PEN_SPOT_{n}"] == pytest.approx(expected[n], abs=1e-15)
+        assert row[f"USD_SPOT_{n}"] == pytest.approx(0.0, abs=1e-15)
 
 
-def test_stress_long_override_with_transition(stress):
-    s4 = stress.loc["C_STRESS_4"]
-    expected_pen = {"ON": 0.005, "1Y": 0.005, "3Y": 0.005, "5Y": 0.0175, "10Y": 0.03, "20Y": 0.03}
-    expected_usd = {"ON": 0.003, "1Y": 0.003, "3Y": 0.003, "5Y": 0.0115, "10Y": 0.02, "20Y": 0.02}
+def test_stress_long_transition_interpolates_t_times_s(doc):
+    """Largo (10Y, 20Y) = +300 pb, 3Y = paralelo +50 pb: 5·s(5) = 3·0.005 + (10·0.03 − 3·0.005)·(5 − 3)/(10 − 3)
+    → s(5) = (0.015 + 0.285·2/7)/5."""
+    row = stress_shocks(_toy_stress(doc, pen_long_override=0.03)).loc["T"]
+    expected = {
+        "ON": 0.005,
+        "1Y": 0.005,
+        "3Y": 0.005,
+        "5Y": (0.015 + 0.285 * 2 / 7) / 5,
+        "10Y": 0.03,
+        "20Y": 0.03,
+    }
     for n in SPOT_NODES:
-        assert s4[f"PEN_SPOT_{n}"] == pytest.approx(expected_pen[n], abs=1e-15)
-        assert s4[f"USD_SPOT_{n}"] == pytest.approx(expected_usd[n], abs=1e-15)
+        assert row[f"PEN_SPOT_{n}"] == pytest.approx(expected[n], abs=1e-15)
+
+
+def test_stress_transition_spreads_forward_change_evenly(doc):
+    """El cambio medio de la forward entre 1Y y 5Y lo fijan los datos: (5·50 − 1·400)/4 = −37.5 pb. Con t·s(t)
+    lineal se reparte parejo entre S2 y S3 (antes: S2 +138, S3 −210 pb)."""
+    from optimum.valuation import base_state
+
+    d = _toy_stress(doc, pen_short_override=0.04)
+    state0 = base_state(d)
+    shocked = state0.shocked(stress_shocks(d).loc["T"].to_dict())
+    for seg in ["S2", "S3"]:
+        change = shocked.forwards[f"PEN_FWD_{seg}"] - state0.forwards[f"PEN_FWD_{seg}"]
+        assert -0.0045 < change < -0.0030, (seg, change)
+
+
+def test_stress_overlapping_tenors_raise(doc):
+    tenors = {
+        "short": {"nodes": ["ON", "1Y"], "transition": ["3Y", "5Y"]},
+        "long": {"nodes": ["10Y", "20Y"], "transition": ["5Y"]},
+    }
+    with pytest.raises(ValueError):
+        stress_shocks(_toy_stress(doc, tenors=tenors, pen_long_override=0.02))
+
+
+def test_stress_override_without_bucket_raises(doc):
+    with pytest.raises(ValueError):
+        stress_shocks(_toy_stress(doc, pen_mid_override=0.01))
+
+
+def test_stress_missing_parallel_raises(doc):
+    d = _toy_stress(doc)
+    del d["stressScenarios"][0]["usd_parallel"]
+    with pytest.raises(ValueError):
+        stress_shocks(d)
 
 
 # ------------------------------------------------------------------ conjunto de escenarios
@@ -264,12 +353,115 @@ def test_returns_equity_and_fx_shocks(doc, spreads):
     assert r.loc["A01", "FX"] == pytest.approx(on0, abs=1e-12)  # caja PEN no depende del FX
 
 
-def test_short_rate_stress_never_lowers_floating_coupons(doc, spreads, stress):
-    """En C_STRESS_3 (subida corta) los flujos del año de los flotantes no caen respecto de Δ = 0."""
+def test_fixed_bond_flows_in_year_are_contractual(doc, spreads):
+    """Independiente de la fórmula de r: los flujos del año de un bono fijo PEN son los del cronograma."""
+    t0, th = pd.Timestamp(doc["valuationDate"]), pd.Timestamp(doc["caseParameters"]["horizonDate"])
+    fixed_pen = next(
+        i["id"] for i in doc["instruments"] if i["currency"] == "PEN" and i["instrument_type"] == "BOND_FIXED"
+    )
+    cf = pd.DataFrame(doc["cashFlows"])
+    cf = cf[(cf["instrument_id"] == fixed_pen) & (pd.to_datetime(cf["payment_date"]) > t0)]
+    expected = cf.loc[pd.to_datetime(cf["payment_date"]) <= th, "total_cash_flow"].sum()
+    assert horizon_value_and_flows(doc, spreads, {}).loc[fixed_pen, "flows"] == pytest.approx(
+        expected, abs=1e-12
+    )
+
+
+def test_cash_accrues_half_on_shock(doc, spreads):
+    """D-12: la caja devenga ON0 + ½ΔON (τ = 1): con ΔON = +150 pb, r = ON0 + 0.0075."""
+    d = _zero_delta()
+    d.loc["Z", "PEN_SPOT_ON"] = 0.015
+    on0 = doc["marketHistory"][-1]["spot"]["PEN"]["ON"]
+    assert scenario_returns(doc, d, spreads).loc["A01", "Z"] == pytest.approx(on0 + 0.0075, abs=1e-12)
+
+
+def test_fx_shock_scales_usd_values_and_converts_flows_on_path(doc, spreads):
+    """FX +20 %: V(tH) de todo instrumento USD × 1.20 exacto, PEN sin cambio (una cobertura con igual V(tH) USD en
+    activos y pasivos queda inmune). Flujos USD del año convertidos con FX(τ) = FX0·1.2^θ(τ), no con FX(tH)."""
+    from optimum.curves import year_fraction
+
     base = horizon_value_and_flows(doc, spreads, {})
-    shocked = horizon_value_and_flows(doc, spreads, stress.loc["C_STRESS_3"].to_dict())
-    floating = [i["id"] for i in doc["instruments"] if i["reference_factor"]]
-    assert (shocked.loc[floating, "flows"] >= base.loc[floating, "flows"] - 1e-12).all()
+    fx = horizon_value_and_flows(doc, spreads, {"FX_PENUSD": math.log(1.2)})
+    ccy = pd.Series({i["id"]: i["currency"] for i in doc["instruments"]})
+    ratio = fx["value_h"] / base["value_h"]
+    assert np.allclose(ratio[ccy == "USD"], 1.2, atol=1e-12)
+    assert np.allclose(ratio[ccy == "PEN"], 1.0, atol=1e-12)
+
+    t0, th = pd.Timestamp(doc["valuationDate"]), pd.Timestamp(doc["caseParameters"]["horizonDate"])
+    fixed_usd = next(
+        i["id"] for i in doc["instruments"] if i["currency"] == "USD" and i["instrument_type"] == "BOND_FIXED"
+    )
+    cf = pd.DataFrame(doc["cashFlows"])
+    pay = pd.to_datetime(cf["payment_date"])
+    cf = cf[(cf["instrument_id"] == fixed_usd) & (pay > t0) & (pay <= th)]
+    theta = np.asarray(year_fraction(t0, pd.to_datetime(cf["payment_date"]))) / float(year_fraction(t0, th))
+    fx0 = doc["marketHistory"][-1]["fx"]["PENUSD"]
+    expected = float(np.sum(cf["total_cash_flow"].to_numpy() * fx0 * 1.2**theta))
+    assert fx.loc[fixed_usd, "flows"] == pytest.approx(expected, rel=1e-12)
+    assert expected < 1.2 * base.loc[fixed_usd, "flows"]  # no se convierte todo con FX(tH)
+
+
+def test_zero_market_value_raises_clear_error(doc):
+    """I-3: market_value_pen es precio y posición; 0 debe fallar con un mensaje que nombre el instrumento."""
+    d = copy.deepcopy(doc)
+    d["instruments"][1]["market_value_pen"] = 0.0
+    iid = d["instruments"][1]["id"]
+    with pytest.raises(ValueError, match=iid):
+        calibrate_spreads(d)
+    with pytest.raises(ValueError, match=iid):
+        scenario_returns(d, _zero_delta())
+
+
+def test_calibration_out_of_bracket_names_instrument(doc):
+    """M-5: si el spread no está en el intervalo de búsqueda, el error nombra el instrumento."""
+    d = copy.deepcopy(doc)
+    d["instruments"][1]["market_value_pen"] = 1e6
+    with pytest.raises(ValueError, match=d["instruments"][1]["id"]):
+        calibrate_spreads(d)
+
+
+def _floaters_by_segment(doc, keep):
+    """Flotantes cuyo segmento de referencia (fromNode, toNode) cumple `keep`, por moneda: {ccy: [ids]}."""
+    segs = {s["id"]: (s["fromNode"], s["toNode"]) for s in doc["curveSegments"]}
+    out = {}
+    for i in doc["instruments"]:
+        ref = i["reference_factor"]
+        if ref and "_FWD_" in ref:
+            ccy, seg = ref.split("_FWD_")
+            if keep(*segs[seg]):
+                out.setdefault(ccy, []).append(i["id"])
+    return out
+
+
+def test_short_rate_stress_never_lowers_short_floating_coupons(doc, spreads, stress):
+    """En todo estrés con override corto > paralelo, los flotantes indexados a un segmento dentro del tramo corto
+    (hoy S1: ON-1Y) no reducen sus flujos del año respecto de Δ = 0."""
+    short = set(doc["caseParameters"]["stressTenors"]["short"]["nodes"])
+    inside = _floaters_by_segment(doc, lambda a, b: a in short and b in short)
+    base = horizon_value_and_flows(doc, spreads, {})
+    for s in doc["stressScenarios"]:
+        shocked = horizon_value_and_flows(doc, spreads, stress.loc[s["scenario_id"]].to_dict())
+        for ccy, ids in inside.items():
+            ov, par = s.get(f"{ccy.lower()}_short_override"), s[f"{ccy.lower()}_parallel"]
+            if ov is not None and ov > par:
+                assert (shocked.loc[ids, "flows"] >= base.loc[ids, "flows"] - 1e-12).all(), (
+                    s["scenario_id"],
+                    ids,
+                )
+
+
+def test_short_rate_stress_lowers_coupons_on_transition_segment(doc, spreads):
+    """Consecuencia documentada de D-11 v2 + D-13: con +400 pb en ON-1Y y +50 pb desde 5Y, la forward 1Y-3Y cae
+    (≈ −35 pb, inevitable en promedio entre 1Y y 5Y), así que los flotantes indexados a ella cobran/pagan menos."""
+    short = doc["caseParameters"]["stressTenors"]["short"]
+    straddle = _floaters_by_segment(doc, lambda a, b: a in short["nodes"] and b in short["transition"])
+    ids = straddle.get("PEN", [])
+    if not ids:
+        pytest.skip("Ningún flotante PEN indexado al segmento de transición corto")
+    d = _toy_stress(doc, pen_short_override=0.04)
+    shocked = horizon_value_and_flows(d, spreads, stress_shocks(d).loc["T"].to_dict())
+    base = horizon_value_and_flows(doc, spreads, {})
+    assert (shocked.loc[ids, "flows"] < base.loc[ids, "flows"]).all()
 
 
 def test_pn_change_signs():
@@ -303,6 +495,8 @@ def test_cvar_at_least_var_and_bad_inputs():
     losses = rng.normal(size=1000)
     var, cvar = var_cvar(losses, 0.95)
     assert cvar >= var
+    with pytest.raises(TypeError):
+        var_cvar(losses)  # M-4: α sale de input.json, sin valor por defecto
     with pytest.raises(ValueError):
         var_cvar(losses, 1.2)
     with pytest.raises(ValueError):
@@ -325,7 +519,9 @@ def test_min_rate_diagnostic(doc, scenarios):
     assert list(diag["min_rate"].index) == list(scenarios.ids)
     assert np.isfinite(diag["min_rate"]).all()
     base_min = min(min(c.values()) for c in doc["marketHistory"][-1]["spot"].values())
-    assert diag["min_rate"]["C_STRESS_2"] < base_min  # caída fuerte de tasas
+    lowest = min(doc["stressScenarios"], key=lambda s: min(s["pen_parallel"], s["usd_parallel"]))
+    if min(lowest["pen_parallel"], lowest["usd_parallel"]) < 0:  # estrés con caída de tasas
+        assert diag["min_rate"][lowest["scenario_id"]] < base_min
 
 
 # ---------------------------------------------------------------- sensibilidades (D-14)

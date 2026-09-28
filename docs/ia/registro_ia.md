@@ -44,6 +44,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado con corrección
 **Detalle:** Plan → decisiones D-14 a D-16 (el alumno aceptó las recomendaciones) → 29 tests escritos antes del código → implementación. Al revisar las salidas, la IA detectó un sesgo de media en su propia formulación del bootstrap (E04); el alumno eligió centrar las ventanas (D-09 v3) y se agregaron 2 tests. Resultados: 504 escenarios, σ del bootstrap a 12 m entre 0.86 y 1.09 veces la histórica, R de 12 × 504 en unos 45 s. Posición inicial: E[ΔPN] = +4.0, σ = 25.4, VaR95 = 42.5 y CVaR95 = 50.1 S/ mm; 25 % de la probabilidad de la cola viene del estrés. Coherencia (D-14): σ local con Σ bootstrap = 24.9 vs. 25.2 por revalorización completa; con Σ i.i.d. × 12 da 12.8, lo que confirma la persistencia. En el notebook 03 queda para el alumno la sección "Lectura".
 
+## P07 · 2026-09-28 · Auditoría de la capa (iii) y correcciones
+**Prompt:** "lanza la auditoria"; elección de la regla de transición del estrés (dos rondas).
+**Resultado:** Aceptado con corrección
+**Detalle:** El subagente auditor-financiero no encontró errores críticos. Reprodujo las cifras y verificó var_cvar contra un LP de Rockafellar–Uryasev (diferencia < 1e-13). Hallazgos importantes: I-1 transición del estrés (→ D-11 v2, E05), I-2 riesgo de modelo de D-13 y I-4 sesgo de los estrés hacia USD (ambos pasan a sensibilidades en formulación §9), e I-3 posición 0 (→ validación). También 8 menores. Correcciones con 14 tests nuevos; los que dependían de valores fijos de input.json ahora se derivan del doc. Efecto en los resultados: ΔPN en C_STRESS_3 pasa de −22.3 a −23.3 y en C_STRESS_4 de −7.8 a −8.5; VaR y CVaR sin cambio (42.5 / 50.1). D-17 registra las correcciones de robustez.
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
@@ -70,3 +75,8 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Prompt:** "continuemos con la implementación" (risk.py).
 **Resultado:** Corregido
 **Detalle:** La formulación que propuso la IA centraba cada cambio mensual y asumía que así el bootstrap quedaba con media cero ("centrado da media 0 antes de la deriva"). Con bloques móviles no circulares eso es falso: los meses de los extremos entran en menos ventanas, y la suma esperada de un bloque pondera más el tramo central de la muestra. Se detectó al revisar los resultados de la implementación: el rendimiento medio del equity (8.3 %) no cuadraba con la deriva (6.0 %). Un cálculo exacto sobre las 54 ventanas mostró que el sesgo no era ruido: +1.2 % en equity y −30 pb en PEN ON. Los tests iniciales no lo detectaron porque el juguete [1, 2, 3, 4] es simétrico. Se corrigió centrando las ventanas, con dos tests nuevos (juguete asimétrico y media del bootstrap = μ dentro de 3 errores estándar) que fallaron antes de corregir el código.
+
+## E05 · 2026-09-28 · Justificación falsa de la transición del estrés (D-11 v2)
+**Prompt:** Formulación base (D-11) y respuesta a la auditoría I-1.
+**Resultado:** Corregido
+**Detalle:** La IA justificó promediar override y paralelo en 3Y/5Y como forma de "evitar forwards implícitas absurdas". El auditor-financiero mostró que solo las movía: S3 PEN caía −210 pb en C_STRESS_3. Al responder, la IA recomendó "interpolar el shift linealmente en el tiempo" sin calcularlo. Antes de implementar lo verificó y vio que en el tramo corto esa opción es idéntica al promedio, porque la curva ya interpola linealmente la tasa cero. Se lo informó al alumno antes de programar. Al derivarlo también encontró que el cambio medio de la forward entre nodos fijos lo imponen los datos (−37.5 pb entre 1Y y 5Y en C_STRESS_3). El alumno eligió interpolar t·s(t). La prueba de §10 "ningún cupón flotante cae en una subida corta" también era una afirmación de la IA que solo se cumplía por el artefacto: se reescribió para los flotantes S1 y se documentó que los S2 bajan. Durante la corrección, un error del script de edición de la IA dejó sin insertar 5 tests; se detectó porque dos tests "pasaban" sin cambios en el código, y se corrigió.
