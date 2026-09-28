@@ -54,6 +54,16 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado con corrección
 **Detalle:** La IA redactó un borrador de lectura (marcado para validación del alumno) con la descomposición de cada estrés por factor. Antes de entregarlo verificó las afirmaciones que no salían de una tabla y corrigió tres. La principal: había descrito la cola del bootstrap como "caída de tasas y equity", pero es el régimen de 2022, con tasas al alza, apreciación del PEN (FX −5 %) y equity −18 %. Esto refuerza el hallazgo I-4 de la auditoría. Las otras dos fueron el rango de subestimación de σ·√12 y el peor escenario, que eran cifras anteriores a D-09 v3.
 
+## P09 · 2026-09-28 · Optimizador (optimizer.py): plan, pruebas primero e implementación
+**Prompt:** "vamos con el plan del optimmizer"; "dale, usa el generador-pruebas"; "dale, implementa".
+**Resultado:** Aceptado
+**Detalle:** La IA presentó el plan (LP de Rockafellar–Uryasev, benchmark media-varianza como QP, `r_{k,s}` calculado una vez) y preguntó al alumno las ambigüedades en vez de asumirlas: caja al horizonte (D-18: CASH + flujos netos − TC), bloque `analysis` en output.json (D-19) e incumplimiento LE_12M al horizonte. El subagente `generador-pruebas` escribió las pruebas (44 casos nuevos con la parametrización) desde la formulación, sin ver la implementación, con soluciones del juguete verificadas por enumeración. Detectó que "E[ΔPN] no creciente en λ" no está garantizado con costos de transacción (lo garantizado es E − TC) y que D-18 no cerraba el balance sin restar TC. La implementación pasó las 123 pruebas sin cambios en los tests.
+
+## P10 · 2026-09-28 · Auditoría del optimizador y límites al horizonte
+**Prompt:** "o es mejor primero ejecutar el auditor financiero para saber que hacer?"; decisiones del alumno sobre LE_12M, reporte al horizonte y sensibilidad D-13.
+**Resultado:** Aceptado con corrección
+**Detalle:** El alumno propuso auditar antes de decidir LE_12M, y fue lo correcto: la auditoría (sin críticos) encontró que el reporte al horizonte estaba incompleto y que la mitad pasivos depende de D-13. El alumno eligió base con reporte + variante ENFORCE (D-20), reportar todos los grupos del Cuadro 4 al horizonte y dejar la sensibilidad D-13 para el notebook 05. La variante reproduce el cálculo independiente del auditor (costo 0.287 S/ mm con λ = 0.25).
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema
@@ -85,3 +95,8 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Prompt:** Formulación base (D-11) y respuesta a la auditoría I-1.
 **Resultado:** Corregido
 **Detalle:** La IA justificó promediar override y paralelo en 3Y/5Y como forma de "evitar forwards implícitas absurdas". El auditor-financiero mostró que solo las movía: S3 PEN caía −210 pb en C_STRESS_3. Al responder, la IA recomendó "interpolar el shift linealmente en el tiempo" sin calcularlo. Antes de implementar lo verificó y vio que en el tramo corto esa opción es idéntica al promedio, porque la curva ya interpola linealmente la tasa cero. Se lo informó al alumno antes de programar. Al derivarlo también encontró que el cambio medio de la forward entre nodos fijos lo imponen los datos (−37.5 pb entre 1Y y 5Y en C_STRESS_3). El alumno eligió interpolar t·s(t). La prueba de §10 "ningún cupón flotante cae en una subida corta" también era una afirmación de la IA que solo se cumplía por el artefacto: se reescribió para los flotantes S1 y se documentó que los S2 bajan. Durante la corrección, un error del script de edición de la IA dejó sin insertar 5 tests; se detectó porque dos tests "pasaban" sin cambios en el código, y se corrigió.
+
+## E06 · 2026-09-28 · Reporte al horizonte incompleto y plazos por días/365 en el optimizador
+**Prompt:** "dale, implementa" (optimizer.py).
+**Resultado:** Corregido
+**Detalle:** La IA solo revisaba al horizonte los grupos MATURITY, con los montos de t0, aunque la solución está pegada a varios límites que el mercado desplaza (renta fija ≤ 75 % se incumple con probabilidad 0.68). Además midió los plazos como días/365·12, y por el año bisiesto L02 entraba en GT_36M al horizonte cuando por calendario le quedan exactamente 36 meses. Lo detectó el subagente `auditor-financiero` (I-2 y menor 1). Se corrigió reportando todos los grupos con tenencias en t_H y causa estructural/mercado, y usando meses calendario. Se agregaron pruebas a mano para ambos casos (D-20).

@@ -42,6 +42,9 @@ caseParameters:
     long: { nodes: ["10Y", "20Y"], transition: ["5Y"] }
   # Grilla del barrido de aversión al riesgo (pregunta 4 del Caso C).
   lambdaGrid: [0.0, 0.1, 0.25, 0.5, 1.0, 2.0, 5.0]
+  # Límites de vencimiento medidos desde el horizonte (D-20): REPORT = solo se reportan (lectura literal del
+  # enunciado: los límites se exigen en t0); ENFORCE = se imponen. output.json trae siempre la variante opuesta.
+  horizonMaturityLimits: "REPORT"
 
 # Semilla global para bootstrap/simulaciones (reproducibilidad)
 seed: 20251231

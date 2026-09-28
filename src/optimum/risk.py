@@ -261,18 +261,29 @@ def build_scenarios(doc: Mapping, seed: int | None = None) -> ScenarioSet:
 
 
 # ---------------------------------------------------------------- resultados r_{k,s}
+def scenario_components(
+    doc: Mapping, deltas: pd.DataFrame, spreads: Mapping[str, float] | None = None
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """(reval, flows), instrumentos × escenarios, decimal por S/ invertido, por revalorización completa:
+    reval = V^H/V^0 − 1 y flows = F/V^0 (flujos cobrados/pagados en (t0, tH], D-18). r = reval + flows."""
+    check_positive_values(doc)
+    spreads = calibrate_spreads(doc) if spreads is None else spreads
+    v0 = pd.Series({i["id"]: float(i["market_value_pen"]) for i in doc["instruments"]})
+    reval, flows = {}, {}
+    for sid, row in deltas.iterrows():
+        h = horizon_value_and_flows(doc, spreads, row.to_dict())
+        base = v0.reindex(h.index)
+        reval[sid] = h["value_h"] / base - 1
+        flows[sid] = h["flows"] / base
+    return pd.DataFrame(reval), pd.DataFrame(flows)
+
+
 def scenario_returns(
     doc: Mapping, deltas: pd.DataFrame, spreads: Mapping[str, float] | None = None
 ) -> pd.DataFrame:
     """r_{k,s} (instrumentos × escenarios, decimal por S/ invertido) por revalorización completa al horizonte."""
-    check_positive_values(doc)
-    spreads = calibrate_spreads(doc) if spreads is None else spreads
-    v0 = pd.Series({i["id"]: float(i["market_value_pen"]) for i in doc["instruments"]})
-    cols = {}
-    for sid, row in deltas.iterrows():
-        h = horizon_value_and_flows(doc, spreads, row.to_dict())
-        cols[sid] = (h["value_h"] + h["flows"]) / v0.reindex(h.index) - 1
-    return pd.DataFrame(cols)
+    reval, flows = scenario_components(doc, deltas, spreads)
+    return reval + flows
 
 
 def pn_change(returns: pd.DataFrame, positions: pd.Series, sides: pd.Series) -> np.ndarray:

@@ -52,6 +52,10 @@ def cmd_run(args: argparse.Namespace) -> None:
         sys.exit("output inválido:\n- " + "\n- ".join(errors))
     write_json(out, args.output)
     print(f"{args.output} -> status {out['status']}")
+    if out["status"] == "OPTIMAL_INACCURATE":
+        print("ADVERTENCIA: el solver reporta una solución inexacta; revisar constraintChecks.", file=sys.stderr)
+    elif out["status"] != "OPTIMAL":
+        sys.exit(f"El problema no tiene solución óptima (status {out['status']}); output.json sin posiciones.")
 
 
 def main(argv: list[str] | None = None) -> None:

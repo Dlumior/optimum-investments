@@ -138,3 +138,51 @@ Error E05.
 - La deriva IRP usa z(τ) al plazo del horizonte.
 - `var_cvar` exige α, sin valor por defecto.
 - La calibración informa el instrumento si el spread cae fuera del intervalo de búsqueda.
+
+## D-18 · 2026-09-28 · Caja al horizonte = instrumentos CASH + flujos netos del año − TC
+Para reportar incumplimientos al horizonte (caja$_T$ ≥ `minCash`, P/A$_T$ ≤ `maxLiabilitiesToAssets`):
+caja$_{T,s} = \sum_{i \in CASH} x_i V^H_{i,s}/V^0_i + \sum_{i \in \mathcal{A}} x_i F_{i,s}/V^0_i - \sum_{j \in \mathcal{L}} y_j F_{j,s}/V^0_j - TC$,
+donde $F$ son los flujos cobrados/pagados en el año, que no se reinvierten (S8) y quedan en caja, y
+$TC$ es el costo de reestructuración, pagado con caja en $t_0$.
+Así $A_T - L_T = PN_T = PN_0 - TC + \Delta PN$: el balance al horizonte cuadra.
+**Incumplimiento LE_12M al horizonte:** se reporta si $\sum y_j$ de los pasivos con vencimiento ≤ 12 meses desde $t_H$
+supera `max_weight`·$B_L$ (o queda bajo `min_weight`·$B_L$). No depende del escenario: probabilidad 0 o 1.
+Alternativa descartada: solo los instrumentos CASH, porque los cupones quedarían fuera de todo rubro del balance.
+Consecuencia: el optimizador necesita separar $r_{k,s}$ en revalorización ($V^H/V^0 - 1$) y flujos ($F/V^0$).
+Decidido por el alumno.
+
+## D-19 · 2026-09-28 · Los análisis del Caso C van en `output.json` (bloque `analysis`)
+`solve()` calcula además la posición inicial, el barrido de `lambdaGrid` y el benchmark media-varianza, y los guarda
+en `analysis`, para que todo número del informe salga de `output.json`. La evaluación fuera de muestra (otra semilla,
+unos 50 s más) es una función de `optimizer.py` que se llama desde el notebook 05. La matriz $r_{k,s}$ se calcula una sola vez y se reutiliza (unos 50 s por conjunto de escenarios).
+Decidido por el alumno.
+
+## D-20 · 2026-09-28 · Límites al horizonte: base con reporte + variante de vencimientos (auditoría del optimizador)
+**Contexto.** El enunciado exige los límites "sobre la estructura post-decisión" y pide reportar los incumplimientos
+en las simulaciones del Caso C. El óptimo lleva L01 (vence 2027-12-31) al tope de 35 %; en $t_H$ le quedan 12 meses
+y el grupo LE_12M de pasivos (máx. 25 %) queda incumplido con probabilidad 1: lo provoca la decisión, no el mercado.
+**Decisión (alumno, opción c recomendada por el auditor):**
+- **Base (`caseParameters.horizonMaturityLimits: REPORT`)**: los límites del Cuadro 4 se imponen en $t_0$.
+- **Reporte al horizonte de todos los grupos del Cuadro 4** (auditoría I-2), con la pertenencia medida desde $t_H$
+  y las tenencias en $t_H$ (V^H; flujos netos del año − TC en la caja en moneda base). Cada incumplimiento se
+  clasifica como **estructural** (se incumple aun con los montos de $t_0$: lo provoca el paso del tiempo) o de
+  **mercado** (solo por la deriva de valores).
+- **Variante** (`analysis.horizonMaturityVariant`): la misma λ con el modo opuesto. Con base REPORT, la variante
+  ENFORCE impone los grupos MATURITY medidos desde $t_H$ con los montos de $t_0$ (lineal y determinista, sin
+  parámetros nuevos) y reporta `objectiveCost` = objetivo base − objetivo variante.
+- Resultado con λ = 0.25: costo 0.287 S/ mm (objetivo 1.155 → 0.868), L01 280 → 200, CVaR 7.82 → 7.33.
+**Alternativas descartadas.** (a) Solo reportar: no cuantifica el costo de cumplir. (b) Imponerlo en la base: se
+aparta del texto del enunciado y, por simetría, obligaría a imponer también la deriva de mercado de los demás límites.
+
+**Ajustes menores de la misma auditoría:**
+- Plazos por **meses calendario** (`pd.DateOffset`), no días/365·12: con la regla anterior L02 (36 meses desde
+  $t_H$ por calendario, 36.03 por días) entraba en GT_36M al horizonte.
+- `prepare` valida: costo ≥ 0, λ ≥ 0, 0 < α < 1, modo de vencimientos conocido y que cada instrumento pertenezca a
+  exactamente una categoría TYPE cuando hay límites TYPE.
+- `python -m optimum run` sale con código ≠ 0 si el status no es óptimo y advierte si es OPTIMAL_INACCURATE.
+- El TC se paga con caja **después** de fijar los presupuestos: Σx = $B_A$ y caja ≥ `minCash` se verifican antes del
+  pago (la caja efectiva es 200 − 2.7 = 197.3). No cambia ningún límite activo.
+- Para el informe: E[ΔPN] = 5.83 oculta el TC. E − TC = 3.11 < 3.96 de la posición inicial: el óptimo cede 0.85 de
+  valor esperado para bajar el CVaR de 50.1 a 7.8. Con λ ≥ 2, E − TC ≤ 0.
+- Pendiente (etapa de sensibilidades, notebook 05): la mitad pasivos (L01/L06) y las ganancias en C_STRESS_3/4
+  dependen de la regla de cupones flotantes D-13 (auditoría I-1); la mitad activos es robusta. Sensibilidad §9.7.

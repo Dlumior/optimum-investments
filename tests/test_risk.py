@@ -544,3 +544,36 @@ def test_sensitivities_match_full_revaluation_small_shock(doc, spreads):
     local = m[factors] @ pd.Series(shock)
     big = full.abs() > 0.1
     assert np.allclose(local[big], full[big], rtol=0.02)
+
+
+# ------------------------------------------------- componentes de r_{k,s} (D-18, optimizador)
+def test_scenario_components_split_returns(doc, spreads, scenarios):
+    """D-18: r_{k,s} se separa en revalorización (V^H/V^0 − 1) y flujos del año (F/V^0), por S/ invertido.
+
+    Verifica, con los 3 primeros escenarios (cada uno toma ~0.1 s):
+    - reval + flows == scenario_returns (tol 1e-12): la separación no cambia el resultado total;
+    - ambos son instrumentos × escenarios, con los ids de `doc['instruments']` y los ids de los escenarios;
+    - la caja y el equity no tienen flujos en el año (la caja devenga en su valor al horizonte y el equity no paga
+      dividendos, §7.4), así que flows = 0 para esos tipos;
+    - los bonos con cupón en el año tienen flows > 0 (cobran o pagan al menos un cupón).
+    La función se importa aquí para no desactivar el resto del módulo mientras no exista.
+    """
+    from optimum.risk import scenario_components
+
+    deltas = scenarios.deltas.iloc[:3]
+    reval, flows = scenario_components(doc, deltas, spreads)
+    total = scenario_returns(doc, deltas, spreads)
+    ids = [i["id"] for i in doc["instruments"]]
+
+    for df in (reval, flows):
+        assert set(df.index) == set(ids)
+        assert list(df.columns) == list(deltas.index)
+    diff = (reval + flows).reindex(index=total.index, columns=total.columns) - total
+    assert np.abs(diff.to_numpy()).max() < 1e-12
+
+    types = {i["id"]: i["instrument_type"] for i in doc["instruments"]}
+    no_flow = [k for k, t in types.items() if t in ("CASH", "EQUITY")]
+    assert no_flow, "el caso debe tener caja o equity"
+    assert np.allclose(flows.loc[no_flow].to_numpy(), 0.0, atol=1e-15)
+    bonds = [k for k, t in types.items() if t.startswith("BOND")]
+    assert (flows.loc[bonds] > 0).all().all()

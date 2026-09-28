@@ -173,10 +173,15 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
 - **Incumplimientos por escenario al horizonte**, exigidos por el enunciado:
   - $PN_{T,s} \ge 120$;
   - $P/A$ a $t_H \le 0.85$;
-  - caja a $t_H \ge 80$;
-  - LE_12M a $t_H$ (L01 pasa a ≤ 12 m).
+  - caja a $t_H \ge 80$, con caja$_T$ = instrumentos CASH + flujos netos cobrados en el año − TC pagado en $t_0$ (D-18);
+  - LE_12M a $t_H$ (L01 pasa a ≤ 12 m): determinista, se reporta con probabilidad 0 o 1 (D-18).
 
-  Se reporta el conteo y la probabilidad de cada incumplimiento. **Se reportan, no se imponen** en el LP.
+  - **todos los grupos de pesos del Cuadro 4** a $t_H$, con tenencias en $t_H$ y pertenencia medida desde $t_H$
+    (meses calendario), clasificados como *estructurales* o *de mercado* (D-20).
+
+  Se reporta el conteo y la probabilidad de cada incumplimiento. **Se reportan, no se imponen** en el LP base
+  (`horizonMaturityLimits: REPORT`). La variante ENFORCE impone los grupos MATURITY medidos desde $t_H$ con los
+  montos de $t_0$ y se reporta con su costo en el objetivo (`analysis.horizonMaturityVariant`, D-20).
 
 ## 8. Supuestos y simplificaciones (con justificación)
 | # | Supuesto | Justificación | Decisión |
@@ -215,6 +220,7 @@ $r_{k,s}$ no depende del tamaño de la posición, así que el problema es un LP.
    período (fijación → pago).
 8. **Sesgo del conjunto de estrés (auditoría I-4):** los cuatro estrés deprecian el PEN; ninguno castiga una posición
    larga en USD. Sensibilidad con un estrés de apreciación del PEN, fuera de input.json y sin cambiar el caso base.
+9. **Vencimientos al horizonte (D-20):** costo en el objetivo de imponer LE_12M/GT_36M medidos desde $t_H$.
 
 ## 10. Pruebas que validan la formulación
 - **Curvas y fechas:** `year_fraction` acepta escalares, arrays y `pd.Series` (hallazgo I6, ya corregido).
