@@ -74,6 +74,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Aceptado (el alumno eligió evaluación instantánea para ±200 pb, switch de cupones, salida separada y estrés espejo)
 **Detalle:** La IA propuso nueve sensibilidades (formulación §11, D-21, D-22) y escribió 23 pruebas antes del código (precio sombra 0.0162 S/ mm por pp calculado a mano en el juguete, ΔV de bonos fijos por fórmula, forward por período en forma cerrada, invariantes contra la base). Se implementaron `sensitivity.py`, los duales con nombre en `optimizer.py`, `floatingCouponRule` en `valuation.py` y `python -m optimum sensitivity`. El caso base no cambia (objetivo idéntico). Al verificar los signos de los duales, la IA vio que el dual del presupuesto de activos (0.029) no coincide con subir $B_A$ en el input (0.038), porque las cotas de peso escalan con $B_A$; por eso S2 solo reporta cotas de peso.
 
+## P13 · 2026-09-28 · Notebook 05 (resultados y sensibilidad)
+**Prompt:** "haz el commit y vamos con el notebook 05_resultados_sensibilidad".
+**Resultado:** Aceptado (lectura pendiente de validación del alumno)
+**Detalle:** El notebook lee `sensitivity.json` y `output.json`, sin recalcular, y controla que estén al día (config igual a input.json, base = output.json). Exporta 2 figuras (ΔPN ante shocks de tasas; robustez del CVaR de x* frente a la cartera reoptimizada) y 4 tablas (S1 tasas, S2 precios sombra, resumen S3–S9, estrés según la regla de cupones). La IA redactó la lectura con las cifras de las tablas. Conclusión: son robustos la cobertura PEN y el CVaR de 7–8; son frágiles el posicionamiento USD (depende del conjunto de estrés) y el resultado esperado (depende de la deriva y de los costos).
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema

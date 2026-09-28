@@ -1,0 +1,35 @@
+\begin{table}[htbp]
+\centering
+\caption{S3--S9: variantes reoptimizadas y cartera base $x^*$ evaluada con el modelo de cada variante (S/ mm y \% del lado). En S4 el CVaR usa el $\alpha$ de la fila.}
+\label{tab:sens-resumen}
+\begin{tabular}{llrrrrrrr}
+\toprule
+ & Grupo & E − TC & CVaR & Distancia a x* & Activos USD (\%) & Pasivos flot. (\%) & E − TC de x* & CVaR de x* \\
+\midrule
+Base & Base & 3.11 & 7.82 & 0.00 & 29.00 & 55.00 & 3.11 & 7.82 \\
+TC × 0 & S3 costos & 8.71 & 3.15 & 592.92 & 39.59 & 55.00 & 5.83 & 7.82 \\
+TC × 0.5 & S3 costos & 4.11 & 2.05 & 346.55 & 29.00 & 51.53 & 4.47 & 7.82 \\
+TC × 1 & S3 costos & 3.11 & 7.82 & 0.00 & 29.00 & 55.00 & 3.11 & 7.82 \\
+TC × 2 & S3 costos & 1.85 & 8.61 & 393.93 & 29.00 & 41.25 & 0.38 & 7.82 \\
+TC × 4 & S3 costos & 0.53 & 8.97 & 411.93 & 29.00 & 41.25 & -5.07 & 7.82 \\
+α = 0.95 & S4 α & 3.11 & 7.82 & 0.00 & 29.00 & 55.00 & 3.11 & 7.82 \\
+α = 0.975 & S4 α & 2.95 & 8.10 & 59.72 & 29.00 & 53.93 & 3.11 & 9.51 \\
+α = 0.99 & S4 α & 3.02 & 9.23 & 37.38 & 29.00 & 53.85 & 3.11 & 10.63 \\
+P estrés = 0.05 & S5 cola & 3.11 & 7.82 & 0.00 & 29.00 & 55.00 & 3.11 & 7.82 \\
+P estrés = 0.1 & S5 cola & 3.73 & 8.16 & 58.23 & 31.85 & 54.92 & 3.47 & 8.97 \\
+P estrés = 0.2 & S5 cola & 9.31 & 20.46 & 380.00 & 45.00 & 51.25 & 4.18 & 10.39 \\
+sin C\_STRESS\_1 & S5 cola & 2.81 & 6.83 & 84.28 & 29.00 & 54.98 & 3.02 & 8.24 \\
+sin C\_STRESS\_2 & S5 cola & 2.94 & 0.54 & 306.68 & 20.00 & 47.08 & 3.49 & 6.37 \\
+sin C\_STRESS\_3 & S5 cola & 2.74 & 6.86 & 81.35 & 29.00 & 55.00 & 3.01 & 8.24 \\
+sin C\_STRESS\_4 & S5 cola & 2.39 & 5.24 & 298.90 & 25.06 & 51.98 & 2.92 & 8.24 \\
+semilla 1 & S6 semillas & 2.88 & 7.68 & 34.55 & 27.27 & 55.00 & 2.91 & 7.93 \\
+semilla 2 & S6 semillas & 2.67 & 6.48 & 106.63 & 28.34 & 55.00 & 2.96 & 7.74 \\
+semilla 3 & S6 semillas & 2.87 & 7.72 & 16.90 & 28.15 & 55.00 & 2.88 & 7.82 \\
+semilla 4 & S6 semillas & 2.41 & 5.59 & 134.10 & 28.28 & 55.00 & 2.76 & 7.34 \\
+semilla 5 & S6 semillas & 3.03 & 6.35 & 88.07 & 29.00 & 54.92 & 3.27 & 7.49 \\
+deriva ALL\_ZERO & S7 deriva & -0.32 & 9.12 & 181.40 & 21.76 & 52.71 & -0.23 & 9.93 \\
++ C\_STRESS\_PEN\_UP & S8 estrés & 2.55 & 7.25 & 270.09 & 20.00 & 49.37 & 2.78 & 11.70 \\
+cupones PERIOD\_FORWARD & S9 cupones & 2.12 & 7.28 & 100.00 & 29.00 & 55.00 & 2.09 & 8.12 \\
+\bottomrule
+\end{tabular}
+\end{table}
