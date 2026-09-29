@@ -1,4 +1,36 @@
 \section{Algoritmo e implementación}\label{sec:algoritmo}
-% Arquitectura en 5 capas (i) JSON (ii) valorización (iii) riesgo (iv) optimización (v) resultados.
-% Solver, tolerancias, tratamiento de la singularidad de SigmaF, semilla.
-\todo{Describir arquitectura y solver.}
+
+El modelo se resuelve en cinco etapas secuenciales, cada una consumiendo la salida de la anterior.
+
+\textbf{(i) Datos del caso.} Los parámetros del caso asignado (presupuestos, límites del Cuadro~4 del caso, nivel de
+confianza, aversión al riesgo, tamaño y semilla del remuestreo) y las posiciones y flujos contractuales
+limpios se consolidan en un único documento de entrada, para que ningún límite, costo o posición quede fijado
+fuera de esos datos.
+
+\textbf{(ii) Valorización.} Cada instrumento se valora a $t_0$ descontando sus flujos contractuales con la
+curva cero de su moneda más un spread calibrado para que ese valor coincida con el valor de mercado
+observado, con una tolerancia de $10^{-6}$. La misma función de valorización, con
+el mismo spread fijo, revaloriza cada instrumento bajo cualquier escenario de mercado.
+
+\textbf{(iii) Escenarios y riesgo.} Se generan las 504 trayectorias descritas en la Sección~\ref{sec:riesgo} (500
+por remuestreo más 4 de estrés) y se revaloriza cada uno de los doce instrumentos bajo cada una, para obtener
+la matriz de resultados $r_{k,s}$ que alimenta la optimización. Calcular esa matriz completa toma cerca de un
+minuto y se reutiliza en todas las variantes que no cambian los escenarios ni la valorización.
+
+\textbf{(iv) Optimización.} Con $r_{k,s}$ fija, el problema lineal de la ecuación~\eqref{eq:objetivo} se
+plantea con \textcite{diamond2016} y se resuelve con el solver de programación lineal de código abierto
+HiGHS. La instancia base (12 instrumentos, 504 escenarios y unas 40 restricciones de peso y presupuesto)
+converge en 167 iteraciones de simplex y 11 milisegundos. Cuando un grupo de peso queda vacío por la
+composición de los instrumentos y su límite inferior es positivo, o cuando los límites de caja o patrimonio
+resultan incompatibles entre sí, el problema se declara sin solución en vez de forzar un resultado.
+
+\textbf{(v) Resultados.} La solución óptima, el barrido de la aversión al riesgo $\lambda$, un punto de
+comparación de mínima varianza con el mismo resultado neto esperado, el diagnóstico de la posición inicial y
+la variante que exige los límites de vencimiento también en el horizonte (Sección~\ref{sec:resultados}) se calculan
+en la misma corrida y quedan disponibles como un único registro de resultados: cada cifra, tabla y figura de
+este informe se lee directamente de ese registro, sin transcripción manual.
+
+Todo el proceso es reproducible con una semilla fija para el remuestreo. La elección de revalorizar cada
+escenario en vez de propagar la matriz de covarianzas de los 24 factores de riesgo (Sección~\ref{sec:datos}) evita
+tener que reducir su dimensión: esa matriz es singular y una aproximación lineal exigiría antes una
+descomposición de componentes principales o un filtro equivalente, con su propio error de aproximación.

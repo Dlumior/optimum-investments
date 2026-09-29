@@ -2,6 +2,7 @@
 \centering
 \caption{Spreads de calibración (V0 = valor de mercado al 31-12-2025).}
 \label{tab:spreads}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lllrrrr}
 \toprule
  & tipo & moneda & spread Excel (pb) & spread calibrado (pb) & V0 (S/ mm) & dif. spread (pb) \\
@@ -19,5 +20,5 @@ L04 & LOAN\_FLOAT & PEN & 143.87 & 143.37 & 110.00 & -0.50 \\
 L05 & BOND\_FIXED & USD & 153.29 & 152.90 & 140.00 & -0.39 \\
 L06 & LOAN\_FLOAT & USD & 144.19 & 143.80 & 100.00 & -0.40 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

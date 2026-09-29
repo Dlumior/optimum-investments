@@ -2,6 +2,7 @@
 \centering
 \caption{Restricciones en el óptimo: pesos (fracción del lado), montos (S/ mm) y límites activos.}
 \label{tab:restricciones-optimo}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrrll}
 \toprule
  & Valor & Mín. & Máx. & Activa & Nota \\
@@ -36,5 +37,5 @@ minNetWorth & 200.000 & 120.000 & -- &  &  \\
 maxLiabilitiesToAssets & 0.800 & -- & 0.850 &  &  \\
 nonNegativity & 0.000 & 0.000 & -- & sí &  \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

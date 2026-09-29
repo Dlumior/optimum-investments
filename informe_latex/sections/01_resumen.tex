@@ -1,5 +1,24 @@
 \section{Resumen ejecutivo}\label{sec:resumen}
-% 1/2 página. Problema, decisión recomendada, cifras clave (antes -> después), principal riesgo.
-\todo{Recomendación en 3--4 frases con las cifras principales.}
 
-% \input{tables/resumen_metricas}
+Optimum Investments cierra 2025 con un patrimonio neto (PN) de \PEN200 mm sobre \PEN1{,}000 mm de activos
+y \PEN800 mm de pasivos. Evaluada a un año con la historia de mercado 2021--2025, esa posición inicial
+arriesga mucho más de lo que rinde: el resultado esperado es de solo \PEN3.96 mm, pero la volatilidad del
+patrimonio es de \PEN25.4 mm y su pérdida esperada en el 5\,\% de escenarios más adversos (CVaR al 95\,\%)
+alcanza \PEN50.1 mm, un cuarto del patrimonio. La cartera además incumple el propio límite de renta variable
+del banco (22\,\% de los activos contra un máximo de 20\,\%).
+
+Este informe recomienda reestructurar activos y pasivos hacia la cartera que minimiza esa pérdida de cola con
+una aversión al riesgo $\lambda = 0.25$: subir la caja en soles a \PEN200 mm, concentrar la renta fija en soles
+en el bono A02 (hasta su tope individual de \PEN350 mm), duplicar la posición en el bono flotante en dólares
+A05 (a \PEN240 mm), liquidar el bono fijo en dólares A04 y recortar la renta variable a su piso de \PEN50 mm;
+del lado de los pasivos, llevar el préstamo corto en soles L01 a su tope de \PEN280 mm y reducir el bono fijo
+L02 a \PEN40 mm. Pagando \PEN2.73 mm en costos de transacción, esta cartera baja la volatilidad del patrimonio
+a \PEN7.0 mm y el CVaR al 95\,\% a \PEN7.8 mm --- una caída de 84\,\% --- a cambio de solo \PEN0.85 mm de
+resultado esperado neto (de \PEN3.96 mm a \PEN3.11 mm).
+
+El principal riesgo de esta recomendación no es de mercado sino de modelo: los cuatro escenarios de estrés del
+caso deprecian el sol sin excepción, y sustituir la regla de proyección de cupones flotantes por la forward del
+período cambia el resultado de la cartera óptima en el escenario de estrés más severo de \mbox{$-$\PEN18.8 mm} a
+\mbox{$-$\PEN5.8 mm} (Sección~\ref{sec:sensibilidad}). Además, el préstamo corto L01 llevado a su tope incumple con
+certeza (100\,\% de probabilidad) el límite de vencimientos de corto plazo una vez llegado el horizonte;
+exigir ese límite también en el horizonte cuesta \PEN0.29 mm de resultado esperado neto.

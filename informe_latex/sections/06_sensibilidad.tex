@@ -1,3 +1,82 @@
 \section{Validación y análisis de sensibilidad}\label{sec:sensibilidad}
-% Pruebas (Anexo C), cambios en lambda, tasas (+200 pb cortas), límites y costos.
-\todo{Sensibilidades del caso.}
+
+\subsection{Shocks instantáneos de tasas}\label{subsec:shocks-tasas}
+Aplicar shocks paralelos de $\pm 200$ pb a $t_0$, sin reoptimizar, muestra que ninguna de las tres carteras es
+neutral a tasas (Cuadro~\ref{tab:sens-tasas}). La cartera óptima gana
+\PEN10.05 mm ante un alza paralela conjunta de 200 pb y pierde \PEN13.62 mm ante la baja simétrica, con el
+mayor efecto individual en la tasa de dólares (+\PEN12.52 mm ante USD+200 pb): la estructura de pasivos en
+dólares queda más expuesta a su costo de financiamiento que los activos en dólares a su rendimiento. El shock
+que solo mueve el tramo corto de la curva (SHORT+200) revela además un riesgo de modelo: con la regla de
+cupones base, la cartera óptima gana \PEN8.47 mm; recalculando el mismo shock con los cupones flotantes
+indexados a la forward del período en vez de al nivel plano del factor de referencia, el resultado se invierte
+a \mbox{$-$\PEN0.49} mm. El signo del riesgo de tasa corta depende, en este caso, más de la convención de
+proyección de cupones que del propio shock.
+
+\input{tables/sensibilidad_tasas}
+
+\subsection{Precios sombra de los límites activos}
+Cinco límites de peso están activos en el óptimo, todos con precio sombra positivo (Cuadro~\ref{tab:precios-sombra}):
+el máximo de renta fija en los activos es el más caro de relajar (\PEN0.39 mm de objetivo por punto porcentual
+de presupuesto de activos), seguido del máximo de caja (\PEN0.20 mm) y del tope individual del bono A02
+(\PEN0.09 mm); el tope del préstamo L01 y el par de límites fijo/flotante de los pasivos valen menos de
+\PEN0.03 mm por punto porcentual. Comparar la dual con una diferencia finita de 0.5 y de 5 puntos porcentuales
+muestra que el valor óptimo es cóncavo y lineal por tramos en cada límite: la ganancia marginal de relajar
+el máximo de renta fija baja de \PEN0.39 mm a \PEN0.34 mm en promedio sobre una banda de 5 puntos. La dual,
+por eso, solo es una buena aproximación para relajaciones pequeñas.
+
+\input{tables/precios_sombra}
+
+\subsection{Costos, confianza y peso de la cola}
+El resto de las sensibilidades reoptimiza la cartera bajo variantes del caso base (Cuadro~\ref{tab:sens-resumen}).
+Sin costo de transacción, la rotación se triplica (\PEN593 mm movidos, más de la mitad del presupuesto
+conjunto) persiguiendo soluciones de esquina; duplicar o cuadruplicar el costo calibrado la reduce a la mitad
+sin cambiar mucho el $\CVaR_{95\%}$, señal de que la cartera óptima del caso base no está al borde de un
+costo crítico. Subir el nivel de confianza de 95\,\% a 99\,\% sube el $\CVaR$ de \PEN7.82 mm a \PEN9.23 mm
+pero mueve la cartera muy poco (a menos de 60 mm de distancia de la base, sobre \PEN1{,}800 mm de presupuesto
+conjunto): la elección de $\alpha$ afecta la magnitud del riesgo reportado, no la composición de la cartera.
+Subir la probabilidad conjunta de los cuatro escenarios de estrés de 5\,\% a 20\,\% sí cambia la composición:
+los activos en dólares suben de 29\,\% a 45\,\%, y el $\CVaR$ casi se triplica (a \PEN20.46 mm). Dejar
+fuera, uno a la vez, cada escenario de estrés muestra que casi todo el riesgo de cola proviene de uno solo:
+sin C\_STRESS\_2 (la baja de tasas con depreciación del sol) el $\CVaR$ de la cartera reoptimizada cae a
+\PEN0.54 mm, mientras que sin cualquiera de los otros tres apenas baja a \PEN5--7 mm.
+
+\input{tables/sensibilidades_resumen}
+
+Reoptimizar con cinco semillas alternativas del remuestreo da un $\CVaR_{95\%}$ entre \PEN5.6 mm y \PEN7.7 mm
+(contra \PEN7.82 mm en la base) y carteras a no más de \PEN134 mm de distancia de la óptima: hay algo de
+sobreajuste a la muestra de escenarios, pero no cambia la composición central. Sustituir la deriva mixta de la
+Sección~\ref{sec:riesgo} por una deriva nula en los 24 factores invierte el signo del resultado esperado neto de la
+cartera óptima (de \PEN3.11 mm a \mbox{$-$\PEN0.32} mm) y sube su $\CVaR$ a \PEN9.12 mm: buena parte del
+resultado esperado del caso base depende del supuesto de prima de riesgo en renta variable y de paridad de
+tasas en el tipo de cambio, no solo de evitar la cola.
+
+\begin{figure}[htbp]\centering
+  \caption{$\CVaR_{95\%}$ de la cartera óptima base sin reoptimizar frente a la cartera reoptimizada, en cada
+  variante de sensibilidad.}\label{fig:robustez}
+  \includegraphics[width=0.75\linewidth]{robustez_cvar.pdf}
+\end{figure}
+
+\subsection{Sesgo del conjunto de estrés y regla de cupones}\label{subsec:sesgo-estres}
+Los cuatro escenarios de estrés del caso deprecian el sol; ninguno lo aprecia. Agregar un escenario adicional,
+espejo de C\_STRESS\_1 pero con el sol apreciándose 20\,\%, baja el resultado esperado neto de la cartera
+óptima a \PEN2.55 mm y sube su $\CVaR_{95\%}$ a \PEN11.70 mm: parte de la preferencia del modelo por activos
+en dólares refleja que el conjunto de estrés oficial castiga solo una dirección del tipo de cambio.
+Reproyectar los cupones flotantes con la forward del período en vez de con el nivel plano del factor de
+referencia confirma el hallazgo del apartado~\ref{subsec:shocks-tasas} a escala de cartera completa (Cuadro~\ref{tab:estres-cupones}): en
+el escenario más severo, C\_STRESS\_3, la pérdida de la cartera óptima base cae de \PEN18.80 mm a \PEN5.79 mm
+con la sola reproyección, sin reoptimizar. Gran parte de la ganancia de estrés que exhibe el óptimo del
+caso base es, entonces, una convención de modelo y no una posición de mercado.
+
+\input{tables/estres_regla_cupones}
+
+\subsection{Incumplimientos al horizonte}
+Evaluando la cartera óptima en $t_H$ bajo cada escenario, el único incumplimiento determinista es el límite de
+pasivos con vencimiento a 12 meses o menos: con probabilidad 100\,\%, porque llevar L01 a su tope de
+concentración hoy implica que en $t_H$ le queda menos de un año de vida y su peso (37.8\,\%) supera el máximo
+de 25\,\%. Es un incumplimiento estructural, causado por el paso del tiempo y no por el mercado. Los demás
+incumplimientos son de mercado y dependen del escenario: el máximo de renta fija en activos se supera en
+67.7\,\% de los escenarios y el mínimo de tasa fija en pasivos en 33.6\,\%. Exigir el cumplimiento también en
+$t_H$ (Cuadro~\ref{tab:incumplimientos-horizonte}, última columna) elimina el incumplimiento estructural pero
+no los de mercado, y a un costo de \PEN0.29 mm de objetivo (Sección~\ref{sec:resultados}).
+
+\input{tables/incumplimientos_horizonte}

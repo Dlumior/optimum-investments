@@ -13,6 +13,20 @@ import pandas as pd
 from optimum import paths
 
 
+def _fit_to_page_width(tex: str) -> str:
+    """Envuelve la tabular en \\resizebox para que nunca exceda el ancho de página.
+
+    \\ifdim\\width>\\textwidth compara el ancho natural de la tabla con \\textwidth: la encoge
+    solo si no entra, y deja intactas las tablas angostas (no las estira).
+    """
+    tex = tex.replace(
+        "\\begin{tabular}",
+        "\\resizebox{\\ifdim\\width>\\textwidth\\textwidth\\else\\width\\fi}{!}{%\n\\begin{tabular}",
+        1,
+    )
+    return tex.replace("\\end{tabular}\n\\end{table}", "\\end{tabular}}\n\\end{table}", 1)
+
+
 def save_table(
     df: pd.DataFrame,
     name: str,
@@ -37,6 +51,7 @@ def save_table(
         position="htbp",
         position_float="centering",
     )
+    tex = _fit_to_page_width(tex)
     f = out_dir / f"{name}.tex"
     f.write_text(tex, encoding="utf-8")
     return f

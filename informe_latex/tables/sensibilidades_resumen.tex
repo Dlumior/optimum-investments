@@ -2,6 +2,7 @@
 \centering
 \caption{S3--S9: variantes reoptimizadas y cartera base $x^*$ evaluada con el modelo de cada variante (S/ mm y \% del lado). En S4 el CVaR usa el $\alpha$ de la fila.}
 \label{tab:sens-resumen}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{llrrrrrrr}
 \toprule
  & Grupo & E − TC & CVaR & Distancia a x* & Activos USD (\%) & Pasivos flot. (\%) & E − TC de x* & CVaR de x* \\
@@ -31,5 +32,5 @@ deriva ALL\_ZERO & S7 deriva & -0.32 & 9.12 & 181.40 & 21.76 & 52.71 & -0.23 & 9
 + C\_STRESS\_PEN\_UP & S8 estrés & 2.55 & 7.25 & 270.09 & 20.00 & 49.37 & 2.78 & 11.70 \\
 cupones PERIOD\_FORWARD & S9 cupones & 2.12 & 7.28 & 100.00 & 29.00 & 55.00 & 2.09 & 8.12 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

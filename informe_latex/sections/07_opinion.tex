@@ -1,3 +1,31 @@
 \section{Opinión del analista}\label{sec:opinion}
-% Fortalezas y debilidades del modelo; qué cambiaría con más datos/tiempo.
-\todo{Opinión crítica.}
+
+El modelo tiene tres fortalezas que valen su costo computacional. Primero, revalorizar cada instrumento por
+sus flujos completos, en vez de aproximar con duración o DV01, es lo que permite detectar que el riesgo de
+tasa corta de la cartera óptima cambia de signo según la convención de proyección de cupones flotantes
+(Sección~\ref{sec:sensibilidad}); una aproximación lineal habría escondido ese riesgo de modelo. Segundo, linealizar
+el CVaR con la formulación de Rockafellar--Uryasev mantiene el problema como programa lineal, resoluble en
+milisegundos, sin perder la coherencia entre el CVaR que entra en el objetivo y el que se reporta \emph{ex
+post}. Tercero, la batería de nueve sensibilidades (tasas, precios sombra, costos, confianza, peso de la
+cola, semilla, deriva, sesgo del estrés y regla de cupones) obliga a distinguir qué parte del resultado viene
+de la optimización y qué parte viene de supuestos que el enunciado del caso no fija por completo.
+
+Esa misma batería expone las debilidades del modelo. El conjunto de estrés castiga solo una dirección del
+tipo de cambio: los cuatro escenarios deprecian el sol. Buena parte de la preferencia de la cartera
+óptima por activos en dólares depende de esa asimetría (apartado~\ref{subsec:sesgo-estres}), y un comité de riesgos debería incorporar un
+escenario de apreciación del sol al conjunto base, no solo como sensibilidad. El remuestreo por bloques
+reproduce bien la razón de varianzas a 12 meses observada en la historia, pero esa historia cubre cinco años y
+un solo ciclo de alza de tasas; la prueba de semillas alternativas muestra una dispersión de CVaR de
+\PEN5.6 mm a \PEN7.7 mm que, sin ser grande, tampoco es despreciable frente al \PEN7.82 mm de la base. Y la
+convención de proyección de cupones flotantes (nivel plano del factor de referencia frente a forward del
+período) no está fijada de manera inequívoca por los datos del caso y cambia materialmente el resultado en
+el escenario de estrés más severo; este informe la trata como una sensibilidad porque no hay evidencia
+suficiente para preferir una convención sobre la otra, pero es la fuente de riesgo de modelo más grande de
+todo el análisis.
+
+Con más tiempo o más datos, extendería la historia de mercado más allá de cinco años para cubrir más de un
+ciclo de tasas, y adoptaría como cartera base la variante que exige los límites de vencimiento también en el
+horizonte: la solución base los incumple con certeza en el préstamo corto L01, y corregirlo cuesta solo
+\PEN0.29 mm de resultado esperado neto. También agregaría de forma permanente al conjunto de estrés un
+escenario de apreciación del sol, en vez de dejarlo como sensibilidad aparte, para que la cartera recomendada
+no dependa de la dirección cambiaria de los cuatro escenarios que trae el caso.

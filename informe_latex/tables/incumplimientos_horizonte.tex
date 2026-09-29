@@ -2,6 +2,7 @@
 \centering
 \caption{Incumplimientos al horizonte de la solución óptima (λ = 0.25) y de la variante ENFORCE.}
 \label{tab:incumplimientos-horizonte}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrrrlr}
 \toprule
  & Prob. (\%) & Peor valor & Mín. & Máx. & Causa & Prob. ENFORCE (\%) \\
@@ -17,5 +18,5 @@ Pasivos · RATE\_TYPE · FLOAT & 33.580 & 0.591 & 0.200 & 0.550 & mercado & 0.00
 Pasivos · MATURITY · LE\_12M & 100.000 & 0.378 & 0.000 & 0.250 & estructural & 35.640 \\
 Pasivos · CONCENTRATION · SINGLE\_POSITION · L01 & 36.130 & 0.378 & 0.000 & 0.350 & mercado & 0.000 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

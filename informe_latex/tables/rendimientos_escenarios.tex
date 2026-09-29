@@ -2,6 +2,7 @@
 \centering
 \caption{Resultado a un año por instrumento en los escenarios (para pasivos, costo).}
 \label{tab:rendimientos}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lllrrrr}
 \toprule
  & lado & moneda & E[r] (\%) & σ(r) (\%) & r estrés mín. (\%) & r estrés máx. (\%) \\
@@ -19,5 +20,5 @@ L04 & LIABILITY & PEN & 6.51 & 0.98 & 0.34 & 8.57 \\
 L05 & LIABILITY & USD & 6.83 & 6.44 & 13.11 & 28.66 \\
 L06 & LIABILITY & USD & 6.92 & 7.20 & 11.03 & 39.77 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

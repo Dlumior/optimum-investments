@@ -1,19 +1,96 @@
 \section{Formulación del problema}\label{sec:formulacion}
-% Fuente de verdad: docs/formulacion.md (se escribe ANTES del código).
+
+El problema es una decisión estática: elegir en $t_0$ (31-12-2025) el monto de cada posición de activo y de
+pasivo para el horizonte de un año ($t_H$ = 31-12-2026), sin rebalanceo dentro del año. Se optimiza la
+estructura conjunta de los seis activos y los seis pasivos existentes; no se considera deuda nueva, porque el
+caso asignado no la incluye en su alcance.
 
 \subsection{Variables de decisión}
-\todo{Definir variables, dominio y unidades.}
+Sea $i$ un activo, $j$ un pasivo y $k$ cualquiera de los doce instrumentos. Las variables son:
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+Variable & Descripción & Dominio & Unidad \\
+\midrule
+$x_i$ & monto asignado al activo $i$ & $x_i \ge 0$ & S/ mm \\
+$y_j$ & monto asignado al pasivo $j$ & $y_j \ge 0$ & S/ mm \\
+$\Delta_k^+,\ \Delta_k^-$ & aumento y reducción frente a la posición inicial $x_k^0$ & $\ge 0$ & S/ mm \\
+$\zeta$ & valor en riesgo auxiliar (Rockafellar--Uryasev) & libre & S/ mm \\
+$u_s$ & exceso de pérdida del escenario $s$ sobre $\zeta$ & $\ge 0$ & S/ mm \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+No hay posiciones cortas: la ausencia de esa alternativa en los datos del caso se traduce en $x_i, y_j \ge 0$.
+La reestructuración de cada instrumento se descompone en $x_k - x_k^0 = \Delta_k^+ - \Delta_k^-$, lo que
+permite penalizar simétricamente cualquier movimiento, subida o bajada, sin usar variables binarias.
 
 \subsection{Función objetivo}
+El resultado del patrimonio y su pérdida en el escenario $s$ son
 \begin{equation}
-  \max_{\bm{w}} \; \E[\text{PN}_T(\bm{w})] - \lambda\, \rho\big(\text{PN}_T(\bm{w})\big) - \text{TC}(\bm{w})
+  \Delta PN_s = \sum_{i} x_i\, r_{i,s} - \sum_{j} y_j\, r_{j,s}, \qquad L_s = -\Delta PN_s,
+\end{equation}
+donde $r_{k,s}$ es el resultado a un año del instrumento $k$ bajo el escenario $s$ (Sección~\ref{sec:riesgo}). El
+costo de transacción $TC = \sum_k c_k\,(\Delta_k^+ + \Delta_k^-)$ se paga en $t_0$, es determinista y no
+depende del escenario. El problema es
+
+\begin{equation}
+  \max_{x,\,y,\,\Delta,\,\zeta,\,u}\quad \sum_{s} p_s\,\Delta PN_s \;-\; \lambda\left(\zeta + \frac{1}{1-\alpha}\sum_s p_s\, u_s\right) \;-\; TC
+  \qquad\text{s.a. } u_s \ge L_s - \zeta,\ u_s \ge 0.
   \label{eq:objetivo}
 \end{equation}
-\todo{Adaptar al caso asignado: $\rho$ = volatilidad o CVaR, costos, penalizaciones.}
+
+El término entre paréntesis es el $\CVaR_\alpha$ de la pérdida $L_s$ en su forma lineal de
+\textcite{rockafellar2000}: minimizarlo sobre $\zeta$ recupera exactamente el valor en riesgo al nivel
+$\alpha$ y el promedio de las pérdidas que lo superan; maximizarlo dentro del objetivo con el signo opuesto
+(ponderado por la aversión al riesgo $\lambda \ge 0$) penaliza esa cola sin perder la linealidad del
+problema. Con $\lambda = 0$ el objetivo maximiza solo el resultado esperado neto de costos; a medida que
+$\lambda$ crece, la solución se acerca a la que minimiza el $\CVaR_{0.95}$ alcanzable (Sección~\ref{sec:resultados}).
+El costo de transacción se resta una sola vez, fuera de $L_s$: es un costo cierto de la decisión, no un
+riesgo de mercado, de modo que se reporta por separado el patrimonio neto de costos, $PN_0' = PN_0 - TC$, y
+su valor esperado al horizonte, $\E[PN_T] = PN_0' + \E[\Delta PN]$.
+
+Con probabilidades no uniformes y masas de probabilidad concentradas en unos pocos escenarios de estrés, el
+cuantil que define el valor en riesgo puede no ser único cuando $\lambda \to 0$; por eso el $\VaR$ y el
+$\CVaR$ que se reportan en los resultados se recalculan \emph{ex post}, sobre la distribución completa de
+$\Delta PN_s$, con la definición de átomo fraccional
+$\CVaR_\alpha = \frac{1}{1-\alpha}\big[\sum_{L_s > \VaR} p_s L_s + \VaR\,(1-\alpha - \sum_{L_s > \VaR} p_s)\big]$,
+en vez de leer directamente la variable $\zeta$ de la ecuación~\eqref{eq:objetivo}.
 
 \subsection{Restricciones}
-\todo{Cuadro 4 + patrimonio mínimo \PEN120 mm, $P/A \le 85\%$, caja mínima \PEN80 mm, presupuestos, no negatividad.}
+Los presupuestos $\sum_i x_i = B_A = 1{,}000$ y $\sum_j y_j = B_L = 800$ (S/ mm) son exógenos y fijan el
+denominador de cada peso, de modo que las restricciones del Cuadro~4 del caso son lineales en las variables
+de decisión: para cada grupo $g$ (moneda, tipo de instrumento, tipo de tasa o vencimiento remanente) y cada
+lado $l \in \{A, L\}$,
+\begin{equation}
+  \underline{w}_g\, B_l \;\le\; \sum_{k \in \mathcal{K}_g} z_k \;\le\; \overline{w}_g\, B_l, \qquad z = x \text{ o } y.
+\end{equation}
+Un grupo adicional, de concentración, acota individualmente cada instrumento ($z_k \le \overline{w}_g\, B_l$).
+Sobre esos límites, el patrimonio neto en $t_0$ debe ser de al menos \PEN120 mm, el cociente pasivos/activos
+de a lo más 0.85 y la caja de al menos \PEN80 mm; con los presupuestos fijos, las dos primeras ya se cumplen
+por construcción ($PN_0 = 200$, $P/A = 0.80$) y se mantienen en el modelo solo para que el solver las
+verifique y el informe las reporte.
 
-\subsection{Modelo de riesgo}
-Aproximación local $\Delta V \approx \M\,\Delta F$ y $\SigmaV = \M \SigmaF \M^\top$, o
-revalorización completa por escenario. \todo{Justificar la elección.}
+\subsection{Modelo de riesgo}\label{sec:riesgo}
+El resultado por instrumento $r_{k,s}$ no se aproxima con una duración o un DV01, sino que se obtiene
+revalorizando cada instrumento completo al horizonte bajo el escenario $s$:
+\begin{equation}
+  r_{k,s} = \frac{V_k^{PEN}(t_H;\,\text{mercado}_s) + CF_k^{PEN}(t_0, t_H]_s}{V_k^{PEN}(t_0)} - 1,
+\end{equation}
+donde $V_k(t_H)$ es el valor presente de los flujos posteriores a $t_H$ descontados con la curva del
+escenario y $CF_k(t_0, t_H]$ son los flujos cobrados o pagados dentro del año, convertidos a soles al tipo de
+cambio del escenario en su fecha de pago y sin reinvertir. Como $r_{k,s}$ no depende del tamaño de la
+posición, la ecuación~\eqref{eq:objetivo} con esta matriz de resultados fijada de antemano es un problema
+lineal.
+
+Los escenarios $s$ combinan dos fuentes, con probabilidad conjunta 95\,\%/5\,\%: 500 trayectorias de un año
+obtenidas por remuestreo de la historia mensual, y los cuatro escenarios de estrés propios del caso, cada uno
+con probabilidad 1.25\,\%. El remuestreo concatena dos bloques de seis meses consecutivos de cambios
+históricos, en vez de doce meses independientes, para conservar la persistencia mensual documentada en la
+Sección~\ref{sec:datos} y no subestimar la varianza anual. A ese shock centrado se le suma una deriva anual que
+depende de la clase de factor: nula en las tasas (para no proyectar el ciclo alcista de 2021--2025 hacia
+adelante), la paridad de tasas implícita en las curvas de $t_0$ en el tipo de cambio, y el promedio histórico
+del log-retorno mensual en la renta variable (aproximadamente 6\,\%/año). Dentro del horizonte, cada factor se
+mueve linealmente entre su valor en $t_0$ y su valor bajo el escenario en $t_H$, la misma regla con la que se
+reproyectan los cupones flotantes que se fijan dentro del año y con la que devenga la caja.
