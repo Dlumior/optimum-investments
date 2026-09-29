@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "econ-write": {
+      "source": "hanlulong/econ-writing-skill",
+      "sourceType": "github",
+      "skillPath": "skills/econ-write/SKILL.md",
+      "computedHash": "d578a4ad898901496259d5429be5c0f2630ade1a9361136cedef0d7ffd6b9c85"
+    }
+  }
+}

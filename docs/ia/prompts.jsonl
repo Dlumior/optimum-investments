@@ -61,3 +61,4 @@
 {"ts": "2026-09-28T20:49:36", "session": "af31c2b8-37bc-4526-971c-59f962d83cdb", "prompt": "Hay referencias al Cuadro 4 que no estan con un ref. \n\nLas referencias a las secciones estan como §3. preferiria ser mas explicito"}
 {"ts": "2026-09-28T20:54:11", "session": "af31c2b8-37bc-4526-971c-59f962d83cdb", "prompt": "Los captions de los cuadros estan arriba. Entonces para seguir con lo mismo los captions de las imagenes deben estar encima de la imagen"}
 {"ts": "2026-09-28T21:13:45", "session": "af31c2b8-37bc-4526-971c-59f962d83cdb", "prompt": "Hagamos el commit"}
+{"ts": "2026-09-28T21:15:25", "session": "f0786d38-c9d6-49ec-9d7f-18e34ab5a290", "prompt": "hagamos el commit de los archivos"}
