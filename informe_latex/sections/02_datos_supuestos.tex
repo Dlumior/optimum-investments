@@ -1,59 +1,65 @@
 \section{Datos y supuestos}\label{sec:datos}
 
 \subsection{Balance inicial}
-El balance al 31-12-2025 (Cuadro~\ref{tab:balance}) tiene seis posiciones de activo (A01--A06) y seis de
-pasivo (L01--L06), en soles (PEN) y dólares (USD). Los activos combinan caja, dos bonos y un préstamo
-titulizado en soles, un bono y un bono flotante en dólares, y un fondo cotizado (ETF) de renta variable
-global; los pasivos combinan tres emisiones en soles (una de ellas flotante y de corto plazo) y dos
-obligaciones en dólares (una fija, una flotante). El patrimonio neto inicial es $PN_0 = 1{,}000 - 800 = 200$
-S/ mm, es decir un apalancamiento pasivo/activo de 0.80, y toda la posición es solvente frente a los límites
-comunes salvo el peso de renta variable, que a 22\,\% de los activos supera el máximo de 20\,\% del Cuadro~4
-del caso.
+El balance al 31-12-2025 tiene seis posiciones de activo y seis de pasivo. Los montos iniciales están en la
+columna ``Inicial'' del Cuadro~\ref{tab:posiciones-optimas}.
 
-\input{tables/balance_inicial}
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+ & En soles (PEN) & En dólares (USD) \\
+\midrule
+Activos & caja (A01), bono fijo (A02), bono flotante (A03) & bono fijo (A04), bono flotante (A05), \\
+ & & fondo cotizado de renta variable global (A06) \\
+Pasivos & préstamo flotante de corto plazo (L01), & bono fijo (L05), préstamo flotante (L06) \\
+ & dos bonos fijos (L02, L03), préstamo flotante (L04) & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El patrimonio neto inicial es $\PN_0 = 1{,}000 - 800 = 200$ S/ mm, con un cociente pasivo/activo de 0.80. La
+posición cumple todos los límites comunes menos uno: la renta variable pesa el 22\,\% de los activos y el
+máximo del Cuadro~4 del enunciado es 20\,\%.
 
 \subsection{Historia de mercado y factores de riesgo}
-La historia de mercado cubre 60 observaciones mensuales (enero de 2021 a diciembre de 2025) de las curvas
-cero de soles y dólares en seis nodos (O/N, 1, 3, 5, 10 y 20 años), el tipo de cambio PEN/USD y un índice
-de renta variable en dólares (Figura~\ref{fig:curvas}). A esos 14 factores se agregan diez tasas forward por
-segmento, usadas para indexar los cupones de los instrumentos flotantes, hasta completar los 24 factores de
-riesgo del modelo. Los cambios mensuales se miden como diferencia absoluta en las tasas y como log-retorno en
-el tipo de cambio y la renta variable, la convención estándar para series de tasas y de precios
-respectivamente.
+La historia de mercado tiene 60 observaciones mensuales, de enero de 2021 a diciembre de 2025. Incluye:
+\begin{itemize}
+  \item las curvas cero de soles y dólares en seis nodos (O/N, 1, 3, 5, 10 y 20 años);
+  \item el tipo de cambio PEN/USD;
+  \item un índice de renta variable en dólares (Figura~\ref{fig:curvas}).
+\end{itemize}
+A esos 14 factores se agregan diez tasas forward por segmento, que indexan los cupones de los instrumentos
+flotantes, para un total de 24 factores de riesgo. Los cambios mensuales se miden como diferencia absoluta
+en las tasas y como log-retorno en el tipo de cambio y la renta variable.
 
 \begin{figure}[htbp]\centering
   \caption{Curvas spot PEN y USD, 2021--2025 (nodos seleccionados).}\label{fig:curvas}
-  \includegraphics[width=0.85\linewidth]{curvas_spot_historicas.pdf}
+  \includegraphics[width=0.7\linewidth]{curvas_spot_historicas.pdf}
 \end{figure}
 
-Los cambios mensuales de las tasas cortas y de la renta variable tienen una autocorrelación de primer orden
-muy alta (0.94 en la tasa O/N en soles, 0.96 en dólares, 0.91 en el índice de renta variable) y una razón de
-varianza a 12 meses de entre 3.8 y 6.9 veces la varianza mensual multiplicada por 12: los cambios mensuales no
-son independientes en el tiempo, sino que persisten en la misma dirección durante varios meses. El tipo de
-cambio es la excepción, con autocorrelación de 0.56. Esta persistencia es la razón por la que el modelo de
-escenarios de la Sección~\ref{sec:formulacion} remuestrea bloques de meses consecutivos en lugar de meses
-independientes: un bootstrap mes a mes subestimaría el riesgo anual en la misma proporción que esa razón de
-varianzas.
+Los cambios mensuales de las tasas cortas y de la renta variable persisten en la misma dirección durante
+varios meses. Su autocorrelación de primer orden es de 0.94 en la tasa O/N en soles, 0.96 en dólares y 0.91
+en la renta variable. La razón de varianza a 12 meses, es decir, la varianza anual dividida por 12 veces la
+varianza mensual, va de 3.8 a 6.9. El tipo de cambio es la excepción, con una autocorrelación de 0.56. Por
+esta persistencia, el modelo de escenarios remuestrea bloques de meses consecutivos
+\parencite{kunsch1989} en lugar de meses independientes. Un bootstrap mes a mes subestimaría la varianza
+anual en esa proporción, y la volatilidad en su raíz cuadrada.
 
-La matriz de covarianzas mensuales de los 24 factores es singular: 17 de sus 24 autovalores son
-numéricamente cero (Figura~\ref{fig:autovalores}), porque las diez tasas forward que indexan los cupones
-flotantes son funciones exactas de la curva spot de su moneda. Solo tres componentes explican el 99.2\,\% de
-la varianza total. Por eso el modelo de riesgo no aproxima el patrimonio con esa covarianza y una matriz de
-sensibilidades lineales, sino que revaloriza cada instrumento por sus flujos de caja bajo cada escenario
-simulado (Sección~\ref{sec:formulacion}), sin recurrir a duración ni a DV01.
-
-\begin{figure}[htbp]\centering
-  \caption{Autovalores de la matriz de covarianzas de los 24 factores de riesgo (escala logarítmica); los que
-  caen por debajo de $10^{-20}$ son numéricamente cero.}\label{fig:autovalores}
-  \includegraphics[width=0.55\linewidth]{autovalores_covarianza.pdf}
-\end{figure}
+La matriz de covarianzas mensuales de los 24 factores es singular. De sus 24 autovalores, 14 son menores que
+$10^{-12}$ y seis de ellos son menores que $10^{-20}$, y solo tres componentes explican el 99.2\,\% de la
+varianza total. La singularidad tiene dos causas. En los datos, varios nodos spot son combinación exacta de
+otros, y las diez tasas forward son funciones de la curva spot de su moneda. Por eso el modelo de riesgo no
+aproxima el patrimonio con esta covarianza y una matriz de sensibilidades lineales. En su lugar, revaloriza
+cada instrumento por sus flujos de caja en cada escenario simulado (Sección~\ref{sec:formulacion}), sin
+recurrir a la duración ni al DV01.
 
 \subsection{Convenciones y calibración}
-Las tasas spot son efectivas anuales y el tiempo se mide en base ACT/365, con interpolación lineal de la
-tasa cero entre nodos y un nodo O/N en $t=0$; las forwards se obtienen de esa misma curva, sin arbitraje por
-construcción. El precio de cada instrumento a $t_0$ se hace coincidir con su valor de mercado mediante un
-spread de calibración constante, que se mantiene fijo al revalorizar bajo escenarios: no hay información en
-los datos sobre cómo evolucionaría ese spread, y su efecto sobre el patrimonio es de segundo orden frente a
-los movimientos de la curva y del tipo de cambio. La calibración reproduce el valor de mercado de cada
-instrumento con una tolerancia de $10^{-6}$ S/ mm, y el spread resultante difiere del spread de referencia del
-caso en menos de un punto básico en los doce instrumentos.
+Las tasas spot son efectivas anuales y el tiempo se mide en base ACT/365. La tasa cero se interpola
+linealmente entre nodos, con un nodo O/N en $t=0$, y las forwards salen de esa misma curva, así que no hay
+arbitraje por construcción. Cada instrumento tiene un spread de calibración constante, elegido para que su
+precio en $t_0$ coincida con su valor de mercado. El spread se mantiene fijo al revalorizar en cada
+escenario, por dos razones: los datos no dicen cómo evolucionaría, y su efecto sobre el patrimonio es de
+segundo orden frente a los movimientos de la curva y del tipo de cambio. La calibración reproduce el valor de
+mercado de cada instrumento con una tolerancia de $10^{-6}$ S/ mm. En los doce instrumentos, el spread
+calibrado difiere del spread de referencia del caso en menos de un punto básico.

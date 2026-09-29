@@ -3,7 +3,8 @@
 Convenciones (docs/formulacion.md §5, §7.1-7.4; decisiones D-06, D-09, D-11, D-14, D-15, D-16):
 - 24 factores en el orden de `FACTORS`. Cambios mensuales: Δ absoluta en tasas, log-retorno en FX y equity.
 - Bootstrap por bloques móviles: cada escenario suma `n_blocks` ventanas centradas de `block_length` meses
-  consecutivos con inicio uniforme. Se añade la deriva anual μ escalada por (b·m)/12 (D-06, D-15).
+  consecutivos con inicio uniforme. Se añade la deriva anual μ escalada por (b·m)/12 (D-06, D-15). Con FX `IRP`,
+  el log-shock FX se desplaza para que la media muestral de FX_T/FX_0 sea la forward de paridad (D-24).
 - Estrés: shift paralelo por moneda; el override (un shift, D-16) reemplaza al paralelo en los nodos del tramo; en
   los de transición se interpola t·s(t) entre los nodos fijos vecinos, para que la forward cambie parejo (D-11 v2).
   Sin deriva.
@@ -116,6 +117,13 @@ def bootstrap_shocks(
     windows = windows - windows.mean(axis=0)
     starts = np.random.default_rng(seed).integers(0, len(windows), size=(n, n_blocks))
     return windows[starts].sum(axis=1)
+
+
+def match_forward(log_shocks: np.ndarray, log_forward: float) -> np.ndarray:
+    """Desplaza log-shocks equiprobables por una constante para que la media muestral de e^{shock} sea e^{log_forward}
+    (D-24). Corrige a la vez la convexidad (E[e^X] = e^{μ + σ²/2}) y el error de muestreo de la media; la dispersión
+    no cambia."""
+    return log_shocks + (log_forward - math.log(float(np.mean(np.exp(log_shocks)))))
 
 
 # ------------------------------------------------------------------------- estrés
@@ -242,6 +250,9 @@ def build_scenarios(doc: Mapping, seed: int | None = None) -> ScenarioSet:
     mu = drift(doc, changes).to_numpy()
     boot = bootstrap_shocks(changes, n_b, b, m, cp["seed"] if seed is None else seed)
     boot = boot + mu * (b * m / MONTHS_PER_YEAR)
+    if cp["drift"]["fx"] == "IRP":
+        i = FACTORS.index("FX_PENUSD")
+        boot[:, i] = match_forward(boot[:, i], mu[i] * (b * m / MONTHS_PER_YEAR))
     stress = stress_shocks(doc)
 
     p_stress = np.array([float(s["probability"]) for s in doc["stressScenarios"]])

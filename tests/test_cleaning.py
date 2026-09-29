@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import pytest
 
 from optimum.cleaning import FACTORS, DataValidationError, clean_market_history, compute_factor_changes
@@ -49,3 +50,13 @@ def test_excel_covariance_is_singular(tables):
     """El caso advierte que SigmaF puede ser singular: el modelo debe tolerarlo."""
     w = np.linalg.eigvalsh(tables["covariance_excel"].values)
     assert w.min() < 1e-15
+
+
+def test_stress_probabilities_not_hardcoded():
+    """Auditoría final I-1: otras probabilidades de estrés no rompen la limpieza (la suma se valida en risk.py)."""
+    from optimum.cleaning import clean_stress_scenarios
+
+    raw = pd.DataFrame({"Scenario_ID": ["S1", "S2"], "Probability": [0.03, 0.04]})
+    assert clean_stress_scenarios(raw)["probability"].sum() == pytest.approx(0.07)
+    with pytest.raises(DataValidationError):
+        clean_stress_scenarios(raw.assign(Probability=[-0.01, 0.04]))

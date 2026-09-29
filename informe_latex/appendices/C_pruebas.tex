@@ -1,3 +1,56 @@
 \section{Pruebas automáticas}\label{app:pruebas}
-% Mínimo 5: caso simple, cambio extremo de tasas, restricciones infactibles, ...
-\todo{Tabla: prueba, qué verifica, resultado.}
+La batería (\texttt{make test}) tiene 167 casos en \texttt{tests/}, y todos pasan con los datos entregados.
+La mayoría se escribió a partir de \texttt{docs/formulacion.md}, antes de implementar cada capa, con
+resultados calculados a mano. El Cuadro~\ref{tab:pruebas} resume las que pide el enunciado y las que más
+protegen la validez del modelo.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Pruebas principales: qué verifican y resultado.}\label{tab:pruebas}
+\begin{tabular}{p{0.28\textwidth}p{0.55\textwidth}l}
+\toprule
+Prueba (archivo) & Qué verifica & Resultado \\
+\midrule
+Caso simple resuelto a mano (\texttt{test\_optimizer})
+  & Balance de juguete (dos activos, un pasivo, cinco escenarios). La solución analítica con $\lambda=0.5$
+    (caja 60, bono 40, pasivo 80; objetivo 0.112) se reproduce con tolerancia $10^{-6}$.
+  & pasa \\
+CVaR del LP = CVaR \emph{ex post} (\texttt{test\_optimizer})
+  & Para varios $\alpha$ y $\lambda$, $\zeta+\sum p_s u_s/(1-\alpha)$ coincide con el CVaR recalculado con
+    átomo fraccional, incluido el caso en que el VaR cae dentro de un átomo de probabilidad.
+  & pasa \\
+Cambio extremo de tasas (\texttt{test\_optimizer})
+  & Con $+500$ pb en los nodos cortos de ambas curvas en todos los escenarios, la solución se mueve en la
+    dirección esperada. La exposición neta a la tasa corta (caja y activos indexados al tramo corto, menos
+    los pasivos indexados a él) sube al menos \PEN1 mm; los activos cortos no bajan y los pasivos cortos no
+    suben.
+  & pasa \\
+Restricciones infactibles (\texttt{test\_optimizer})
+  & Tres contradicciones: renta variable máxima bajo su piso implícito, caja mínima sobre la máxima y
+    mínimos de moneda que suman 110\,\%. En los tres, el programa informa \texttt{INFEASIBLE} sin lanzar una
+    excepción y con un \texttt{output.json} válido.
+  & pasa \\
+Sin parámetros en el código (\texttt{test\_optimizer}, \texttt{test\_cleaning})
+  & Si se cambian en \texttt{input.json} la concentración máxima, $\lambda$, los costos o las
+    probabilidades de estrés, la solución cambia o el programa sigue funcionando.
+  & pasa \\
+Valorización a mano (\texttt{test\_valuation})
+  & Cero cupón y bono de dos flujos con interpolación calculados a mano; calibración con $V_0$ igual al
+    valor de mercado ($10^{-6}$); forwards recalculadas iguales a las del Excel; flotantes sin
+    información futura.
+  & pasa \\
+Escenarios (\texttt{test\_risk})
+  & Bootstrap de juguete con ventanas centradas; deriva sumada solo al bootstrap; media muestral de
+    $FX_T/FX_0$ igual a la forward de paridad (D-24); estrés con transición $t\,s(t)$; $\sum p_s = 1$.
+  & pasa \\
+Monotonía en $\lambda$ y costos (\texttt{test\_optimizer}, \texttt{test\_sensitivity})
+  & Al subir $\lambda$, el CVaR y el resultado esperado no suben. Con costos más altos el objetivo no sube.
+    Con costo cero la rotación no es menor.
+  & pasa \\
+Horizonte (\texttt{test\_optimizer})
+  & Incumplimientos al horizonte calculados a mano. El de vencimiento a 12 meses es determinista, y la
+    variante \texttt{ENFORCE} lo impone.
+  & pasa \\
+\bottomrule
+\end{tabular}
+\end{table}

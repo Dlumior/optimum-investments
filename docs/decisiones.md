@@ -238,3 +238,15 @@ Sin errores de código críticos. Se aplicó (decidido por el alumno):
 - **M-4:** con P = 0.20 los estrés (todos deprecian el PEN) se vuelven fuente de ganancia; se lee junto con S8.
 - **M-6:** cuatro pruebas nuevas: S8 concatenado = recálculo completo, cotas gemelas, signo de un pasivo flotante en
   S1, y PERIOD_FORWARD sin información futura.
+
+## D-24 · 2026-09-28 · Deriva FX `IRP` ajustada a la forward en la muestra (auditoría final M-1)
+El auditor mostró que con μ_FX = ln(F/S) la media de FX_T/FX_0 no era la forward: E[e^X] = e^{μ+σ²/2} agrega ≈ 7.5 pb
+de convexidad y la media muestral del shock de los 500 escenarios (0.53 %) superaba μ (0.36 %). En total, la
+muestra daba E[FX_T/FX_0] − 1 = 0.61 % contra 0.36 % de paridad: ≈ 25 pb/año a favor de estar largo en USD.
+**Decisión (alumno, opción a):** con `drift.fx = IRP`, tras sumar μ se desplaza el log-shock FX de los escenarios
+bootstrap por una constante c = ln(F/S) − ln(media de e^{shock}) (`risk.match_forward`). La media muestral de
+FX_T/FX_0 queda exactamente en la forward de paridad (corrige convexidad y ruido de muestreo a la vez); la dispersión,
+el estrés y los demás factores no cambian. Con deriva FX `ZERO` o `HISTORICAL` no se aplica.
+Alternativa descartada: solo restar σ²/2 (deja el error de muestreo de la media).
+Además (auditoría final I-1): `cleaning.clean_stress_scenarios` ya no exige Σp = 0.05; esa validación la hace
+`risk.build_scenarios` contra `caseParameters.stressProbability`.

@@ -122,7 +122,10 @@ En `constraintChecks`, los grupos vacíos y los redundantes se marcan como no vi
    persistencia: la razón de varianzas a 12 m es 5.1 en PEN ON, 6.9 en USD ON, 3.8 en equity y 2.1 en FX.
 4. **Deriva anual** $\mu$ (D-06), sumada al shock centrado:
    - tasas: `ZERO` → 0, sin proyectar el ciclo alcista 2021-25;
-   - FX: `IRP` → $\ln\frac{1+z_{PEN}(1Y)}{1+z_{USD}(1Y)}$ con curvas de $t_0$ (FX = PEN por USD);
+   - FX: `IRP` → $\ln\frac{1+z_{PEN}(1Y)}{1+z_{USD}(1Y)}$ con curvas de $t_0$ (FX = PEN por USD). Después se
+     desplaza el log-shock FX de todos los escenarios bootstrap por
+     $c = \ln(F/S) - \ln\big(\tfrac{1}{N_B}\sum_s e^{\Delta\ln FX_s}\big)$, de modo que la media muestral de
+     $FX_T/FX_0$ es exactamente la forward de paridad (corrige la convexidad $\sigma^2/2$ y el ruido de muestreo; D-24);
    - equity: `HISTORICAL` → 12 × media del log-retorno mensual.
 5. **Probabilidad:** $p_s = \text{bootstrapProbability}/N_B$.
 

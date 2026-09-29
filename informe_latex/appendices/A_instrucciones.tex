@@ -1,8 +1,12 @@
 \section{Instrucciones de ejecución}\label{app:instrucciones}
+Requiere Python $\ge$ 3.11 y \texttt{uv}; el informe se compila con LuaLaTeX (\texttt{latexmk}).
 \begin{lstlisting}[language=bash]
-python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
-.venv/bin/python -m optimum data   # Excel -> tablas limpias
-.venv/bin/python -m optimum json   # -> data/json/input.json
-.venv/bin/python -m optimum run    # -> data/json/output.json
-.venv/bin/python -m pytest -q      # pruebas
+make setup        # .venv con el paquete en modo editable
+make all          # Excel -> tablas limpias -> input.json -> output.json
+make sensitivity  # sensibilidades S1-S9 -> sensitivity.json (5-8 min)
+make test         # pruebas automaticas (Anexo C)
+make notebooks    # ejecuta los notebooks: tablas y figuras del informe
+make report       # compila el informe
 \end{lstlisting}
+Sin \texttt{make}, los mismos pasos son \texttt{python -m optimum \{data,json,run,sensitivity\}}. Todos los
+parámetros (límites, $\lambda$, $\alpha$, costos, semilla y escenarios) se leen de \texttt{data/json/input.json}.

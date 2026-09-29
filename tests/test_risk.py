@@ -108,12 +108,41 @@ def test_bootstrap_centers_windows_not_months():
 
 
 def test_bootstrap_mean_equals_drift(doc, scenarios):
-    """Tras centrar las ventanas, la media del bootstrap solo difiere de μ por ruido de muestreo (< 3 errores estándar)."""
+    """Tras centrar las ventanas, la media del bootstrap solo difiere de μ por ruido de muestreo (< 3 errores estándar).
+    FX con IRP se ajusta aparte (D-24): ver test_irp_fx_matches_forward."""
     boot = scenarios.deltas[np.asarray(scenarios.kind) == "bootstrap"]
     mu = drift(doc, factor_changes(doc))
     se = boot.std(ddof=1) / np.sqrt(len(boot))
-    for f in ["PEN_SPOT_ON", "USD_SPOT_ON", "PEN_SPOT_10Y", "FX_PENUSD", "EQUITY_USD"]:
+    for f in ["PEN_SPOT_ON", "USD_SPOT_ON", "PEN_SPOT_10Y", "EQUITY_USD"]:
         assert abs(boot[f].mean() - mu[f]) < 3 * se[f], f
+
+
+def test_irp_fx_matches_forward(doc, scenarios):
+    """D-24: con deriva FX `IRP`, la media muestral de FX_T/FX_0 en el bootstrap es la forward de paridad e^{μ·τ}
+    (sin sesgo de convexidad ni de muestreo). Con otras semillas también."""
+    assert doc["caseParameters"]["drift"]["fx"] == "IRP"
+    cp = doc["caseParameters"]
+    tau = cp["bootstrapBlockLength"] * cp["bootstrapBlocksPerScenario"] / 12  # años del shock
+    forward = math.exp(drift(doc, factor_changes(doc))["FX_PENUSD"] * tau)
+    for s in (scenarios, build_scenarios(doc, seed=12345)):
+        boot = s.deltas[np.asarray(s.kind) == "bootstrap"]
+        assert np.exp(boot["FX_PENUSD"]).mean() == pytest.approx(forward, rel=1e-12)
+        # el log-shock medio queda por debajo de ln F (convexidad)
+        assert boot["FX_PENUSD"].mean() < math.log(forward)
+
+
+def test_irp_fx_adjustment_is_constant_shift(doc, scenarios):
+    """D-24: el ajuste FX es un desplazamiento constante de los escenarios bootstrap; no cambia su dispersión ni el
+    estrés, y sin IRP no se aplica."""
+    no_irp = build_scenarios(_with_params(doc, drift={**doc["caseParameters"]["drift"], "fx": "ZERO"}))
+    mu = drift(doc, factor_changes(doc))["FX_PENUSD"]
+    boot = np.asarray(scenarios.kind) == "bootstrap"
+    diff = (scenarios.deltas["FX_PENUSD"] - no_irp.deltas["FX_PENUSD"]).to_numpy()
+    assert np.ptp(diff[boot]) < 1e-14
+    assert np.allclose(diff[~boot], 0.0)
+    assert diff[boot][0] != pytest.approx(mu, abs=1e-12)  # no es solo μ: incluye el ajuste
+    others = [f for f in FACTORS if f != "FX_PENUSD"]
+    assert np.allclose(scenarios.deltas[others].to_numpy(), no_irp.deltas[others].to_numpy())
 
 
 def test_bootstrap_toy_two_blocks():
@@ -309,12 +338,13 @@ def test_scenario_set_reproducible(doc, scenarios):
 
 
 def test_drift_added_only_to_bootstrap(doc, scenarios):
-    """Con la misma semilla, pasar de deriva ZERO a la mixta suma μ exacto a cada escenario bootstrap y no toca el estrés."""
+    """Con la misma semilla, pasar de deriva ZERO a la mixta suma μ exacto a cada escenario bootstrap y no toca el estrés.
+    FX con IRP lleva además el ajuste a la forward (D-24), probado aparte."""
     flat = build_scenarios(_with_params(doc, drift={"rates": "ZERO", "fx": "ZERO", "equity": "ZERO"}))
     mu = drift(doc, factor_changes(doc))
-    diff = scenarios.deltas - flat.deltas
+    diff = (scenarios.deltas - flat.deltas).drop(columns="FX_PENUSD")
     boot = np.asarray(scenarios.kind) == "bootstrap"
-    assert np.allclose(diff[boot].to_numpy(), mu.to_numpy()[None, :], atol=1e-15)
+    assert np.allclose(diff[boot].to_numpy(), mu.drop("FX_PENUSD").to_numpy()[None, :], atol=1e-15)
     assert np.allclose(diff[~boot].to_numpy(), 0.0)
 
 

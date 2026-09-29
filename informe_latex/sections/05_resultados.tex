@@ -1,85 +1,90 @@
 \section{Resultados}\label{sec:resultados}
 
 \subsection{Posición inicial}
-Evaluada con el modelo de riesgo de la Sección~\ref{sec:riesgo}, la posición inicial rinde en promedio
-$\E[\Delta PN] = \PEN3.96$ mm a un año, con una volatilidad de \PEN25.4 mm y un $\CVaR_{95\%}$ de \PEN50.1 mm
-(Cuadro~\ref{tab:riesgo-inicial}): una cuarta parte del patrimonio inicial en el 5\,\% de escenarios más
-adversos. Un 25\,\% de esa cola de pérdida proviene de los cuatro escenarios de estrés pese a que representan
-solo 1.25\,\% de la probabilidad total, y el escenario de mayor pérdida es una depreciación del sol acompañada
-de una caída de tasas y de renta variable, que cuesta \PEN45.6 mm. La única restricción del Cuadro~4 del caso
-que la posición inicial incumple es el peso máximo de renta variable en los activos (22\,\% contra 20\,\%).
-
-\input{tables/riesgo_posicion_inicial}
+Con el modelo de riesgo de la Sección~\ref{sec:riesgo}, la posición inicial tiene un resultado esperado a
+un año de $\E[\Delta \PN] = \PEN3.29$ mm, una volatilidad de \PEN25.3 mm y un $\CVaR_{95\%}$ de
+\PEN50.5 mm (Cuadro~\ref{tab:metricas-optimizacion}, columna ``Inicial''). Esto equivale a un cuarto del
+patrimonio inicial en el 5\,\% de escenarios más adversos. Buena parte de esa cola viene de un solo
+escenario de estrés, C\_STRESS\_2: una depreciación del sol acompañada de caídas de tasas y de renta
+variable. Con apenas 1.25\,\% de probabilidad, ocupa el 25\,\% de la probabilidad de la cola, aporta cerca
+del 23\,\% del CVaR y cuesta \PEN45.6 mm. En ningún escenario el patrimonio cae por debajo del mínimo de
+\PEN120 mm. La única restricción del Cuadro~4 del enunciado que la posición inicial incumple es el peso
+máximo de renta variable (22\,\% contra 20\,\%).
 
 \subsection{Cartera óptima}
 Con la aversión al riesgo de referencia del caso, $\lambda = 0.25$, la reasignación óptima
-(Cuadro~\ref{tab:posiciones-optimas} y Figura~\ref{fig:posiciones}) concentra los activos en soles: la caja
-sube a \PEN200 mm (el máximo de 20\,\% de los activos, no el piso de \PEN80 mm, que queda muy por debajo) y el
-bono fijo en soles A02 sube a su tope individual de \PEN350 mm. Del lado en dólares, el bono flotante A05 casi
-se duplica a \PEN240 mm mientras que el bono fijo A04 se liquida por completo; la renta variable A06 cae a su
-piso implícito de 5\,\% (\PEN50 mm), el mínimo compatible con los máximos de caja y renta fija. En los pasivos,
-el préstamo corto en soles L01 sube a su tope de concentración (\PEN280 mm) y el bono fijo L02 baja a
-\PEN40 mm, mientras que la mezcla de tasa fija y flotante de los pasivos queda exactamente en sus dos límites
-(45\,\% fijo, 55\,\% flotante): son restricciones gemelas, extremos opuestos de la misma partición.
+(Cuadros~\ref{tab:posiciones-optimas} y~\ref{tab:pesos-optimo}, Figura~\ref{fig:posiciones}) concentra los
+activos en soles:
+\begin{itemize}
+  \item La caja sube a \PEN200 mm, el máximo de 20\,\% de los activos. El piso de \PEN80 mm queda muy lejos.
+  \item El bono fijo en soles A02 llega a su tope individual de \PEN350 mm, y el flotante A03 sube a
+    \PEN185.5 mm.
+  \item En dólares, el bono flotante A05 crece 53\,\%, hasta \PEN214.5 mm, y el bono fijo A04 se liquida
+    por completo.
+  \item La renta variable A06 cae a \PEN50 mm, el 5\,\% de los activos. No es un límite del caso, sino el
+    mínimo que dejan los máximos de caja y de renta fija.
+\end{itemize}
+En los pasivos, el préstamo corto en soles L01 sube a su tope de concentración (\PEN280 mm), el bono fijo
+L02 baja a \PEN41.6 mm y el préstamo en dólares L06 a \PEN48.4 mm. Los límites activos son los máximos de
+caja y renta fija, los topes individuales de A02 y L01 y la no negatividad de A04. La mezcla fija/flotante
+de los pasivos (45.2\,\%/54.8\,\%) queda al borde de sus límites, pero sin tocarlos.
 
 \input{tables/posiciones_optimas}
+\input{tables/pesos_optimo}
 
 \begin{figure}[htbp]\centering
-  \caption{Posiciones inicial y óptima por instrumento (barras) y de la variante con vencimientos exigidos en
-  $t_H$ (marca horizontal).}\label{fig:posiciones}
-  \includegraphics[width=\linewidth]{posiciones_inicial_optima.pdf}
+  \caption{Posiciones inicial y óptima por instrumento (barras) y de la variante con vencimientos exigidos al
+  horizonte (marca horizontal).}\label{fig:posiciones}
+  \includegraphics[width=0.8\linewidth]{posiciones_inicial_optima.pdf}
 \end{figure}
 
-Esa reasignación paga \PEN2.73 mm en costos de transacción y sube el resultado esperado bruto a
-\PEN5.83 mm; aun así, el resultado neto (\PEN3.11 mm) queda por debajo del de la posición inicial
-(\PEN3.96 mm). El modelo cede \PEN0.85 mm de valor esperado a cambio de bajar la volatilidad del patrimonio
-de \PEN25.4 mm a \PEN7.0 mm y el $\CVaR_{95\%}$ de \PEN50.1 mm a \PEN7.8 mm, una caída de 84\,\%
-(Cuadro~\ref{tab:metricas-optimizacion}). La rentabilidad esperada de los activos apenas cambia (de 6.08\,\% a
-6.01\,\%), pero el costo esperado de los pasivos baja de 7.10\,\% a 6.79\,\%: la ganancia de la optimización
-viene sobre todo de una estructura de pasivos más barata y menos expuesta a la cola, no de activos más
-rentables.
+La reasignación paga \PEN2.72 mm en costos de transacción y sube el resultado esperado bruto a
+\PEN5.56 mm. Aun así, el resultado neto (\PEN2.84 mm) queda por debajo del de la posición inicial
+(\PEN3.29 mm). El modelo cede \PEN0.45 mm de valor esperado a cambio de dos mejoras: la volatilidad del
+patrimonio baja de \PEN25.3 mm a \PEN6.3 mm y el $\CVaR_{95\%}$ de \PEN50.5 mm a \PEN7.7 mm, una caída de
+85\,\% (Cuadro~\ref{tab:metricas-optimizacion}). La rentabilidad esperada de los activos casi no cambia
+(5.95\,\% frente a 5.94\,\%). En cambio, el costo económico esperado de los pasivos, que incluye su
+revalorización, baja de 7.02\,\% a 6.73\,\%. La mejora viene de una estructura de pasivos más barata y
+menos expuesta a la cola, no de activos más rentables.
 
 \input{tables/metricas_optimizacion}
 
 \subsection{Barrido de la aversión al riesgo}
-Variar $\lambda$ entre 0 y 5 traza la frontera entre resultado esperado neto y $\CVaR_{95\%}$
-(Cuadro~\ref{tab:barrido-lambda} y Figura~\ref{fig:frontera}). Con $\lambda = 0$ el objetivo ignora el riesgo y
-elige una solución de esquina: 49\,\% de activos en dólares y 20\,\% en renta variable, con un
-$\CVaR_{95\%}$ de \PEN61.0 mm, más riesgosa que la propia posición inicial. Subir $\lambda$ a 0.1 ya recorta
-ese CVaR a \PEN32.1 mm, y en $\lambda = 0.25$ la solución colapsa a los límites de caja y renta fija descritos
-arriba. Para $\lambda \ge 0.5$ el resultado esperado neto cae por debajo de \PEN1.1 mm y en $\lambda = 5$ se
-vuelve negativo (\mbox{$-$\PEN0.69} mm): a partir de ahí, evitar más cola cuesta más de lo que queda de
-resultado esperado. La composición de la cartera se mueve en la misma dirección: la renta variable salta del
-20\,\% al piso de 5\,\% no bien $\lambda$ deja de ser cero, y el peso de pasivos en dólares sube de 23.75\,\%
-a 43\,\% a medida que $\lambda$ crece, porque financiarse en dólares resulta, en este conjunto de escenarios,
-más barato en la cola que financiarse en soles.
+Variar $\lambda$ entre 0 y 5 traza la frontera entre el resultado esperado neto y el $\CVaR_{95\%}$
+(Cuadro~\ref{tab:barrido-lambda} y Figura~\ref{fig:frontera}):
+\begin{itemize}
+  \item Con $\lambda = 0$ el objetivo ignora el riesgo y elige una esquina: 41\,\% de los activos en dólares
+    y 20\,\% en renta variable. Su $\CVaR_{95\%}$ (\PEN51.2 mm) supera al de la posición inicial.
+  \item Con $\lambda = 0.1$, el CVaR baja a \PEN30.9 mm y la renta variable a 16\,\%.
+  \item Con $\lambda = 0.25$, la renta variable llega a su piso de 5\,\%.
+  \item Desde $\lambda = 0.5$, el resultado esperado neto no pasa de \PEN0.98 mm. Desde $\lambda = 2$ es
+    negativo, y en $\lambda = 5$ llega a \mbox{$-$\PEN0.84} mm: evitar más cola cuesta más que el resultado
+    esperado que queda.
+\end{itemize}
+Al subir $\lambda$, los pasivos en dólares pasan de 20--30\,\% a 43\,\%, y la razón es de calce de monedas.
+La posición neta en dólares (activos menos pasivos en USD) baja de \PEN170--209 mm con $\lambda \le 0.1$ a
+\PEN76 mm con $\lambda = 0.25$ y se estabiliza en torno a \PEN54 mm desde $\lambda = 0.5$. Los pasivos en
+dólares crecen junto con el bono A05 y lo cubren. Queda un largo neto pequeño que gana cuando el sol se
+deprecia, como en los cuatro escenarios de estrés.
 
 \input{tables/barrido_lambda}
 
 \begin{figure}[htbp]\centering
   \caption{Frontera resultado esperado neto vs. $\CVaR_{95\%}$ sobre el barrido de $\lambda$, con la posición
-  inicial, el punto de comparación de mínima varianza y la variante con vencimientos exigidos en $t_H$.}
+  inicial, el punto de comparación de mínima varianza y la variante con vencimientos exigidos al horizonte.}
   \label{fig:frontera}
-  \includegraphics[width=0.65\linewidth]{frontera_lambda.pdf}
+  \includegraphics[width=0.55\linewidth]{frontera_lambda.pdf}
 \end{figure}
 
-\subsection{Comparación con mínima varianza y con vencimientos exigidos en el horizonte}
-Fijando el mismo resultado esperado neto que la cartera óptima (\PEN3.11 mm), una cartera de mínima varianza
-con las mismas restricciones logra una volatilidad algo menor (\PEN6.40 mm contra \PEN7.03 mm) pero un
-$\CVaR_{95\%}$ mayor (\PEN9.23 mm contra \PEN7.82 mm): optimizar directamente la medida de riesgo que exige el
-caso controla mejor la cola que minimizar la dispersión total, aunque acepte algo más de varianza en el
-centro de la distribución. Exigir que los límites de vencimiento del Cuadro~4 del caso se cumplan también en $t_H$, y no solo en $t_0$ como
-hace la solución base, cuesta \PEN0.29 mm de objetivo (de 1.16 a 0.87). El préstamo corto L01 baja de
-\PEN280 mm a \PEN200 mm y el $\CVaR_{95\%}$ mejora a \PEN7.33 mm, porque esa restricción adicional también
-limita, de paso, la concentración de la cartera óptima base.
+\subsection{Comparación con mínima varianza y con vencimientos exigidos al horizonte}
+Una cartera de mínima varianza con el mismo resultado esperado neto (\PEN2.84 mm) y las mismas
+restricciones logra una volatilidad algo menor (\PEN5.74 mm contra \PEN6.27 mm), pero un $\CVaR_{95\%}$
+mayor (\PEN8.55 mm contra \PEN7.71 mm). La diferencia está en C\_STRESS\_2: la cartera de mínima varianza
+pierde \PEN19.9 mm en ese escenario y la óptima \PEN13.9 mm. La varianza queda dominada por los 500
+escenarios de remuestreo, que suman 95\,\% de la probabilidad, y casi no ve un escenario de 1.25\,\%. El
+CVaR, en cambio, lo pondera por completo.
 
-\begin{figure}[htbp]\centering
-  \caption{Distribución de $\Delta PN$ a un año: posición inicial, cartera óptima y mínima varianza
-  (histograma: escenarios de remuestreo; triángulos: escenarios de estrés; línea punteada: $-\CVaR_{95\%}$ de
-  cada cartera).}\label{fig:distribucion-optima}
-  \includegraphics[width=0.75\linewidth]{distribucion_dpn_optima.pdf}
-\end{figure}
-
-La Figura~\ref{fig:distribucion-optima} resume el efecto conjunto: la distribución de la cartera óptima es
-mucho más angosta que la inicial y sus escenarios de estrés, que en la posición inicial caían muy por debajo
-del grueso de la distribución, quedan cerca del cuerpo de la distribución remuestreada.
+La solución base cumple los límites de vencimiento solo en $t_0$. Exigirlos también en $t_H$ cuesta
+\PEN0.21 mm de objetivo (de 0.91 a 0.70) y \PEN0.14 mm de resultado esperado neto. En esa variante, L01
+baja de \PEN280 mm a \PEN200 mm, y los pasivos que lo reemplazan (L02 y L06) suben el $\CVaR_{95\%}$ a
+\PEN8.02 mm.

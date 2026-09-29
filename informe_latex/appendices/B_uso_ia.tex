@@ -3,13 +3,51 @@
 % `python scripts/ia_log_to_tex.py` genera appendices/B_prompts_generado.tex.
 
 \subsection{Herramientas y forma de trabajo}
-\todo{Claude Code con skills y hooks del proyecto (.claude/).}
+Se usó Claude Code (Anthropic) como asistente de programación y redacción, con una configuración propia del
+proyecto:
+\begin{itemize}
+  \item \textbf{Reglas del proyecto.} El programa no puede tener parámetros escritos en el código, está
+    prohibido usar la duración o el DV01 como dato y, ante una ambigüedad financiera, la IA debe preguntar en
+    vez de asumir.
+  \item \textbf{Guías temáticas.} Hay guías para el contrato JSON, la valorización por flujos, el modelo de
+    riesgo, la formulación, las figuras y el informe. Una guía de desarrollo por etapas obliga a seguir el
+    orden plan $\to$ pruebas $\to$ código $\to$ auditoría para cada componente.
+  \item \textbf{Controles automáticos.} Los datos crudos y los derivados no se pueden editar a mano, cada
+    archivo Python se revisa con \texttt{ruff} al guardarse, las pruebas corren al terminar cada tarea y cada
+    prompt queda registrado.
+  \item \textbf{Revisores independientes, de solo lectura.} Un auditor financiero revisa la formulación, el
+    código y los resultados; un revisor verifica que el informe sea coherente con \texttt{output.json}; un
+    generador escribe pruebas a partir de la formulación, sin ver la implementación.
+\end{itemize}
 
-\subsection{Errores y simplificaciones de la IA corregidos (mínimo 2)}
+El alumno tomó las decisiones de modelación: la deriva por clase de factor, la transición del estrés, la
+regla de cupones como sensibilidad y la corrección de la deriva cambiaria. Quedaron registradas en
+\texttt{docs/decisiones.md} junto con las alternativas descartadas. La IA propuso, programó y redactó, y
+cada propuesta financiera pasó por una auditoría antes de aceptarse.
+
+\subsection{Errores y simplificaciones de la IA corregidos}
+Se registraron nueve errores de la IA (E01--E09 en la lista de más abajo). Los cuatro más relevantes:
 \begin{enumerate}
-  \item \todo{Error 1: qué propuso la IA, cómo se detectó, cómo se corrigió.}
-  \item \todo{Error 2.}
+  \item \textbf{Bootstrap independiente mes a mes (E01).} La IA propuso sumar doce meses sorteados de forma
+    independiente y descartó los bloques con un argumento falso sobre el número de ventanas. Los cambios
+    mensuales tienen una autocorrelación de 0.91 a 0.96 y una razón de varianzas a 12 meses de 3.8 a 6.9, así
+    que la propuesta subestimaba el riesgo anual. Lo detectó el auditor y se corrigió con un bootstrap por
+    bloques de seis meses.
+  \item \textbf{Doble cobro de costos (E02).} Cada reducción de pasivos pagaba a la vez el costo de
+    reestructuración y el de prepago, y por eso los pasivos quedaban inmóviles en la solución. La hoja de
+    costos del caso asigna el prepago solo a los Casos A y E. Lo detectó el auditor.
+  \item \textbf{Deriva cambiaria sesgada (E08).} La deriva por paridad se sumaba al logaritmo del tipo de
+    cambio sin corregir la convexidad, así que el tipo de cambio esperado superaba la forward y el modelo
+    favorecía estar largo en dólares en unos 25 pb por año. El test que había escrito la IA medía la media en
+    logaritmos y no podía detectarlo. Lo encontró la auditoría final, y se corrigió con pruebas primero; la
+    cartera óptima cambió.
+  \item \textbf{Cifras del informe mal leídas (E09).} En el primer borrador, la IA invirtió el signo de una
+    ganancia en estrés, confundió la distancia entre carteras con la rotación, mezcló dos carteras en una
+    misma frase y atribuyó el mayor riesgo de modelo a un supuesto que mueve poco el CVaR. Los dos revisores
+    lo detectaron por separado, y el texto se reescribió contrastando cada cifra con los resultados.
 \end{enumerate}
+En varios de estos casos, las pruebas escritas por la propia IA pasaban aunque el error existía (E04, E08).
+Las revisiones independientes detectaron más errores que la batería de pruebas.
 
-\subsection{Prompts principales}
+\subsection{Prompts principales y registro de errores}
 \IfFileExists{appendices/B_prompts_generado.tex}{\input{appendices/B_prompts_generado}}{\todo{Generar con scripts/ia\_log\_to\_tex.py}}

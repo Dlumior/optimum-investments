@@ -172,7 +172,8 @@ def split_scenario_tree(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def clean_stress_scenarios(df: pd.DataFrame) -> pd.DataFrame:
     df = _snake_cols(df).rename(columns={"fx_pct": "fx_pct", "equity_pct": "equity_pct"})
-    _check(abs(df["probability"].sum() - 0.05) < 1e-12, "Probabilidad conjunta de estrés != 5 %")
+    # La suma se valida contra caseParameters.stressProbability en risk.build_scenarios (sin constantes del caso aquí).
+    _check(bool((df["probability"] >= 0).all()), "Probabilidad de estrés negativa")
     return df.set_index("scenario_id")
 
 

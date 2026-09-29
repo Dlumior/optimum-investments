@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "caseId": "C",
   "status": "OPTIMAL",
-  "objectiveValue": 1.1551269326158322,
+  "objectiveValue": 0.9094788722573335,
   "valuation": {
     "valuationDate": "2025-12-31",
     "horizonDate": "2026-12-31",
@@ -11,45 +11,45 @@
     "initialNetWorth": 200.0
   },
   "metrics": {
-    "expectedAssetReturn": 0.060118438700872766,
-    "expectedLiabilityEconomicCost": 0.06785487603268027,
-    "expectedNetWorthChange": 5.83453787472855,
-    "expectedTerminalNetWorth": 203.10953787472855,
-    "netWorthVolatility": 7.032434708028923,
-    "var95Loss": 5.257340853430328,
-    "cvar95Loss": 7.81764376845087,
+    "expectedAssetReturn": 0.05938673847817079,
+    "expectedLiabilityEconomicCost": 0.06728712098506957,
+    "expectedNetWorthChange": 5.557041690115143,
+    "expectedTerminalNetWorth": 202.8361336744661,
+    "netWorthVolatility": 6.266739657807714,
+    "var95Loss": 3.8828588233948977,
+    "cvar95Loss": 7.706619208835148,
     "cvarAlpha": 0.95,
-    "transactionCosts": 2.725,
+    "transactionCosts": 2.720908015649022,
     "stressLosses": {
-      "C_STRESS_1": -17.69830239871819,
-      "C_STRESS_2": 10.346287679512862,
-      "C_STRESS_3": -18.80451742692732,
-      "C_STRESS_4": -24.217777081956413
+      "C_STRESS_1": -13.303937571029856,
+      "C_STRESS_2": 13.899048371306531,
+      "C_STRESS_3": -13.024333363237647,
+      "C_STRESS_4": -19.837881665657946
     },
     "tailStressShare": 0.2499999999999998,
     "horizonBreaches": {
       "minNetWorth": {
         "count": 0,
         "probability": 0.0,
-        "worst": 185.43936575692408
+        "worst": 183.38004361304445
       },
       "maxLiabilitiesToAssets": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.8240393728654448
+        "worst": 0.8267811198391981
       },
       "minCash": {
         "count": 0,
         "probability": 0.0,
-        "worst": 196.1705833913148
+        "worst": 196.30021809687833
       },
       "ASSET:CURRENCY:PEN": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.7291602082521064,
+        "worst": 0.7538856615814868,
         "range": [
-          0.6699402874621577,
-          0.7291602082521064
+          0.6987933740255484,
+          0.7538856615814868
         ],
         "min": 0.4,
         "max": 0.8,
@@ -58,34 +58,34 @@
       "ASSET:CURRENCY:USD": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.2708397917478936,
+        "worst": 0.24611433841851318,
         "range": [
-          0.2708397917478936,
-          0.3300597125378424
+          0.24611433841851318,
+          0.30120662597445164
         ],
         "min": 0.2,
         "max": 0.6,
         "cause": null
       },
       "ASSET:TYPE:CASH": {
-        "count": 93,
-        "probability": 0.17670000000000005,
-        "worst": 0.2148374428709695,
+        "count": 102,
+        "probability": 0.19380000000000006,
+        "worst": 0.21475683004589205,
         "range": [
-          0.18466022929482392,
-          0.2148374428709695
+          0.18542314247570446,
+          0.21475683004589205
         ],
         "min": 0.05,
         "max": 0.2,
         "cause": "mercado"
       },
       "ASSET:TYPE:FIXED_INCOME": {
-        "count": 334,
-        "probability": 0.677,
-        "worst": 0.7720388312844191,
+        "count": 295,
+        "probability": 0.6029000000000001,
+        "worst": 0.7711257363967942,
         "range": [
-          0.7470409244735492,
-          0.7720388312844191
+          0.7467173567822109,
+          0.7711257363967942
         ],
         "min": 0.4,
         "max": 0.75,
@@ -94,10 +94,10 @@
       "ASSET:TYPE:EQUITY": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.03733804830847722,
+        "worst": 0.037205337252666504,
         "range": [
-          0.03733804830847722,
-          0.06455400644924973
+          0.037205337252666504,
+          0.06455077796410481
         ],
         "min": 0.0,
         "max": 0.2,
@@ -106,22 +106,22 @@
       "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.2148374428709695,
+        "worst": 0.21475683004589205,
         "range": [
-          0.18466022929482392,
-          0.2148374428709695
+          0.18542314247570446,
+          0.21475683004589205
         ],
         "min": 0.0,
         "max": 0.35,
         "cause": null
       },
       "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-        "count": 272,
-        "probability": 0.5274000000000001,
-        "worst": 0.36658981025550336,
+        "count": 279,
+        "probability": 0.5407000000000002,
+        "worst": 0.36581344814107114,
         "range": [
-          0.3146456434170621,
-          0.36658981025550336
+          0.31615836087820687,
+          0.36581344814107114
         ],
         "min": 0.0,
         "max": 0.35,
@@ -130,10 +130,10 @@
       "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.14951267348978414,
+        "worst": 0.19647311504592874,
         "range": [
-          0.14951267348978414,
-          0.1696881303521512
+          0.17437489369731288,
+          0.19647311504592874
         ],
         "min": 0.0,
         "max": 0.35,
@@ -154,10 +154,10 @@
       "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.2856087563996247,
+        "worst": 0.25654196359582776,
         "range": [
-          0.22241580267892153,
-          0.2856087563996247
+          0.19791244676126363,
+          0.25654196359582776
         ],
         "min": 0.0,
         "max": 0.35,
@@ -166,10 +166,10 @@
       "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.03733804830847722,
+        "worst": 0.037205337252666504,
         "range": [
-          0.03733804830847722,
-          0.06455400644924973
+          0.037205337252666504,
+          0.06455077796410481
         ],
         "min": 0.0,
         "max": 0.35,
@@ -178,10 +178,10 @@
       "LIABILITY:CURRENCY:PEN": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.7824300759023435,
+        "worst": 0.7849891769413911,
         "range": [
-          0.7262411001584554,
-          0.7824300759023435
+          0.7285660717343374,
+          0.7849891769413911
         ],
         "min": 0.5,
         "max": 0.8,
@@ -190,34 +190,34 @@
       "LIABILITY:CURRENCY:USD": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.2175699240976565,
+        "worst": 0.2150108230586089,
         "range": [
-          0.2175699240976565,
-          0.27375889984154456
+          0.2150108230586089,
+          0.27143392826566254
         ],
         "min": 0.2,
         "max": 0.5,
         "cause": null
       },
       "LIABILITY:RATE_TYPE:FIXED": {
-        "count": 160,
-        "probability": 0.3358,
-        "worst": 0.40904998395806413,
+        "count": 159,
+        "probability": 0.3339000000000001,
+        "worst": 0.4109709385862693,
         "range": [
-          0.40904998395806413,
-          0.4890012545496941
+          0.4109709385862693,
+          0.4910753432471298
         ],
         "min": 0.45,
         "max": 0.8,
         "cause": "mercado"
       },
       "LIABILITY:RATE_TYPE:FLOAT": {
-        "count": 160,
-        "probability": 0.3358,
-        "worst": 0.5909500160419358,
+        "count": 159,
+        "probability": 0.3339000000000001,
+        "worst": 0.5890290614137308,
         "range": [
-          0.5109987454503059,
-          0.5909500160419358
+          0.5089246567528702,
+          0.5890290614137308
         ],
         "min": 0.2,
         "max": 0.55,
@@ -226,10 +226,10 @@
       "LIABILITY:MATURITY:LE_12M": {
         "count": 504,
         "probability": 0.9999999999999998,
-        "worst": 0.37775946174368386,
+        "worst": 0.3780268041679563,
         "range": [
-          0.3198755465914562,
-          0.37775946174368386
+          0.3199205379241002,
+          0.3780268041679563
         ],
         "min": 0.0,
         "max": 0.25,
@@ -238,22 +238,22 @@
       "LIABILITY:MATURITY:GT_36M": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.5732678970756493,
+        "worst": 0.5709605254253661,
         "range": [
-          0.5732678970756493,
-          0.6311255519686902
+          0.5709605254253661,
+          0.6290683594209263
         ],
         "min": 0.4,
         "max": 1.0,
         "cause": null
       },
       "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-        "count": 179,
-        "probability": 0.3613,
-        "worst": 0.37775946174368386,
+        "count": 185,
+        "probability": 0.37270000000000003,
+        "worst": 0.3780268041679563,
         "range": [
-          0.3198755465914562,
-          0.37775946174368386
+          0.3199205379241002,
+          0.3780268041679563
         ],
         "min": 0.0,
         "max": 0.35,
@@ -262,10 +262,10 @@
       "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.046691277711885915,
+        "worst": 0.048629535527136086,
         "range": [
-          0.046691277711885915,
-          0.051642584441903526
+          0.048629535527136086,
+          0.05376839237771487
         ],
         "min": 0.0,
         "max": 0.35,
@@ -274,10 +274,10 @@
       "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.2437844196776065,
+        "worst": 0.243818708594143,
         "range": [
-          0.18785416372409647,
-          0.2437844196776065
+          0.18796106654079142,
+          0.243818708594143
         ],
         "min": 0.0,
         "max": 0.35,
@@ -286,10 +286,10 @@
       "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.12557858677861863,
+        "worst": 0.1255962497354496,
         "range": [
-          0.12557858677861863,
-          0.14664926343833135
+          0.1255962497354496,
+          0.14675304791913402
         ],
         "min": 0.0,
         "max": 0.35,
@@ -298,10 +298,10 @@
       "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.15102863323773588,
+        "worst": 0.15076161373196842,
         "range": [
-          0.15102863323773588,
-          0.19802090354486956
+          0.15076161373196842,
+          0.1981335919832505
         ],
         "min": 0.0,
         "max": 0.35,
@@ -310,17 +310,17 @@
       "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
         "count": 0,
         "probability": 0.0,
-        "worst": 0.05497940944595682,
+        "worst": 0.05306048168104841,
         "range": [
-          0.05497940944595682,
-          0.08136117012825501
+          0.05306048168104841,
+          0.0787536218951199
         ],
         "min": 0.0,
         "max": 0.35,
         "cause": null
       }
     },
-    "cvarLp": 7.817643768450871
+    "cvarLp": 7.706619208835148
   },
   "riskModel": {
     "historyStart": "2021-01-31",
@@ -329,7 +329,7 @@
     "covarianceMethod": "Sin covarianza paramétrica: escenarios (bootstrap por bloques + estrés) con revalorización completa; covarianza de r_{k,s} ponderada por p_s solo como control",
     "psdCheck": {
       "ok": true,
-      "minEigenvalue": 1.326028377832678e-09
+      "minEigenvalue": 1.3231400134728714e-09
     },
     "riskMeasure": "CVAR",
     "cvarAlpha": 0.95,
@@ -367,9 +367,9 @@
         "type": "BOND_FLOAT",
         "currency": "PEN",
         "initial": 160.0,
-        "optimal": 160.0,
-        "change": 0.0,
-        "weight": 0.16
+        "optimal": 185.45658481742655,
+        "change": 25.456584817426545,
+        "weight": 0.18545658481742655
       },
       {
         "id": "A04",
@@ -387,9 +387,9 @@
         "type": "BOND_FLOAT",
         "currency": "USD",
         "initial": 140.0,
-        "optimal": 240.0,
-        "change": 100.0,
-        "weight": 0.24
+        "optimal": 214.54341518257345,
+        "change": 74.54341518257345,
+        "weight": 0.21454341518257344
       },
       {
         "id": "A06",
@@ -419,9 +419,9 @@
         "type": "BOND_FIXED",
         "currency": "PEN",
         "initial": 150.0,
-        "optimal": 39.99999999999994,
-        "change": -110.00000000000006,
-        "weight": 0.049999999999999926
+        "optimal": 41.636793740391205,
+        "change": -108.3632062596088,
+        "weight": 0.052045992175489005
       },
       {
         "id": "L03",
@@ -459,21 +459,21 @@
         "type": "LOAN_FLOAT",
         "currency": "USD",
         "initial": 100.0,
-        "optimal": 50.00000000000006,
-        "change": -49.99999999999994,
-        "weight": 0.06250000000000007
+        "optimal": 48.363206259608795,
+        "change": -51.636793740391205,
+        "weight": 0.06045400782451099
       }
     ]
   },
   "weights": {
     "byCurrency": {
       "ASSET": {
-        "PEN": 0.71,
-        "USD": 0.29
+        "PEN": 0.7354565848174266,
+        "USD": 0.2645434151825734
       },
       "LIABILITY": {
-        "PEN": 0.7625,
-        "USD": 0.23750000000000007
+        "PEN": 0.764545992175489,
+        "USD": 0.235454007824511
       }
     },
     "byType": {
@@ -484,8 +484,8 @@
         "EQUITY": 0.05
       },
       "LIABILITY": {
-        "BOND_FIXED": 0.44999999999999996,
-        "LOAN_FLOAT": 0.55
+        "BOND_FIXED": 0.452045992175489,
+        "LOAN_FLOAT": 0.547954007824511
       }
     },
     "byRateType": {
@@ -494,8 +494,8 @@
         "FLOAT": 0.4
       },
       "LIABILITY": {
-        "FIXED": 0.44999999999999996,
-        "FLOAT": 0.55
+        "FIXED": 0.452045992175489,
+        "FLOAT": 0.547954007824511
       }
     }
   },
@@ -520,7 +520,7 @@
     },
     {
       "name": "ASSET:CURRENCY:PEN",
-      "value": 0.71,
+      "value": 0.7354565848174266,
       "min": 0.4,
       "max": 0.8,
       "active": false,
@@ -529,7 +529,7 @@
     },
     {
       "name": "ASSET:CURRENCY:USD",
-      "value": 0.29,
+      "value": 0.2645434151825734,
       "min": 0.2,
       "max": 0.6,
       "active": false,
@@ -583,7 +583,7 @@
     },
     {
       "name": "ASSET:CONCENTRATION:SINGLE_POSITION:A03",
-      "value": 0.16,
+      "value": 0.18545658481742655,
       "min": 0.0,
       "max": 0.35,
       "active": false,
@@ -601,7 +601,7 @@
     },
     {
       "name": "ASSET:CONCENTRATION:SINGLE_POSITION:A05",
-      "value": 0.24,
+      "value": 0.21454341518257344,
       "min": 0.0,
       "max": 0.35,
       "active": false,
@@ -619,7 +619,7 @@
     },
     {
       "name": "LIABILITY:CURRENCY:PEN",
-      "value": 0.7625,
+      "value": 0.764545992175489,
       "min": 0.5,
       "max": 0.8,
       "active": false,
@@ -628,7 +628,7 @@
     },
     {
       "name": "LIABILITY:CURRENCY:USD",
-      "value": 0.23750000000000007,
+      "value": 0.235454007824511,
       "min": 0.2,
       "max": 0.5,
       "active": false,
@@ -637,19 +637,19 @@
     },
     {
       "name": "LIABILITY:RATE_TYPE:FIXED",
-      "value": 0.44999999999999996,
+      "value": 0.452045992175489,
       "min": 0.45,
       "max": 0.8,
-      "active": true,
+      "active": false,
       "ok": true,
       "note": ""
     },
     {
       "name": "LIABILITY:RATE_TYPE:FLOAT",
-      "value": 0.55,
+      "value": 0.547954007824511,
       "min": 0.2,
       "max": 0.55,
-      "active": true,
+      "active": false,
       "ok": true,
       "note": ""
     },
@@ -682,7 +682,7 @@
     },
     {
       "name": "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02",
-      "value": 0.049999999999999926,
+      "value": 0.052045992175489005,
       "min": 0.0,
       "max": 0.35,
       "active": false,
@@ -718,7 +718,7 @@
     },
     {
       "name": "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06",
-      "value": 0.06250000000000007,
+      "value": 0.06045400782451099,
       "min": 0.0,
       "max": 0.35,
       "active": false,
@@ -766,21 +766,21 @@
     "name": "HIGHS",
     "status": "optimal",
     "iterations": 167,
-    "time": 0.011303901672363281
+    "time": 0.01131892204284668
   },
   "riskAversionLambda": 0.25,
   "horizonMaturityLimits": "REPORT",
   "analysis": {
     "initialPosition": {
-      "objective": -8.565416985310637,
+      "objective": -9.341216705846822,
       "metrics": {
-        "expectedAssetReturn": 0.06075364275732354,
-        "expectedLiabilityEconomicCost": 0.0709858275226317,
-        "expectedNetWorthChange": 3.964980739218155,
-        "expectedTerminalNetWorth": 203.96498073921816,
-        "netWorthVolatility": 25.43229778025421,
-        "var95Loss": 42.49152889563174,
-        "cvar95Loss": 50.121590898115166,
+        "expectedAssetReturn": 0.05948857244961753,
+        "expectedLiabilityEconomicCost": 0.07024916839212163,
+        "expectedNetWorthChange": 3.2892377359202323,
+        "expectedTerminalNetWorth": 203.28923773592024,
+        "netWorthVolatility": 25.33165051873102,
+        "var95Loss": 43.06922945678353,
+        "cvar95Loss": 50.52181776706822,
         "cvarAlpha": 0.95,
         "transactionCosts": 0.0,
         "stressLosses": {
@@ -794,7 +794,7 @@
           "minNetWorth": {
             "count": 0,
             "probability": 0.0,
-            "worst": 128.35958527541925
+            "worst": 127.88803479633611
           },
           "maxLiabilitiesToAssets": {
             "count": 2,
@@ -804,15 +804,15 @@
           "minCash": {
             "count": 0,
             "probability": 0.0,
-            "worst": 137.51960382919646
+            "worst": 137.51900977957288
           },
           "ASSET:CURRENCY:PEN": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.43874367702761796,
+            "worst": 0.4393533417168969,
             "range": [
-              0.43874367702761796,
-              0.5343937847554454
+              0.4393533417168969,
+              0.5350089903534211
             ],
             "min": 0.4,
             "max": 0.8,
@@ -821,10 +821,10 @@
           "ASSET:CURRENCY:USD": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.561256322972382,
+            "worst": 0.560646658283103,
             "range": [
-              0.46560621524455476,
-              0.561256322972382
+              0.464991009646579,
+              0.560646658283103
             ],
             "min": 0.2,
             "max": 0.6,
@@ -833,10 +833,10 @@
           "ASSET:TYPE:CASH": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.16363668893812708,
+            "worst": 0.1638234776963565,
             "range": [
-              0.12502943328975064,
-              0.16363668893812708
+              0.1252026737558879,
+              0.1638234776963565
             ],
             "min": 0.05,
             "max": 0.2,
@@ -847,7 +847,7 @@
             "probability": 0.0,
             "worst": 0.674730817007021,
             "range": [
-              0.6055750839857819,
+              0.6056944743668101,
               0.674730817007021
             ],
             "min": 0.4,
@@ -857,10 +857,10 @@
           "ASSET:TYPE:EQUITY": {
             "count": 486,
             "probability": 0.9339999999999999,
-            "worst": 0.26939548272446745,
+            "worst": 0.26910285187730204,
             "range": [
-              0.17724539947487974,
-              0.26939548272446745
+              0.17701120508828821,
+              0.26910285187730204
             ],
             "min": 0.0,
             "max": 0.2,
@@ -869,10 +869,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.12502943328975064,
+            "worst": 0.1252026737558879,
             "range": [
-              0.12502943328975064,
-              0.16363668893812708
+              0.1252026737558879,
+              0.1638234776963565
             ],
             "min": 0.0,
             "max": 0.35,
@@ -881,10 +881,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.19229053726825346,
+            "worst": 0.19252811501134082,
             "range": [
               0.16402054902265556,
-              0.19229053726825346
+              0.19252811501134082
             ],
             "min": 0.0,
             "max": 0.35,
@@ -893,10 +893,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.14662965450772592,
+            "worst": 0.14683363865678975,
             "range": [
-              0.14662965450772592,
-              0.18307209287822046
+              0.14683363865678975,
+              0.18328363614566276
             ],
             "min": 0.0,
             "max": 0.35,
@@ -905,9 +905,9 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.13739812688225206,
+            "worst": 0.1372165827059894,
             "range": [
-              0.13739812688225206,
+              0.1372165827059894,
               0.1784195255849198
             ],
             "min": 0.0,
@@ -917,9 +917,9 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.13139994201255786,
+            "worst": 0.13123888521492535,
             "range": [
-              0.13139994201255786,
+              0.13123888521492535,
               0.16887306657148138
             ],
             "min": 0.0,
@@ -929,10 +929,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.26939548272446745,
+            "worst": 0.26910285187730204,
             "range": [
-              0.17724539947487974,
-              0.26939548272446745
+              0.17701120508828821,
+              0.26910285187730204
             ],
             "min": 0.0,
             "max": 0.35,
@@ -941,10 +941,10 @@
           "LIABILITY:CURRENCY:PEN": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.7205814594129987,
+            "worst": 0.721079920629674,
             "range": [
               0.6515565787910691,
-              0.7205814594129987
+              0.721079920629674
             ],
             "min": 0.5,
             "max": 0.8,
@@ -953,9 +953,9 @@
           "LIABILITY:CURRENCY:USD": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.2794185405870015,
+            "worst": 0.27892007937032615,
             "range": [
-              0.2794185405870015,
+              0.27892007937032615,
               0.34844342120893096
             ],
             "min": 0.2,
@@ -965,9 +965,9 @@
           "LIABILITY:RATE_TYPE:FIXED": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.5518067827437391,
+            "worst": 0.5518212193728345,
             "range": [
-              0.5518067827437391,
+              0.5518212193728345,
               0.6130170244987391
             ],
             "min": 0.45,
@@ -977,10 +977,10 @@
           "LIABILITY:RATE_TYPE:FLOAT": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.448193217256261,
+            "worst": 0.4481787806271656,
             "range": [
               0.386982975501261,
-              0.448193217256261
+              0.4481787806271656
             ],
             "min": 0.2,
             "max": 0.55,
@@ -989,10 +989,10 @@
           "LIABILITY:MATURITY:LE_12M": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.16430338089843108,
+            "worst": 0.1644206667073773,
             "range": [
               0.13473097815089702,
-              0.16430338089843108
+              0.1644206667073773
             ],
             "min": 0.0,
             "max": 0.25,
@@ -1001,9 +1001,9 @@
           "LIABILITY:MATURITY:GT_36M": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.6493194421985119,
+            "worst": 0.6490691134914667,
             "range": [
-              0.6493194421985119,
+              0.6490691134914667,
               0.6846843775725999
             ],
             "min": 0.4,
@@ -1016,7 +1016,7 @@
             "worst": 0.13473097815089702,
             "range": [
               0.13473097815089702,
-              0.16430338089843108
+              0.1644206667073773
             ],
             "min": 0.0,
             "max": 0.35,
@@ -1025,10 +1025,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.1945116860270208,
+            "worst": 0.19464623921376747,
             "range": [
               0.17456451752126223,
-              0.1945116860270208
+              0.19464623921376747
             ],
             "min": 0.0,
             "max": 0.35,
@@ -1052,7 +1052,7 @@
             "worst": 0.12341808356662666,
             "range": [
               0.12341808356662666,
-              0.1488290880002008
+              0.1489353276885467
             ],
             "min": 0.0,
             "max": 0.35,
@@ -1063,7 +1063,7 @@
             "probability": 0.0,
             "worst": 0.1974240168209398,
             "range": [
-              0.15327355364550616,
+              0.15300350256709896,
               0.1974240168209398
             ],
             "min": 0.0,
@@ -1073,9 +1073,9 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.11044257621804143,
+            "worst": 0.11024555514421165,
             "range": [
-              0.11044257621804143,
+              0.11024555514421165,
               0.1601753684994672
             ],
             "min": 0.0,
@@ -1126,47 +1126,47 @@
       {
         "lambda": 0.0,
         "status": "OPTIMAL",
-        "objective": 6.8358562754082115,
+        "objective": 6.177020180720991,
         "metrics": {
-          "expectedAssetReturn": 0.06342975710155244,
-          "expectedLiabilityEconomicCost": 0.06785487603268027,
-          "expectedNetWorthChange": 9.145856275408212,
-          "expectedTerminalNetWorth": 206.83585627540822,
-          "netWorthVolatility": 30.223259714526137,
-          "var95Loss": 42.849533669903316,
-          "cvar95Loss": 60.97495080983212,
+          "expectedAssetReturn": 0.062224891818738165,
+          "expectedLiabilityEconomicCost": 0.06737858954752146,
+          "expectedNetWorthChange": 8.32202018072099,
+          "expectedTerminalNetWorth": 206.17702018072097,
+          "netWorthVolatility": 27.390128225831393,
+          "var95Loss": 35.61419150839467,
+          "cvar95Loss": 51.16366744329426,
           "cvarAlpha": 0.95,
-          "transactionCosts": 2.31,
+          "transactionCosts": 2.145,
           "stressLosses": {
-            "C_STRESS_1": 10.753935523115196,
-            "C_STRESS_2": 4.997022647340259,
-            "C_STRESS_3": 8.591539772010599,
-            "C_STRESS_4": 1.7037633877066458
+            "C_STRESS_1": 27.85097004061938,
+            "C_STRESS_2": 31.894568562727915,
+            "C_STRESS_3": 35.61419150839467,
+            "C_STRESS_4": 16.49297534892241
           },
-          "tailStressShare": 0.0,
+          "tailStressShare": 0.1640000000000011,
           "horizonBreaches": {
             "minNetWorth": {
-              "count": 4,
-              "probability": 0.0076,
-              "worst": 103.74190901903307
+              "count": 0,
+              "probability": 0.0,
+              "worst": 121.30236023808106
             },
             "maxLiabilitiesToAssets": {
-              "count": 10,
-              "probability": 0.019,
-              "worst": 0.8776939220859791
+              "count": 6,
+              "probability": 0.0114,
+              "worst": 0.8597928362017467
             },
             "minCash": {
               "count": 504,
               "probability": 0.9999999999999998,
-              "worst": 67.33164395669809
+              "worst": 69.1723725336365
             },
             "ASSET:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.4632259241034417,
+              "worst": 0.5421794848820439,
               "range": [
-                0.4632259241034417,
-                0.543239706369093
+                0.5421794848820439,
+                0.6261204148695627
               ],
               "min": 0.4,
               "max": 0.8,
@@ -1175,10 +1175,10 @@
             "ASSET:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.5367740758965581,
+              "worst": 0.4578205151179562,
               "range": [
-                0.45676029363090703,
-                0.5367740758965581
+                0.37387958513043734,
+                0.4578205151179562
               ],
               "min": 0.2,
               "max": 0.6,
@@ -1187,34 +1187,34 @@
             "ASSET:TYPE:CASH": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.06501827427433111,
+              "worst": 0.06651457206629287,
               "range": [
-                0.06501827427433111,
-                0.07938035235438153
+                0.06651457206629287,
+                0.08015500247964577
               ],
               "min": 0.05,
               "max": 0.2,
               "cause": null
             },
             "ASSET:TYPE:FIXED_INCOME": {
-              "count": 8,
-              "probability": 0.0364,
-              "worst": 0.7596846208125169,
+              "count": 9,
+              "probability": 0.027700000000000002,
+              "worst": 0.7597126427054915,
               "range": [
-                0.6900729766648558,
-                0.7596846208125169
+                0.6870369045157244,
+                0.7597126427054915
               ],
               "min": 0.4,
               "max": 0.75,
               "cause": "mercado"
             },
             "ASSET:TYPE:EQUITY": {
-              "count": 393,
-              "probability": 0.7466999999999999,
-              "worst": 0.24490874906081306,
+              "count": 386,
+              "probability": 0.7333999999999999,
+              "worst": 0.2464485234179827,
               "range": [
-                0.1637373283582512,
-                0.24490874906081306
+                0.16013235481486282,
+                0.2464485234179827
               ],
               "min": 0.0,
               "max": 0.2,
@@ -1223,22 +1223,22 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.06501827427433111,
+              "worst": 0.06651457206629287,
               "range": [
-                0.06501827427433111,
-                0.07938035235438153
+                0.06651457206629287,
+                0.08015500247964577
               ],
               "min": 0.0,
               "max": 0.35,
               "cause": null
             },
             "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-              "count": 235,
-              "probability": 0.45709999999999995,
-              "worst": 0.37084337441522425,
+              "count": 229,
+              "probability": 0.4457,
+              "worst": 0.36873349018529933,
               "range": [
-                0.32360801805412925,
-                0.37084337441522425
+                0.32598903562136045,
+                0.36873349018529933
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1247,10 +1247,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.07331595427525944,
+              "worst": 0.1479197507602426,
               "range": [
-                0.07331595427525944,
-                0.0930159795994873
+                0.1479197507602426,
+                0.18238734810282983
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1259,10 +1259,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.13961954731777418,
+              "worst": 0.06372126616879897,
               "range": [
-                0.13961954731777418,
-                0.1745817253235664
+                0.06372126616879897,
+                0.08297258163510796
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1271,10 +1271,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.13032400964771754,
+              "worst": 0.12952935325339554,
               "range": [
-                0.13032400964771754,
-                0.1713506920980267
+                0.12952935325339554,
+                0.17261144271383613
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1283,10 +1283,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.24490874906081306,
+              "worst": 0.2464485234179827,
               "range": [
-                0.1637373283582512,
-                0.24490874906081306
+                0.16013235481486282,
+                0.2464485234179827
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1295,10 +1295,10 @@
             "LIABILITY:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.7824300759023435,
+              "worst": 0.7200476426670605,
               "range": [
-                0.7262411001584554,
-                0.7824300759023435
+                0.6547218217808046,
+                0.7200476426670605
               ],
               "min": 0.5,
               "max": 0.8,
@@ -1307,34 +1307,34 @@
             "LIABILITY:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.2175699240976565,
+              "worst": 0.2799523573329396,
               "range": [
-                0.2175699240976565,
-                0.27375889984154456
+                0.2799523573329396,
+                0.3452781782191953
               ],
               "min": 0.2,
               "max": 0.5,
               "cause": null
             },
             "LIABILITY:RATE_TYPE:FIXED": {
-              "count": 160,
-              "probability": 0.3358,
-              "worst": 0.40904998395806413,
+              "count": 161,
+              "probability": 0.3377,
+              "worst": 0.40901187600481037,
               "range": [
-                0.40904998395806413,
-                0.4890012545496941
+                0.40901187600481037,
+                0.4848973566731423
               ],
               "min": 0.45,
               "max": 0.8,
               "cause": "mercado"
             },
             "LIABILITY:RATE_TYPE:FLOAT": {
-              "count": 160,
-              "probability": 0.3358,
-              "worst": 0.5909500160419358,
+              "count": 161,
+              "probability": 0.3377,
+              "worst": 0.5909881239951896,
               "range": [
-                0.5109987454503059,
-                0.5909500160419358
+                0.5151026433268577,
+                0.5909881239951896
               ],
               "min": 0.2,
               "max": 0.55,
@@ -1343,10 +1343,10 @@
             "LIABILITY:MATURITY:LE_12M": {
               "count": 504,
               "probability": 0.9999999999999998,
-              "worst": 0.37775946174368386,
+              "worst": 0.3780696093159882,
               "range": [
-                0.3198755465914562,
-                0.37775946174368386
+                0.31719102060260906,
+                0.3780696093159882
               ],
               "min": 0.0,
               "max": 0.25,
@@ -1355,22 +1355,22 @@
             "LIABILITY:MATURITY:GT_36M": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.5732678970756493,
+              "worst": 0.5729175420504294,
               "range": [
-                0.5732678970756493,
-                0.6311255519686902
+                0.5729175420504294,
+                0.6342212967135252
               ],
               "min": 0.4,
               "max": 1.0,
               "cause": null
             },
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 179,
-              "probability": 0.3613,
-              "worst": 0.37775946174368386,
+              "count": 187,
+              "probability": 0.3659,
+              "worst": 0.3780696093159882,
               "range": [
-                0.3198755465914562,
-                0.37775946174368386
+                0.31719102060260906,
+                0.3780696093159882
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1379,10 +1379,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.046691277711885915,
+              "worst": 0.04612767519603593,
               "range": [
-                0.046691277711885915,
-                0.051642584441903526
+                0.04612767519603593,
+                0.05209776567481519
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1391,10 +1391,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.2437844196776065,
+              "worst": 0.24173848144545895,
               "range": [
-                0.18785416372409647,
-                0.2437844196776065
+                0.18558660788762718,
+                0.24173848144545895
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1403,10 +1403,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.12557858677861863,
+              "worst": 0.06792255277334273,
               "range": [
-                0.12557858677861863,
-                0.14664926343833135
+                0.06792255277334273,
+                0.08005618103024538
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1415,10 +1415,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.15102863323773588,
+              "worst": 0.15077868493729613,
               "range": [
-                0.15102863323773588,
-                0.19802090354486956
+                0.15077868493729613,
+                0.19563062671163642
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1427,374 +1427,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.05497940944595682,
+              "worst": 0.11065357186824377,
               "range": [
-                0.05497940944595682,
-                0.08136117012825501
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            }
-          }
-        },
-        "weights": {
-          "byCurrency": {
-            "ASSET": {
-              "PEN": 0.51,
-              "USD": 0.49
-            },
-            "LIABILITY": {
-              "PEN": 0.7625,
-              "USD": 0.23750000000000007
-            }
-          },
-          "byType": {
-            "ASSET": {
-              "BOND_FIXED": 0.5,
-              "BOND_FLOAT": 0.22,
-              "CASH": 0.08,
-              "EQUITY": 0.2
-            },
-            "LIABILITY": {
-              "BOND_FIXED": 0.44999999999999996,
-              "LOAN_FLOAT": 0.55
-            }
-          },
-          "byRateType": {
-            "ASSET": {
-              "FIXED": 0.78,
-              "FLOAT": 0.22
-            },
-            "LIABILITY": {
-              "FIXED": 0.44999999999999996,
-              "FLOAT": 0.55
-            }
-          }
-        },
-        "positions": {
-          "A01": 80.0,
-          "A02": 350.0,
-          "A03": 80.0,
-          "A04": 150.0,
-          "A05": 140.0,
-          "A06": 200.0,
-          "L01": 280.0,
-          "L02": 39.99999999999994,
-          "L03": 180.0,
-          "L04": 110.0,
-          "L05": 140.0,
-          "L06": 50.00000000000006
-        }
-      },
-      {
-        "lambda": 0.1,
-        "status": "OPTIMAL",
-        "objective": 2.887755324789565,
-        "metrics": {
-          "expectedAssetReturn": 0.06321361089376171,
-          "expectedLiabilityEconomicCost": 0.06869277499417725,
-          "expectedNetWorthChange": 8.259390898419896,
-          "expectedTerminalNetWorth": 206.09418203799157,
-          "netWorthVolatility": 19.790991267821166,
-          "var95Loss": 24.349998024326954,
-          "cvar95Loss": 32.06426713202011,
-          "cvarAlpha": 0.95,
-          "transactionCosts": 2.16520886042832,
-          "stressLosses": {
-            "C_STRESS_1": -9.27512971908093,
-            "C_STRESS_2": 24.349998024326954,
-            "C_STRESS_3": -15.286626740938832,
-            "C_STRESS_4": -3.973109378333106
-          },
-          "tailStressShare": 0.050000000000001196,
-          "horizonBreaches": {
-            "minNetWorth": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 145.70696053718052
-            },
-            "maxLiabilitiesToAssets": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.8353760622640832
-            },
-            "minCash": {
-              "count": 504,
-              "probability": 0.9999999999999998,
-              "worst": 71.53755189373668
-            },
-            "ASSET:CURRENCY:PEN": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.5465582168170904,
-              "range": [
-                0.5465582168170904,
-                0.6146003696117226
-              ],
-              "min": 0.4,
-              "max": 0.8,
-              "cause": null
-            },
-            "ASSET:CURRENCY:USD": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.4534417831829096,
-              "range": [
-                0.3853996303882774,
-                0.4534417831829096
-              ],
-              "min": 0.2,
-              "max": 0.6,
-              "cause": null
-            },
-            "ASSET:TYPE:CASH": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.06667153471107135,
-              "range": [
-                0.06667153471107135,
-                0.08092536287229675
-              ],
-              "min": 0.05,
-              "max": 0.2,
-              "cause": null
-            },
-            "ASSET:TYPE:FIXED_INCOME": {
-              "count": 199,
-              "probability": 0.42050000000000004,
-              "worst": 0.7856962356087017,
-              "range": [
-                0.7214638224902885,
-                0.7856962356087017
-              ],
-              "min": 0.4,
-              "max": 0.75,
-              "cause": "mercado"
-            },
-            "ASSET:TYPE:EQUITY": {
-              "count": 23,
-              "probability": 0.043699999999999996,
-              "worst": 0.21186464279864023,
-              "range": [
-                0.13337840151900143,
-                0.21186464279864023
-              ],
-              "min": 0.0,
-              "max": 0.2,
-              "cause": "mercado"
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.06667153471107135,
-              "range": [
-                0.06667153471107135,
-                0.08092536287229675
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-              "count": 231,
-              "probability": 0.4495,
-              "worst": 0.37046111873643217,
-              "range": [
-                0.32042607145783913,
-                0.37046111873643217
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": "mercado"
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.14923261417387346,
-              "range": [
-                0.14923261417387346,
-                0.1782815669620637
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.0,
-              "range": [
-                0.0,
-                0.0
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.290855741059112,
-              "range": [
-                0.22397236273319834,
-                0.290855741059112
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.13337840151900143,
-              "range": [
-                0.13337840151900143,
-                0.21186464279864023
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CURRENCY:PEN": {
-              "count": 225,
-              "probability": 0.42749999999999994,
-              "worst": 0.8211317321771616,
-              "range": [
-                0.7686668951596436,
-                0.8211317321771616
-              ],
-              "min": 0.5,
-              "max": 0.8,
-              "cause": "mercado"
-            },
-            "LIABILITY:CURRENCY:USD": {
-              "count": 225,
-              "probability": 0.42749999999999994,
-              "worst": 0.17886826782283838,
-              "range": [
-                0.17886826782283838,
-                0.2313331048403564
-              ],
-              "min": 0.2,
-              "max": 0.5,
-              "cause": "mercado"
-            },
-            "LIABILITY:RATE_TYPE:FIXED": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.4848243107975641,
-              "range": [
-                0.4848243107975641,
-                0.5615936334774176
-              ],
-              "min": 0.45,
-              "max": 0.8,
-              "cause": null
-            },
-            "LIABILITY:RATE_TYPE:FLOAT": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.515175689202436,
-              "range": [
-                0.43840636652258247,
-                0.515175689202436
-              ],
-              "min": 0.2,
-              "max": 0.55,
-              "cause": null
-            },
-            "LIABILITY:MATURITY:LE_12M": {
-              "count": 504,
-              "probability": 0.9999999999999998,
-              "worst": 0.340716943913816,
-              "range": [
-                0.2865843950470831,
-                0.340716943913816
-              ],
-              "min": 0.0,
-              "max": 0.25,
-              "cause": "estructural"
-            },
-            "LIABILITY:MATURITY:GT_36M": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.537015284189341,
-              "range": [
-                0.537015284189341,
-                0.5918983553150859
-              ],
-              "min": 0.4,
-              "max": 1.0,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.340716943913816,
-              "range": [
-                0.2865843950470831,
-                0.340716943913816
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.11730473100994422,
-              "range": [
-                0.11730473100994422,
-                0.12720086103009187
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.24382543659117953,
-              "range": [
-                0.19033649645696035,
-                0.24382543659117953
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.1255997154711222,
-              "range": [
-                0.1255997154711222,
-                0.14765896952702948
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.2006375810829978,
-              "range": [
-                0.15206849206124798,
-                0.2006375810829978
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.021845582066981017,
-              "range": [
-                0.021845582066981017,
-                0.03300851803577793
+                0.11065357186824377,
+                0.15912944231186227
               ],
               "min": 0.0,
               "max": 0.35,
@@ -1809,380 +1445,16 @@
               "USD": 0.41
             },
             "LIABILITY": {
-              "PEN": 0.8,
-              "USD": 0.2
+              "PEN": 0.7,
+              "USD": 0.3
             }
           },
           "byType": {
             "ASSET": {
-              "BOND_FIXED": 0.35,
-              "BOND_FLOAT": 0.4,
+              "BOND_FIXED": 0.42,
+              "BOND_FLOAT": 0.3,
               "CASH": 0.08,
-              "EQUITY": 0.17
-            },
-            "LIABILITY": {
-              "BOND_FIXED": 0.523979113957168,
-              "LOAN_FLOAT": 0.47602088604283194
-            }
-          },
-          "byRateType": {
-            "ASSET": {
-              "FIXED": 0.6,
-              "FLOAT": 0.4
-            },
-            "LIABILITY": {
-              "FIXED": 0.523979113957168,
-              "FLOAT": 0.47602088604283194
-            }
-          }
-        },
-        "positions": {
-          "A01": 80.0,
-          "A02": 350.0,
-          "A03": 160.0,
-          "A04": 0.0,
-          "A05": 240.0,
-          "A06": 170.0,
-          "L01": 250.8167088342656,
-          "L02": 99.18329116573442,
-          "L03": 180.0,
-          "L04": 110.0,
-          "L05": 140.0,
-          "L06": 19.999999999999986
-        }
-      },
-      {
-        "lambda": 0.25,
-        "status": "OPTIMAL",
-        "objective": 1.1551269326158322,
-        "metrics": {
-          "expectedAssetReturn": 0.060118438700872766,
-          "expectedLiabilityEconomicCost": 0.06785487603268027,
-          "expectedNetWorthChange": 5.83453787472855,
-          "expectedTerminalNetWorth": 203.10953787472855,
-          "netWorthVolatility": 7.032434708028923,
-          "var95Loss": 5.257340853430328,
-          "cvar95Loss": 7.81764376845087,
-          "cvarAlpha": 0.95,
-          "transactionCosts": 2.725,
-          "stressLosses": {
-            "C_STRESS_1": -17.69830239871819,
-            "C_STRESS_2": 10.346287679512862,
-            "C_STRESS_3": -18.80451742692732,
-            "C_STRESS_4": -24.217777081956413
-          },
-          "tailStressShare": 0.2499999999999998,
-          "horizonBreaches": {
-            "minNetWorth": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 185.43936575692408
-            },
-            "maxLiabilitiesToAssets": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.8240393728654448
-            },
-            "minCash": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 196.1705833913148
-            },
-            "ASSET:CURRENCY:PEN": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.7291602082521064,
-              "range": [
-                0.6699402874621577,
-                0.7291602082521064
-              ],
-              "min": 0.4,
-              "max": 0.8,
-              "cause": null
-            },
-            "ASSET:CURRENCY:USD": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.2708397917478936,
-              "range": [
-                0.2708397917478936,
-                0.3300597125378424
-              ],
-              "min": 0.2,
-              "max": 0.6,
-              "cause": null
-            },
-            "ASSET:TYPE:CASH": {
-              "count": 93,
-              "probability": 0.17670000000000005,
-              "worst": 0.2148374428709695,
-              "range": [
-                0.18466022929482392,
-                0.2148374428709695
-              ],
-              "min": 0.05,
-              "max": 0.2,
-              "cause": "mercado"
-            },
-            "ASSET:TYPE:FIXED_INCOME": {
-              "count": 334,
-              "probability": 0.677,
-              "worst": 0.7720388312844191,
-              "range": [
-                0.7470409244735492,
-                0.7720388312844191
-              ],
-              "min": 0.4,
-              "max": 0.75,
-              "cause": "mercado"
-            },
-            "ASSET:TYPE:EQUITY": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.03733804830847722,
-              "range": [
-                0.03733804830847722,
-                0.06455400644924973
-              ],
-              "min": 0.0,
-              "max": 0.2,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.2148374428709695,
-              "range": [
-                0.18466022929482392,
-                0.2148374428709695
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-              "count": 272,
-              "probability": 0.5274000000000001,
-              "worst": 0.36658981025550336,
-              "range": [
-                0.3146456434170621,
-                0.36658981025550336
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": "mercado"
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.14951267348978414,
-              "range": [
-                0.14951267348978414,
-                0.1696881303521512
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.0,
-              "range": [
-                0.0,
-                0.0
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.2856087563996247,
-              "range": [
-                0.22241580267892153,
-                0.2856087563996247
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.03733804830847722,
-              "range": [
-                0.03733804830847722,
-                0.06455400644924973
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CURRENCY:PEN": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.7824300759023435,
-              "range": [
-                0.7262411001584554,
-                0.7824300759023435
-              ],
-              "min": 0.5,
-              "max": 0.8,
-              "cause": null
-            },
-            "LIABILITY:CURRENCY:USD": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.2175699240976565,
-              "range": [
-                0.2175699240976565,
-                0.27375889984154456
-              ],
-              "min": 0.2,
-              "max": 0.5,
-              "cause": null
-            },
-            "LIABILITY:RATE_TYPE:FIXED": {
-              "count": 160,
-              "probability": 0.3358,
-              "worst": 0.40904998395806413,
-              "range": [
-                0.40904998395806413,
-                0.4890012545496941
-              ],
-              "min": 0.45,
-              "max": 0.8,
-              "cause": "mercado"
-            },
-            "LIABILITY:RATE_TYPE:FLOAT": {
-              "count": 160,
-              "probability": 0.3358,
-              "worst": 0.5909500160419358,
-              "range": [
-                0.5109987454503059,
-                0.5909500160419358
-              ],
-              "min": 0.2,
-              "max": 0.55,
-              "cause": "mercado"
-            },
-            "LIABILITY:MATURITY:LE_12M": {
-              "count": 504,
-              "probability": 0.9999999999999998,
-              "worst": 0.37775946174368386,
-              "range": [
-                0.3198755465914562,
-                0.37775946174368386
-              ],
-              "min": 0.0,
-              "max": 0.25,
-              "cause": "estructural"
-            },
-            "LIABILITY:MATURITY:GT_36M": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.5732678970756493,
-              "range": [
-                0.5732678970756493,
-                0.6311255519686902
-              ],
-              "min": 0.4,
-              "max": 1.0,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 179,
-              "probability": 0.3613,
-              "worst": 0.37775946174368386,
-              "range": [
-                0.3198755465914562,
-                0.37775946174368386
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": "mercado"
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.046691277711885915,
-              "range": [
-                0.046691277711885915,
-                0.051642584441903526
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.2437844196776065,
-              "range": [
-                0.18785416372409647,
-                0.2437844196776065
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.12557858677861863,
-              "range": [
-                0.12557858677861863,
-                0.14664926343833135
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.15102863323773588,
-              "range": [
-                0.15102863323773588,
-                0.19802090354486956
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            },
-            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
-              "count": 0,
-              "probability": 0.0,
-              "worst": 0.05497940944595682,
-              "range": [
-                0.05497940944595682,
-                0.08136117012825501
-              ],
-              "min": 0.0,
-              "max": 0.35,
-              "cause": null
-            }
-          }
-        },
-        "weights": {
-          "byCurrency": {
-            "ASSET": {
-              "PEN": 0.71,
-              "USD": 0.29
-            },
-            "LIABILITY": {
-              "PEN": 0.7625,
-              "USD": 0.23750000000000007
-            }
-          },
-          "byType": {
-            "ASSET": {
-              "BOND_FIXED": 0.35,
-              "BOND_FLOAT": 0.4,
-              "CASH": 0.2,
-              "EQUITY": 0.05
+              "EQUITY": 0.2
             },
             "LIABILITY": {
               "BOND_FIXED": 0.44999999999999996,
@@ -2191,8 +1463,8 @@
           },
           "byRateType": {
             "ASSET": {
-              "FIXED": 0.6,
-              "FLOAT": 0.4
+              "FIXED": 0.7,
+              "FLOAT": 0.3
             },
             "LIABILITY": {
               "FIXED": 0.44999999999999996,
@@ -2201,64 +1473,64 @@
           }
         },
         "positions": {
-          "A01": 200.0,
+          "A01": 80.0,
           "A02": 350.0,
           "A03": 160.0,
-          "A04": 0.0,
-          "A05": 240.0,
-          "A06": 50.0,
+          "A04": 70.0,
+          "A05": 140.0,
+          "A06": 200.0,
           "L01": 280.0,
           "L02": 39.99999999999994,
           "L03": 180.0,
-          "L04": 110.0,
+          "L04": 60.00000000000006,
           "L05": 140.0,
-          "L06": 50.00000000000006
+          "L06": 100.0
         }
       },
       {
-        "lambda": 0.5,
+        "lambda": 0.1,
         "status": "OPTIMAL",
-        "objective": -0.14748732770602135,
+        "objective": 2.2509149308264202,
         "metrics": {
-          "expectedAssetReturn": 0.0600683650433357,
-          "expectedLiabilityEconomicCost": 0.06601211948471106,
-          "expectedNetWorthChange": 7.258669455566867,
-          "expectedTerminalNetWorth": 201.12403495541918,
-          "netWorthVolatility": 5.9623078725467025,
-          "var95Loss": 1.5138974357914954,
-          "cvar95Loss": 2.5430445662503893,
+          "expectedAssetReturn": 0.061930638218156094,
+          "expectedLiabilityEconomicCost": 0.06756722389934758,
+          "expectedNetWorthChange": 7.876859098678015,
+          "expectedTerminalNetWorth": 205.33636779938863,
+          "netWorthVolatility": 18.585226336593628,
+          "var95Loss": 24.80225122057491,
+          "cvar95Loss": 30.854528685622036,
           "cvarAlpha": 0.95,
-          "transactionCosts": 6.134634500147694,
+          "transactionCosts": 2.540491299289391,
           "stressLosses": {
-            "C_STRESS_1": 1.5138974357914599,
-            "C_STRESS_2": 1.5138974357914954,
-            "C_STRESS_3": -18.680160422152085,
-            "C_STRESS_4": 0.4288311726892946
+            "C_STRESS_1": -3.095344097607814,
+            "C_STRESS_2": 24.80225122057491,
+            "C_STRESS_3": -8.09376199830163,
+            "C_STRESS_4": -0.5956999903357527
           },
-          "tailStressShare": 0.24000000000000105,
+          "tailStressShare": 0.20200000000000107,
           "horizonBreaches": {
             "minNetWorth": {
               "count": 0,
               "probability": 0.0,
-              "worst": 186.54708627552407
+              "worst": 147.78916373066352
             },
             "maxLiabilitiesToAssets": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.818262677416561
+              "worst": 0.8349048786609242
             },
             "minCash": {
               "count": 0,
               "probability": 0.0,
-              "worst": 194.54877389860042
+              "worst": 82.40304072002166
             },
             "ASSET:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.7435532799115019,
+              "worst": 0.6574240121844758,
               "range": [
-                0.6869554779181071,
-                0.7435532799115019
+                0.5889184128965753,
+                0.6574240121844758
               ],
               "min": 0.4,
               "max": 0.8,
@@ -2267,10 +1539,738 @@
             "ASSET:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.25644672008849817,
+              "worst": 0.34257598781552434,
               "range": [
-                0.25644672008849817,
-                0.3130445220818929
+                0.34257598781552434,
+                0.4110815871034245
+              ],
+              "min": 0.2,
+              "max": 0.6,
+              "cause": null
+            },
+            "ASSET:TYPE:CASH": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.0776011884743301,
+              "range": [
+                0.0776011884743301,
+                0.09263382200065283
+              ],
+              "min": 0.05,
+              "max": 0.2,
+              "cause": null
+            },
+            "ASSET:TYPE:FIXED_INCOME": {
+              "count": 202,
+              "probability": 0.4262,
+              "worst": 0.7831555194460733,
+              "range": [
+                0.7229308680057445,
+                0.7831555194460733
+              ],
+              "min": 0.4,
+              "max": 0.75,
+              "cause": "mercado"
+            },
+            "ASSET:TYPE:EQUITY": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.19946794351992536,
+              "range": [
+                0.12421065855327398,
+                0.19946794351992536
+              ],
+              "min": 0.0,
+              "max": 0.2,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.0776011884743301,
+              "range": [
+                0.0776011884743301,
+                0.09263382200065283
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
+              "count": 237,
+              "probability": 0.4609,
+              "worst": 0.3691707190066159,
+              "range": [
+                0.32187273468259203,
+                0.3691707190066159
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": "mercado"
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.21118138932979838,
+              "range": [
+                0.17871220605691956,
+                0.21118138932979838
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.0,
+              "range": [
+                0.0,
+                0.0
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.2550601702024665,
+              "range": [
+                0.19450080118196283,
+                0.2550601702024665
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.12421065855327398,
+              "range": [
+                0.12421065855327398,
+                0.19946794351992536
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CURRENCY:PEN": {
+              "count": 232,
+              "probability": 0.4407999999999999,
+              "worst": 0.8221478840518865,
+              "range": [
+                0.7692787816276571,
+                0.8221478840518865
+              ],
+              "min": 0.5,
+              "max": 0.8,
+              "cause": "mercado"
+            },
+            "LIABILITY:CURRENCY:USD": {
+              "count": 232,
+              "probability": 0.4407999999999999,
+              "worst": 0.1778521159481135,
+              "range": [
+                0.1778521159481135,
+                0.23072121837234305
+              ],
+              "min": 0.2,
+              "max": 0.5,
+              "cause": "mercado"
+            },
+            "LIABILITY:RATE_TYPE:FIXED": {
+              "count": 2,
+              "probability": 0.0038,
+              "worst": 0.4470306844850975,
+              "range": [
+                0.4470306844850975,
+                0.5271091023966252
+              ],
+              "min": 0.45,
+              "max": 0.8,
+              "cause": "mercado"
+            },
+            "LIABILITY:RATE_TYPE:FLOAT": {
+              "count": 2,
+              "probability": 0.0038,
+              "worst": 0.5529693155149026,
+              "range": [
+                0.47289089760337477,
+                0.5529693155149026
+              ],
+              "min": 0.2,
+              "max": 0.55,
+              "cause": "mercado"
+            },
+            "LIABILITY:MATURITY:LE_12M": {
+              "count": 504,
+              "probability": 0.9999999999999998,
+              "worst": 0.37913754357087454,
+              "range": [
+                0.320702185712988,
+                0.37913754357087454
+              ],
+              "min": 0.0,
+              "max": 0.25,
+              "cause": "estructural"
+            },
+            "LIABILITY:MATURITY:GT_36M": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.5348476895481182,
+              "range": [
+                0.5348476895481182,
+                0.5933281420995006
+              ],
+              "min": 0.4,
+              "max": 1.0,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
+              "count": 166,
+              "probability": 0.33660000000000007,
+              "worst": 0.37913754357087454,
+              "range": [
+                0.320702185712988,
+                0.37913754357087454
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": "mercado"
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.08257047869793735,
+              "range": [
+                0.08257047869793735,
+                0.08990041699890224
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.24441442012832185,
+              "range": [
+                0.1898330478622101,
+                0.24441442012832185
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.12590311353211403,
+              "range": [
+                0.12590311353211403,
+                0.14718424589511064
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.20010688565605342,
+              "range": [
+                0.15120458989919608,
+                0.20010688565605342
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.021822273400284656,
+              "range": [
+                0.021822273400284656,
+                0.03297329501681424
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            }
+          }
+        },
+        "weights": {
+          "byCurrency": {
+            "ASSET": {
+              "PEN": 0.6309739930825203,
+              "USD": 0.36902600691747967
+            },
+            "LIABILITY": {
+              "PEN": 0.8,
+              "USD": 0.2
+            }
+          },
+          "byType": {
+            "ASSET": {
+              "BOND_FIXED": 0.35,
+              "BOND_FLOAT": 0.4,
+              "CASH": 0.0904912992893908,
+              "EQUITY": 0.1595087007106092
+            },
+            "LIABILITY": {
+              "BOND_FIXED": 0.4875,
+              "LOAN_FLOAT": 0.5125
+            }
+          },
+          "byRateType": {
+            "ASSET": {
+              "FIXED": 0.6,
+              "FLOAT": 0.4
+            },
+            "LIABILITY": {
+              "FIXED": 0.4875,
+              "FLOAT": 0.5125
+            }
+          }
+        },
+        "positions": {
+          "A01": 90.4912992893908,
+          "A02": 350.0,
+          "A03": 190.48269379312953,
+          "A04": 0.0,
+          "A05": 209.51730620687047,
+          "A06": 159.50870071060922,
+          "L01": 280.0,
+          "L02": 70.0,
+          "L03": 180.0,
+          "L04": 110.0,
+          "L05": 140.0,
+          "L06": 20.0
+        }
+      },
+      {
+        "lambda": 0.25,
+        "status": "OPTIMAL",
+        "objective": 0.9094788722573335,
+        "metrics": {
+          "expectedAssetReturn": 0.05938673847817079,
+          "expectedLiabilityEconomicCost": 0.06728712098506957,
+          "expectedNetWorthChange": 5.557041690115143,
+          "expectedTerminalNetWorth": 202.8361336744661,
+          "netWorthVolatility": 6.266739657807714,
+          "var95Loss": 3.8828588233948977,
+          "cvar95Loss": 7.706619208835148,
+          "cvarAlpha": 0.95,
+          "transactionCosts": 2.720908015649022,
+          "stressLosses": {
+            "C_STRESS_1": -13.303937571029856,
+            "C_STRESS_2": 13.899048371306531,
+            "C_STRESS_3": -13.024333363237647,
+            "C_STRESS_4": -19.837881665657946
+          },
+          "tailStressShare": 0.2499999999999998,
+          "horizonBreaches": {
+            "minNetWorth": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 183.38004361304445
+            },
+            "maxLiabilitiesToAssets": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.8267811198391981
+            },
+            "minCash": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 196.30021809687833
+            },
+            "ASSET:CURRENCY:PEN": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.7538856615814868,
+              "range": [
+                0.6987933740255484,
+                0.7538856615814868
+              ],
+              "min": 0.4,
+              "max": 0.8,
+              "cause": null
+            },
+            "ASSET:CURRENCY:USD": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.24611433841851318,
+              "range": [
+                0.24611433841851318,
+                0.30120662597445164
+              ],
+              "min": 0.2,
+              "max": 0.6,
+              "cause": null
+            },
+            "ASSET:TYPE:CASH": {
+              "count": 102,
+              "probability": 0.19380000000000006,
+              "worst": 0.21475683004589205,
+              "range": [
+                0.18542314247570446,
+                0.21475683004589205
+              ],
+              "min": 0.05,
+              "max": 0.2,
+              "cause": "mercado"
+            },
+            "ASSET:TYPE:FIXED_INCOME": {
+              "count": 295,
+              "probability": 0.6029000000000001,
+              "worst": 0.7711257363967942,
+              "range": [
+                0.7467173567822109,
+                0.7711257363967942
+              ],
+              "min": 0.4,
+              "max": 0.75,
+              "cause": "mercado"
+            },
+            "ASSET:TYPE:EQUITY": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.037205337252666504,
+              "range": [
+                0.037205337252666504,
+                0.06455077796410481
+              ],
+              "min": 0.0,
+              "max": 0.2,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.21475683004589205,
+              "range": [
+                0.18542314247570446,
+                0.21475683004589205
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
+              "count": 279,
+              "probability": 0.5407000000000002,
+              "worst": 0.36581344814107114,
+              "range": [
+                0.31615836087820687,
+                0.36581344814107114
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": "mercado"
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.19647311504592874,
+              "range": [
+                0.17437489369731288,
+                0.19647311504592874
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.0,
+              "range": [
+                0.0,
+                0.0
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.25654196359582776,
+              "range": [
+                0.19791244676126363,
+                0.25654196359582776
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.037205337252666504,
+              "range": [
+                0.037205337252666504,
+                0.06455077796410481
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CURRENCY:PEN": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.7849891769413911,
+              "range": [
+                0.7285660717343374,
+                0.7849891769413911
+              ],
+              "min": 0.5,
+              "max": 0.8,
+              "cause": null
+            },
+            "LIABILITY:CURRENCY:USD": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.2150108230586089,
+              "range": [
+                0.2150108230586089,
+                0.27143392826566254
+              ],
+              "min": 0.2,
+              "max": 0.5,
+              "cause": null
+            },
+            "LIABILITY:RATE_TYPE:FIXED": {
+              "count": 159,
+              "probability": 0.3339000000000001,
+              "worst": 0.4109709385862693,
+              "range": [
+                0.4109709385862693,
+                0.4910753432471298
+              ],
+              "min": 0.45,
+              "max": 0.8,
+              "cause": "mercado"
+            },
+            "LIABILITY:RATE_TYPE:FLOAT": {
+              "count": 159,
+              "probability": 0.3339000000000001,
+              "worst": 0.5890290614137308,
+              "range": [
+                0.5089246567528702,
+                0.5890290614137308
+              ],
+              "min": 0.2,
+              "max": 0.55,
+              "cause": "mercado"
+            },
+            "LIABILITY:MATURITY:LE_12M": {
+              "count": 504,
+              "probability": 0.9999999999999998,
+              "worst": 0.3780268041679563,
+              "range": [
+                0.3199205379241002,
+                0.3780268041679563
+              ],
+              "min": 0.0,
+              "max": 0.25,
+              "cause": "estructural"
+            },
+            "LIABILITY:MATURITY:GT_36M": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.5709605254253661,
+              "range": [
+                0.5709605254253661,
+                0.6290683594209263
+              ],
+              "min": 0.4,
+              "max": 1.0,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
+              "count": 185,
+              "probability": 0.37270000000000003,
+              "worst": 0.3780268041679563,
+              "range": [
+                0.3199205379241002,
+                0.3780268041679563
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": "mercado"
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.048629535527136086,
+              "range": [
+                0.048629535527136086,
+                0.05376839237771487
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.243818708594143,
+              "range": [
+                0.18796106654079142,
+                0.243818708594143
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.1255962497354496,
+              "range": [
+                0.1255962497354496,
+                0.14675304791913402
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.15076161373196842,
+              "range": [
+                0.15076161373196842,
+                0.1981335919832505
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            },
+            "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.05306048168104841,
+              "range": [
+                0.05306048168104841,
+                0.0787536218951199
+              ],
+              "min": 0.0,
+              "max": 0.35,
+              "cause": null
+            }
+          }
+        },
+        "weights": {
+          "byCurrency": {
+            "ASSET": {
+              "PEN": 0.7354565848174266,
+              "USD": 0.2645434151825734
+            },
+            "LIABILITY": {
+              "PEN": 0.764545992175489,
+              "USD": 0.235454007824511
+            }
+          },
+          "byType": {
+            "ASSET": {
+              "BOND_FIXED": 0.35,
+              "BOND_FLOAT": 0.4,
+              "CASH": 0.2,
+              "EQUITY": 0.05
+            },
+            "LIABILITY": {
+              "BOND_FIXED": 0.452045992175489,
+              "LOAN_FLOAT": 0.547954007824511
+            }
+          },
+          "byRateType": {
+            "ASSET": {
+              "FIXED": 0.6,
+              "FLOAT": 0.4
+            },
+            "LIABILITY": {
+              "FIXED": 0.452045992175489,
+              "FLOAT": 0.547954007824511
+            }
+          }
+        },
+        "positions": {
+          "A01": 200.0,
+          "A02": 350.0,
+          "A03": 185.45658481742655,
+          "A04": 0.0,
+          "A05": 214.54341518257345,
+          "A06": 50.0,
+          "L01": 280.0,
+          "L02": 41.636793740391205,
+          "L03": 180.0,
+          "L04": 110.0,
+          "L05": 140.0,
+          "L06": 48.363206259608795
+        }
+      },
+      {
+        "lambda": 0.5,
+        "status": "OPTIMAL",
+        "objective": -0.32573320846607867,
+        "metrics": {
+          "expectedAssetReturn": 0.059394457752188844,
+          "expectedLiabilityEconomicCost": 0.06532875092407187,
+          "expectedNetWorthChange": 7.131457012931352,
+          "expectedTerminalNetWorth": 200.98485019103038,
+          "netWorthVolatility": 5.944646178084248,
+          "var95Loss": 1.601005319726923,
+          "cvar95Loss": 2.6211667989928893,
+          "cvarAlpha": 0.95,
+          "transactionCosts": 6.146606821900986,
+          "stressLosses": {
+            "C_STRESS_1": 1.601005319726923,
+            "C_STRESS_2": 1.601005319726923,
+            "C_STRESS_3": -18.648617958053627,
+            "C_STRESS_4": 0.5418420129862014
+          },
+          "tailStressShare": 0.24000000000000105,
+          "horizonBreaches": {
+            "minNetWorth": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 186.48372908799297
+            },
+            "maxLiabilitiesToAssets": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.8183443277007231
+            },
+            "minCash": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 194.53966990597044
+            },
+            "ASSET:CURRENCY:PEN": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.7444114371381463,
+              "range": [
+                0.6874140567642172,
+                0.7444114371381463
+              ],
+              "min": 0.4,
+              "max": 0.8,
+              "cause": null
+            },
+            "ASSET:CURRENCY:USD": {
+              "count": 0,
+              "probability": 0.0,
+              "worst": 0.2555885628618538,
+              "range": [
+                0.2555885628618538,
+                0.3125859432357828
               ],
               "min": 0.2,
               "max": 0.6,
@@ -2279,22 +2279,22 @@
             "ASSET:TYPE:CASH": {
               "count": 82,
               "probability": 0.15580000000000002,
-              "worst": 0.21392664181610532,
+              "worst": 0.21405821539869746,
               "range": [
-                0.18381337889475965,
-                0.21392664181610532
+                0.18381688216888128,
+                0.21405821539869746
               ],
               "min": 0.05,
               "max": 0.2,
               "cause": "mercado"
             },
             "ASSET:TYPE:FIXED_INCOME": {
-              "count": 419,
-              "probability": 0.8385,
-              "worst": 0.7727249468951221,
+              "count": 415,
+              "probability": 0.8309,
+              "worst": 0.7727185813494053,
               "range": [
-                0.7479478116841183,
-                0.7727249468951221
+                0.7479121285281187,
+                0.7727185813494053
               ],
               "min": 0.4,
               "max": 0.75,
@@ -2303,10 +2303,10 @@
             "ASSET:TYPE:EQUITY": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03733648983955102,
+              "worst": 0.037267365935197264,
               "range": [
-                0.03733648983955102,
-                0.06471750834513562
+                0.037267365935197264,
+                0.06460711920516478
               ],
               "min": 0.0,
               "max": 0.2,
@@ -2315,22 +2315,22 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.21392664181610532,
+              "worst": 0.21405821539869746,
               "range": [
-                0.18381337889475965,
-                0.21392664181610532
+                0.18381688216888128,
+                0.21405821539869746
               ],
               "min": 0.0,
               "max": 0.35,
               "cause": null
             },
             "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-              "count": 283,
-              "probability": 0.5483,
-              "worst": 0.36648156987109504,
+              "count": 290,
+              "probability": 0.5616000000000001,
+              "worst": 0.36669863171480294,
               "range": [
-                0.31602869395398336,
-                0.36648156987109504
+                0.3160554262769467,
+                0.36669863171480294
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2339,10 +2339,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.18606508741802946,
+              "worst": 0.18661181863624013,
               "range": [
-                0.16475404591773168,
-                0.18606508741802946
+                0.1651522138903465,
+                0.18661181863624013
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2363,10 +2363,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.26839817814778527,
+              "worst": 0.26793582274433086,
               "range": [
-                0.20803702882880715,
-                0.26839817814778527
+                0.20727003382307924,
+                0.26793582274433086
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2375,10 +2375,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03733648983955102,
+              "worst": 0.037267365935197264,
               "range": [
-                0.03733648983955102,
-                0.06471750834513562
+                0.037267365935197264,
+                0.06460711920516478
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2387,10 +2387,10 @@
             "LIABILITY:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.7543591499187385,
+              "worst": 0.7547339230830274,
               "range": [
-                0.689297204324637,
-                0.7543591499187385
+                0.6890975138149278,
+                0.7547339230830274
               ],
               "min": 0.5,
               "max": 0.8,
@@ -2399,10 +2399,10 @@
             "LIABILITY:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.2456408500812614,
+              "worst": 0.24526607691697253,
               "range": [
-                0.2456408500812614,
-                0.31070279567536296
+                0.24526607691697253,
+                0.3109024861850723
               ],
               "min": 0.2,
               "max": 0.5,
@@ -2411,10 +2411,10 @@
             "LIABILITY:RATE_TYPE:FIXED": {
               "count": 8,
               "probability": 0.0152,
-              "worst": 0.43882882853602173,
+              "worst": 0.4389309602007543,
               "range": [
-                0.43882882853602173,
-                0.5139352782030948
+                0.4389309602007543,
+                0.514353430479463
               ],
               "min": 0.45,
               "max": 0.8,
@@ -2423,10 +2423,10 @@
             "LIABILITY:RATE_TYPE:FLOAT": {
               "count": 8,
               "probability": 0.0152,
-              "worst": 0.5611711714639782,
+              "worst": 0.5610690397992456,
               "range": [
-                0.4860647217969052,
-                0.5611711714639782
+                0.4856465695205372,
+                0.5610690397992456
               ],
               "min": 0.2,
               "max": 0.55,
@@ -2435,10 +2435,10 @@
             "LIABILITY:MATURITY:LE_12M": {
               "count": 504,
               "probability": 0.9999999999999998,
-              "worst": 0.3783026234176134,
+              "worst": 0.37856573850670044,
               "range": [
-                0.3233295477339928,
-                0.3783026234176134
+                0.3233185790460696,
+                0.37856573850670044
               ],
               "min": 0.0,
               "max": 0.25,
@@ -2447,22 +2447,22 @@
             "LIABILITY:MATURITY:GT_36M": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.43778591462171096,
+              "worst": 0.43739488638134627,
               "range": [
-                0.43778591462171096,
-                0.49094049247193255
+                0.43739488638134627,
+                0.49095776189537865
               ],
               "min": 0.4,
               "max": 1.0,
               "cause": null
             },
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 183,
-              "probability": 0.34770000000000006,
-              "worst": 0.3783026234176134,
+              "count": 188,
+              "probability": 0.3572,
+              "worst": 0.37856573850670044,
               "range": [
-                0.3233295477339928,
-                0.3783026234176134
+                0.3233185790460696,
+                0.37856573850670044
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2471,10 +2471,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.19399844200948707,
+              "worst": 0.19412145863158972,
               "range": [
-                0.17118682571518426,
-                0.19399844200948707
+                0.17118392305966623,
+                0.19412145863158972
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2483,10 +2483,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03972889215249485,
+              "worst": 0.03959680804134988,
               "range": [
-                0.03972889215249485,
-                0.053303118330454195
+                0.03959680804134988,
+                0.05312500339495149
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2495,10 +2495,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.12693457846611536,
+              "worst": 0.12693027231535486,
               "range": [
-                0.12693457846611536,
-                0.1468601231717766
+                0.12693027231535486,
+                0.1469622665670367
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2507,10 +2507,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.274902200078566,
+              "worst": 0.27550476802595963,
               "range": [
-                0.20963242520667322,
-                0.274902200078566
+                0.20972504219146407,
+                0.27550476802595963
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2519,10 +2519,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.029761031348674645,
+              "worst": 0.02937293004909111,
               "range": [
-                0.029761031348674645,
-                0.04404617190971907
+                0.02937293004909111,
+                0.04355534768814096
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2533,12 +2533,12 @@
         "weights": {
           "byCurrency": {
             "ASSET": {
-              "PEN": 0.7254492584551206,
-              "USD": 0.2745507415448793
+              "PEN": 0.7258550402253597,
+              "USD": 0.2741449597746403
             },
             "LIABILITY": {
-              "PEN": 0.7236703909560631,
-              "USD": 0.27632960904393683
+              "PEN": 0.7235094021434777,
+              "USD": 0.27649059785652225
             }
           },
           "byType": {
@@ -2549,8 +2549,8 @@
               "EQUITY": 0.05
             },
             "LIABILITY": {
-              "BOND_FIXED": 0.47872705615231753,
-              "LOAN_FLOAT": 0.5212729438476825
+              "BOND_FIXED": 0.4791059828051263,
+              "LOAN_FLOAT": 0.5208940171948737
             }
           },
           "byRateType": {
@@ -2559,70 +2559,70 @@
               "FLOAT": 0.4
             },
             "LIABILITY": {
-              "FIXED": 0.47872705615231753,
-              "FLOAT": 0.5212729438476825
+              "FIXED": 0.4791059828051263,
+              "FLOAT": 0.5208940171948737
             }
           }
         },
         "positions": {
           "A01": 200.0,
           "A02": 350.0,
-          "A03": 175.44925845512068,
+          "A03": 175.8550402253597,
           "A04": 0.0,
-          "A05": 224.55074154487932,
+          "A05": 224.1449597746403,
           "A06": 50.0,
           "L01": 280.0,
           "L02": 150.0,
-          "L03": 38.93631276485053,
+          "L03": 38.80752171478218,
           "L04": 110.0,
-          "L05": 194.04533215700346,
-          "L06": 27.018355078146023
+          "L05": 194.47726452931883,
+          "L06": 26.715213755898993
         }
       },
       {
         "lambda": 1.0,
         "status": "OPTIMAL",
-        "objective": -1.2207149540024211,
+        "objective": -1.4451374259877783,
         "metrics": {
-          "expectedAssetReturn": 0.060097400856424496,
-          "expectedLiabilityEconomicCost": 0.06586153364591414,
-          "expectedNetWorthChange": 7.408173939693183,
-          "expectedTerminalNetWorth": 200.78501157498343,
-          "netWorthVolatility": 6.0870026448593775,
-          "var95Loss": 1.125737091349258,
-          "cvar95Loss": 2.0057265289858517,
+          "expectedAssetReturn": 0.05940134494396283,
+          "expectedLiabilityEconomicCost": 0.06516055149496616,
+          "expectedNetWorthChange": 7.272903747989925,
+          "expectedTerminalNetWorth": 200.65225222466066,
+          "netWorthVolatility": 6.063508694031204,
+          "var95Loss": 1.2438651164862407,
+          "cvar95Loss": 2.0973896506483216,
           "cvarAlpha": 0.95,
-          "transactionCosts": 6.623162364709753,
+          "transactionCosts": 6.620651523329381,
           "stressLosses": {
-            "C_STRESS_1": 1.1257370913492615,
-            "C_STRESS_2": 1.1257370913492437,
-            "C_STRESS_3": -22.574824527734755,
-            "C_STRESS_4": 0.8729768080355704
+            "C_STRESS_1": 1.2438651164862051,
+            "C_STRESS_2": 1.2438651164862407,
+            "C_STRESS_3": -22.40217332912846,
+            "C_STRESS_4": 0.9934446674146997
           },
-          "tailStressShare": 0.2499999999999998,
+          "tailStressShare": 0.24000000000000105,
           "horizonBreaches": {
             "minNetWorth": {
               "count": 0,
               "probability": 0.0,
-              "worst": 187.90397406191892
+              "worst": 187.80152268059146
             },
             "maxLiabilitiesToAssets": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.8185093721880556
+              "worst": 0.8185989249865574
             },
             "minCash": {
               "count": 0,
               "probability": 0.0,
-              "worst": 194.09665544976767
+              "worst": 194.10135426971573
             },
             "ASSET:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.7349142486771439,
+              "worst": 0.7361602510769425,
               "range": [
-                0.6766962256768673,
-                0.7349142486771439
+                0.6776001326720051,
+                0.7361602510769425
               ],
               "min": 0.4,
               "max": 0.8,
@@ -2631,34 +2631,34 @@
             "ASSET:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.2650857513228561,
+              "worst": 0.2638397489230575,
               "range": [
-                0.2650857513228561,
-                0.3233037743231328
+                0.2638397489230575,
+                0.3223998673279949
               ],
               "min": 0.2,
               "max": 0.6,
               "cause": null
             },
             "ASSET:TYPE:CASH": {
-              "count": 76,
-              "probability": 0.14440000000000006,
-              "worst": 0.21387623244301263,
+              "count": 80,
+              "probability": 0.152,
+              "worst": 0.21401262052746775,
               "range": [
-                0.18323288529485182,
-                0.21387623244301263
+                0.1832571147729393,
+                0.21401262052746775
               ],
               "min": 0.05,
               "max": 0.2,
               "cause": "mercado"
             },
             "ASSET:TYPE:FIXED_INCOME": {
-              "count": 438,
-              "probability": 0.8745999999999998,
-              "worst": 0.7733417774471111,
+              "count": 435,
+              "probability": 0.8689,
+              "worst": 0.7733128570787694,
               "range": [
-                0.7481257831113737,
-                0.7733417774471111
+                0.7480797715781176,
+                0.7733128570787694
               ],
               "min": 0.4,
               "max": 0.75,
@@ -2667,10 +2667,10 @@
             "ASSET:TYPE:EQUITY": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03736489179832422,
+              "worst": 0.03729537703834022,
               "range": [
-                0.03736489179832422,
-                0.0647006975998677
+                0.03729537703834022,
+                0.06459279410024037
               ],
               "min": 0.0,
               "max": 0.2,
@@ -2679,22 +2679,22 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.21387623244301263,
+              "worst": 0.21401262052746775,
               "range": [
-                0.18323288529485182,
-                0.21387623244301263
+                0.1832571147729393,
+                0.21401262052746775
               ],
               "min": 0.0,
               "max": 0.35,
               "cause": null
             },
             "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-              "count": 285,
-              "probability": 0.5521,
-              "worst": 0.3669514013482803,
+              "count": 293,
+              "probability": 0.5673000000000001,
+              "worst": 0.3671572441023535,
               "range": [
-                0.3155909158729169,
-                0.3669514013482803
+                0.31563808644577585,
+                0.3671572441023535
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2703,10 +2703,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.15603272900571727,
+              "worst": 0.15681050100611793,
               "range": [
-                0.15603272900571727,
-                0.17669891786847072
+                0.15681050100611793,
+                0.1776546774805382
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2727,10 +2727,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.27871927664269786,
+              "worst": 0.27780870571589894,
               "range": [
-                0.21661399856096564,
-                0.27871927664269786
+                0.21546079021793332,
+                0.27780870571589894
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2739,10 +2739,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03736489179832422,
+              "worst": 0.03729537703834022,
               "range": [
-                0.03736489179832422,
-                0.0647006975998677
+                0.03729537703834022,
+                0.06459279410024037
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2751,10 +2751,10 @@
             "LIABILITY:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.7478416799460577,
+              "worst": 0.7484324809817523,
               "range": [
-                0.6784096966139107,
-                0.7478416799460577
+                0.6785466195270652,
+                0.7484324809817523
               ],
               "min": 0.5,
               "max": 0.8,
@@ -2763,10 +2763,10 @@
             "LIABILITY:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.25215832005394245,
+              "worst": 0.25156751901824764,
               "range": [
-                0.25215832005394245,
-                0.3215903033860893
+                0.25156751901824764,
+                0.3214533804729348
               ],
               "min": 0.2,
               "max": 0.5,
@@ -2775,10 +2775,10 @@
             "LIABILITY:RATE_TYPE:FIXED": {
               "count": 1,
               "probability": 0.0019,
-              "worst": 0.4487289598445709,
+              "worst": 0.4485314322952228,
               "range": [
-                0.4487289598445709,
-                0.5258396551568189
+                0.4485314322952228,
+                0.5259298416369983
               ],
               "min": 0.45,
               "max": 0.8,
@@ -2787,10 +2787,10 @@
             "LIABILITY:RATE_TYPE:FLOAT": {
               "count": 1,
               "probability": 0.0019,
-              "worst": 0.551271040155429,
+              "worst": 0.5514685677047771,
               "range": [
-                0.4741603448431812,
-                0.551271040155429
+                0.47407015836300176,
+                0.5514685677047771
               ],
               "min": 0.2,
               "max": 0.55,
@@ -2799,10 +2799,10 @@
             "LIABILITY:MATURITY:LE_12M": {
               "count": 504,
               "probability": 0.9999999999999998,
-              "worst": 0.37935575339643035,
+              "worst": 0.37959576236088405,
               "range": [
-                0.3229618534808923,
-                0.37935575339643035
+                0.3229614053705808,
+                0.37959576236088405
               ],
               "min": 0.0,
               "max": 0.25,
@@ -2811,22 +2811,22 @@
             "LIABILITY:MATURITY:GT_36M": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.43622080650145506,
+              "worst": 0.4358641174063229,
               "range": [
-                0.43622080650145506,
-                0.491519401070655
+                0.4358641174063229,
+                0.49152010658865075
               ],
               "min": 0.4,
               "max": 1.0,
               "cause": null
             },
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 178,
-              "probability": 0.3382,
-              "worst": 0.37935575339643035,
+              "count": 192,
+              "probability": 0.36479999999999996,
+              "worst": 0.37959576236088405,
               "range": [
-                0.3229618534808923,
-                0.37935575339643035
+                0.3229614053705808,
+                0.37959576236088405
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2835,10 +2835,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.1939700134100509,
+              "worst": 0.1940978123704019,
               "range": [
-                0.17087286450708955,
-                0.1939700134100509
+                0.17088023049882528,
+                0.1940978123704019
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2847,10 +2847,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.032130651922373445,
+              "worst": 0.0322347254662778,
               "range": [
-                0.032130651922373445,
-                0.04313887074879713
+                0.0322347254662778,
+                0.043276675101677625
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2859,10 +2859,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.1267902269357686,
+              "worst": 0.1267900510140383,
               "range": [
-                0.1267902269357686,
-                0.1472689567056488
+                0.1267900510140383,
+                0.14736213011735705
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2871,10 +2871,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.29718203895956896,
+              "worst": 0.2971346784945522,
               "range": [
-                0.22751199000059255,
-                0.29718203895956896
+                0.22705684379171165,
+                0.2971346784945522
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2883,10 +2883,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.02031071184295605,
+              "worst": 0.020199449067848395,
               "range": [
-                0.02031071184295605,
-                0.0301149672104489
+                0.020199449067848395,
+                0.030005544110079087
               ],
               "min": 0.0,
               "max": 0.35,
@@ -2897,12 +2897,12 @@
         "weights": {
           "byCurrency": {
             "ASSET": {
-              "PEN": 0.7164908199681516,
-              "USD": 0.2835091800318485
+              "PEN": 0.7172884731132756,
+              "USD": 0.2827115268867244
             },
             "LIABILITY": {
-              "PEN": 0.7144343926415676,
-              "USD": 0.2855656073584323
+              "PEN": 0.7145604181671511,
+              "USD": 0.28543958183284895
             }
           },
           "byType": {
@@ -2913,8 +2913,8 @@
               "EQUITY": 0.05
             },
             "LIABILITY": {
-              "BOND_FIXED": 0.4894479405133288,
-              "LOAN_FLOAT": 0.5105520594866713
+              "BOND_FIXED": 0.48953249470434534,
+              "LOAN_FLOAT": 0.5104675052956548
             }
           },
           "byRateType": {
@@ -2923,70 +2923,70 @@
               "FLOAT": 0.4
             },
             "LIABILITY": {
-              "FIXED": 0.4894479405133288,
-              "FLOAT": 0.5105520594866713
+              "FIXED": 0.48953249470434534,
+              "FLOAT": 0.5104675052956548
             }
           }
         },
         "positions": {
           "A01": 200.0,
           "A02": 350.0,
-          "A03": 166.49081996815156,
+          "A03": 167.28847311327556,
           "A04": 0.0,
-          "A05": 233.50918003184844,
+          "A05": 232.71152688672444,
           "A06": 50.0,
           "L01": 280.0,
           "L02": 150.0,
-          "L03": 31.547514113254152,
+          "L03": 31.648334533720856,
           "L04": 110.0,
-          "L05": 210.01083829740887,
-          "L06": 18.441647589336966
+          "L05": 209.97766122975537,
+          "L06": 18.374004236523785
         }
       },
       {
         "lambda": 2.0,
         "status": "OPTIMAL",
-        "objective": -3.0289631334767657,
+        "objective": -3.336166272992508,
         "metrics": {
-          "expectedAssetReturn": 0.05987041680371024,
-          "expectedLiabilityEconomicCost": 0.06530889008272622,
-          "expectedNetWorthChange": 7.62330473752926,
-          "expectedTerminalNetWorth": 200.01134617069798,
-          "netWorthVolatility": 5.908934217145815,
-          "var95Loss": 0.8023493478070947,
-          "cvar95Loss": 1.5201546520873812,
+          "expectedAssetReturn": 0.05904583724881442,
+          "expectedLiabilityEconomicCost": 0.06443725997005371,
+          "expectedNetWorthChange": 7.496029272771453,
+          "expectedTerminalNetWorth": 199.87112737117002,
+          "netWorthVolatility": 5.894664112046646,
+          "var95Loss": 0.8922124575014294,
+          "cvar95Loss": 1.6036468220812519,
           "cvarAlpha": 0.95,
-          "transactionCosts": 7.611958566831263,
+          "transactionCosts": 7.624901901601457,
           "stressLosses": {
-            "C_STRESS_1": 0.8023493478070947,
-            "C_STRESS_2": 0.8023493478071018,
-            "C_STRESS_3": -20.706934892791757,
-            "C_STRESS_4": 0.8023493478070662
+            "C_STRESS_1": 0.8922124575014294,
+            "C_STRESS_2": 0.8922124575014401,
+            "C_STRESS_3": -20.7006767196576,
+            "C_STRESS_4": 0.8922124575014081
           },
           "tailStressShare": 0.316000000000001,
           "horizonBreaches": {
             "minNetWorth": {
               "count": 0,
               "probability": 0.0,
-              "worst": 187.78795555043257
+              "worst": 187.7196663477887
             },
             "maxLiabilitiesToAssets": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.8195736133319683
+              "worst": 0.819666191221782
             },
             "minCash": {
               "count": 0,
               "probability": 0.0,
-              "worst": 193.10107706556244
+              "worst": 193.09072484985055
             },
             "ASSET:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.6827073577928949,
+              "worst": 0.6835049981919734,
               "range": [
-                0.6179896673868019,
-                0.6827073577928949
+                0.6182721940512486,
+                0.6835049981919734
               ],
               "min": 0.4,
               "max": 0.8,
@@ -2995,34 +2995,34 @@
             "ASSET:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.31729264220710507,
+              "worst": 0.31649500180802664,
               "range": [
-                0.31729264220710507,
-                0.38201033261319806
+                0.31649500180802664,
+                0.3817278059487515
               ],
               "min": 0.2,
               "max": 0.6,
               "cause": null
             },
             "ASSET:TYPE:CASH": {
-              "count": 64,
-              "probability": 0.12160000000000001,
-              "worst": 0.2133507368627147,
+              "count": 70,
+              "probability": 0.13300000000000006,
+              "worst": 0.21352236748006273,
               "range": [
-                0.1818535049116364,
-                0.2133507368627147
+                0.1818480316680763,
+                0.21352236748006273
               ],
               "min": 0.05,
               "max": 0.2,
               "cause": "mercado"
             },
             "ASSET:TYPE:FIXED_INCOME": {
-              "count": 461,
-              "probability": 0.9182999999999999,
-              "worst": 0.7748258603562482,
+              "count": 459,
+              "probability": 0.9144999999999999,
+              "worst": 0.7748303149317605,
               "range": [
-                0.7484017172064258,
-                0.7748258603562482
+                0.7483257545633947,
+                0.7748303149317605
               ],
               "min": 0.4,
               "max": 0.75,
@@ -3031,10 +3031,10 @@
             "ASSET:TYPE:EQUITY": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03733443458272197,
+              "worst": 0.03727237036852316,
               "range": [
-                0.03733443458272197,
-                0.06452291130898437
+                0.03727237036852316,
+                0.06442228094643172
               ],
               "min": 0.0,
               "max": 0.2,
@@ -3043,10 +3043,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.2133507368627147,
+              "worst": 0.21352236748006273,
               "range": [
-                0.1818535049116364,
-                0.2133507368627147
+                0.1818480316680763,
+                0.21352236748006273
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3055,10 +3055,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.3195882849348285,
+              "worst": 0.3201102234432284,
               "range": [
-                0.26898400353436797,
-                0.3195882849348285
+                0.2692445578253498,
+                0.3201102234432284
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3067,10 +3067,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.1482194812731557,
+              "worst": 0.14822931326801778,
               "range": [
-                0.1482194812731557,
-                0.1696717072557443
+                0.14822931326801778,
+                0.16980975011279786
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3091,10 +3091,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.3380651133148517,
+              "worst": 0.3377788723893676,
               "range": [
-                0.26847274918353514,
-                0.3380651133148517
+                0.2677594393185037,
+                0.3377788723893676
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3103,10 +3103,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03733443458272197,
+              "worst": 0.03727237036852316,
               "range": [
-                0.03733443458272197,
-                0.06452291130898437
+                0.03727237036852316,
+                0.06442228094643172
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3115,10 +3115,10 @@
             "LIABILITY:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.6059827767393509,
+              "worst": 0.6056059258761803,
               "range": [
-                0.6059827767393509,
-                0.6802928371966425
+                0.6056059258761803,
+                0.6805728401427229
               ],
               "min": 0.5,
               "max": 0.8,
@@ -3127,34 +3127,34 @@
             "LIABILITY:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.3940172232606492,
+              "worst": 0.3943940741238196,
               "range": [
-                0.3197071628033576,
-                0.3940172232606492
+                0.31942715985727704,
+                0.3943940741238196
               ],
               "min": 0.2,
               "max": 0.5,
               "cause": null
             },
             "LIABILITY:RATE_TYPE:FIXED": {
-              "count": 44,
-              "probability": 0.0836,
-              "worst": 0.4238118069281987,
+              "count": 43,
+              "probability": 0.0817,
+              "worst": 0.4240722955462985,
               "range": [
-                0.4238118069281987,
-                0.4995878018308492
+                0.4240722955462985,
+                0.5002172278792342
               ],
               "min": 0.45,
               "max": 0.8,
               "cause": "mercado"
             },
             "LIABILITY:RATE_TYPE:FLOAT": {
-              "count": 44,
-              "probability": 0.0836,
-              "worst": 0.5761881930718012,
+              "count": 43,
+              "probability": 0.0817,
+              "worst": 0.5759277044537015,
               "range": [
-                0.5004121981691508,
-                0.5761881930718012
+                0.49978277212076566,
+                0.5759277044537015
               ],
               "min": 0.2,
               "max": 0.55,
@@ -3163,10 +3163,10 @@
             "LIABILITY:MATURITY:LE_12M": {
               "count": 504,
               "probability": 0.9999999999999998,
-              "worst": 0.37890899404576467,
+              "worst": 0.379260415974681,
               "range": [
-                0.321764797834074,
-                0.37890899404576467
+                0.3217360211581728,
+                0.379260415974681
               ],
               "min": 0.0,
               "max": 0.25,
@@ -3175,22 +3175,22 @@
             "LIABILITY:MATURITY:GT_36M": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.445465328226493,
+              "worst": 0.44510043406574784,
               "range": [
-                0.445465328226493,
-                0.5029524557615487
+                0.44510043406574784,
+                0.5030980814787988
               ],
               "min": 0.4,
               "max": 1.0,
               "cause": null
             },
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 182,
-              "probability": 0.34580000000000005,
-              "worst": 0.37890899404576467,
+              "count": 188,
+              "probability": 0.3572,
+              "worst": 0.379260415974681,
               "range": [
-                0.321764797834074,
-                0.37890899404576467
+                0.3217360211581728,
+                0.379260415974681
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3199,10 +3199,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.15990957366704522,
+              "worst": 0.1597705352615988,
               "range": [
-                0.15990957366704522,
-                0.18647842890511465
+                0.1597705352615988,
+                0.18647367770354917
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3223,10 +3223,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.10799653542999178,
+              "worst": 0.10781398903881108,
               "range": [
-                0.10799653542999178,
-                0.1257581654231354
+                0.10781398903881108,
+                0.12567327420847077
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3235,10 +3235,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.3233663583555641,
+              "worst": 0.3241613122000378,
               "range": [
-                0.24818612920045638,
-                0.3233663583555641
+                0.24843314558672738,
+                0.3241613122000378
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3247,10 +3247,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.05950161836197015,
+              "worst": 0.05905713176763706,
               "range": [
-                0.05950161836197015,
-                0.0859219230928768
+                0.05905713176763706,
+                0.08542623061712679
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3261,96 +3261,96 @@
         "weights": {
           "byCurrency": {
             "ASSET": {
-              "PEN": 0.6626510923711121,
-              "USD": 0.3373489076288879
+              "PEN": 0.6629186558938457,
+              "USD": 0.33708134410615437
             },
             "LIABILITY": {
-              "PEN": 0.6463205516322325,
-              "USD": 0.3536794483677676
+              "PEN": 0.6459804020771959,
+              "USD": 0.3540195979228041
             }
           },
           "byType": {
             "ASSET": {
-              "BOND_FIXED": 0.3026510923711121,
-              "BOND_FLOAT": 0.4473489076288879,
+              "BOND_FIXED": 0.30291865589384565,
+              "BOND_FLOAT": 0.44708134410615435,
               "CASH": 0.2,
               "EQUITY": 0.05
             },
             "LIABILITY": {
-              "BOND_FIXED": 0.46547194737811504,
-              "LOAN_FLOAT": 0.534528052621885
+              "BOND_FIXED": 0.4660505391655601,
+              "LOAN_FLOAT": 0.53394946083444
             }
           },
           "byRateType": {
             "ASSET": {
-              "FIXED": 0.5526510923711121,
-              "FLOAT": 0.4473489076288879
+              "FIXED": 0.5529186558938457,
+              "FLOAT": 0.44708134410615435
             },
             "LIABILITY": {
-              "FIXED": 0.46547194737811504,
-              "FLOAT": 0.534528052621885
+              "FIXED": 0.4660505391655601,
+              "FLOAT": 0.53394946083444
             }
           }
         },
         "positions": {
           "A01": 200.0,
-          "A02": 302.6510923711121,
+          "A02": 302.91865589384565,
           "A03": 160.0,
           "A04": 0.0,
-          "A05": 287.3489076288879,
+          "A05": 287.08134410615435,
           "A06": 50.0,
           "L01": 280.0,
-          "L02": 143.01280156558968,
+          "L02": 142.8912465304034,
           "L03": 0.0,
-          "L04": 94.04363974019623,
-          "L05": 229.36475633690233,
-          "L06": 53.57880235731174
+          "L04": 93.89307513135333,
+          "L05": 229.94918480204467,
+          "L06": 53.2664935361986
         }
       },
       {
         "lambda": 5.0,
         "status": "OPTIMAL",
-        "objective": -7.4484731035525105,
+        "objective": -8.016169878903199,
         "metrics": {
-          "expectedAssetReturn": 0.05999682533276898,
-          "expectedLiabilityEconomicCost": 0.06504349436204732,
-          "expectedNetWorthChange": 7.962029843131138,
-          "expectedTerminalNetWorth": 199.30617259355023,
-          "netWorthVolatility": 6.019343677969528,
-          "var95Loss": 0.7093156703831518,
-          "cvar95Loss": 1.3509291394205465,
+          "expectedAssetReturn": 0.0590165821927665,
+          "expectedLiabilityEconomicCost": 0.06397457772628592,
+          "expectedNetWorthChange": 7.836920011737779,
+          "expectedTerminalNetWorth": 199.16204782719777,
+          "netWorthVolatility": 6.010182533741184,
+          "var95Loss": 0.7891283469151595,
+          "cvar95Loss": 1.4356435412201671,
           "cvarAlpha": 0.95,
-          "transactionCosts": 8.655857249580915,
+          "transactionCosts": 8.674872184540142,
           "stressLosses": {
-            "C_STRESS_1": 0.7093156703831696,
-            "C_STRESS_2": 0.7093156703831518,
-            "C_STRESS_3": -22.763037980460133,
-            "C_STRESS_4": -4.561709282621546
+            "C_STRESS_1": 0.7891283469151773,
+            "C_STRESS_2": 0.7891283469151595,
+            "C_STRESS_3": -22.79732850621676,
+            "C_STRESS_4": -4.518685178964189
           },
-          "tailStressShare": 0.316000000000001,
+          "tailStressShare": 0.3540000000000009,
           "horizonBreaches": {
             "minNetWorth": {
               "count": 0,
               "probability": 0.0,
-              "worst": 187.13767359772407
+              "worst": 187.05535035145056
             },
             "maxLiabilitiesToAssets": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.8217341680427988
+              "worst": 0.8218227642633336
             },
             "minCash": {
               "count": 0,
               "probability": 0.0,
-              "worst": 192.13703679161515
+              "worst": 192.12434807868345
             },
             "ASSET:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.5496493794202256,
+              "worst": 0.5496477910938105,
               "range": [
-                0.5496493794202256,
-                0.6214912411429485
+                0.5496477910938105,
+                0.6220730018150661
               ],
               "min": 0.4,
               "max": 0.8,
@@ -3359,34 +3359,34 @@
             "ASSET:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.45035062057977426,
+              "worst": 0.45035220890618954,
               "range": [
-                0.3785087588570515,
-                0.45035062057977426
+                0.3779269981849339,
+                0.45035220890618954
               ],
               "min": 0.2,
               "max": 0.6,
               "cause": null
             },
             "ASSET:TYPE:CASH": {
-              "count": 59,
-              "probability": 0.1121,
-              "worst": 0.21352441605664707,
+              "count": 63,
+              "probability": 0.1197,
+              "worst": 0.2137226154279152,
               "range": [
-                0.17967057351524005,
-                0.21352441605664707
+                0.17966255906417467,
+                0.2137226154279152
               ],
               "min": 0.05,
               "max": 0.2,
               "cause": "mercado"
             },
             "ASSET:TYPE:FIXED_INCOME": {
-              "count": 474,
-              "probability": 0.9429999999999998,
-              "worst": 0.7773140530840303,
+              "count": 463,
+              "probability": 0.9220999999999999,
+              "worst": 0.7773211455021652,
               "range": [
-                0.7483783556424626,
-                0.7773140530840303
+                0.7482551204926342,
+                0.7773211455021652
               ],
               "min": 0.4,
               "max": 0.75,
@@ -3395,10 +3395,10 @@
             "ASSET:TYPE:EQUITY": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03746792775324653,
+              "worst": 0.03741104858899853,
               "range": [
-                0.03746792775324653,
-                0.06428381442888238
+                0.03741104858899853,
+                0.06419290485857074
               ],
               "min": 0.0,
               "max": 0.2,
@@ -3407,10 +3407,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.21352441605664707,
+              "worst": 0.2137226154279152,
               "range": [
-                0.17967057351524005,
-                0.21352441605664707
+                0.17966255906417467,
+                0.2137226154279152
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3419,10 +3419,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.312253658069218,
+              "worst": 0.31243193557834426,
               "range": [
-                0.25787543991584466,
-                0.312253658069218
+                0.2577814458254129,
+                0.31243193557834426
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3431,10 +3431,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.09718511753097724,
+              "worst": 0.09728465087239546,
               "range": [
-                0.09718511753097724,
-                0.11322344399841079
+                0.09728465087239546,
+                0.11344704718318813
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3453,12 +3453,12 @@
               "cause": null
             },
             "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
-              "count": 282,
-              "probability": 0.5782,
-              "worst": 0.4069230913448842,
+              "count": 267,
+              "probability": 0.5497000000000001,
+              "worst": 0.4069245265082112,
               "range": [
-                0.3293406545898299,
-                0.4069230913448842
+                0.32883446434697167,
+                0.4069245265082112
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3467,10 +3467,10 @@
             "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.03746792775324653,
+              "worst": 0.03741104858899853,
               "range": [
-                0.03746792775324653,
-                0.06428381442888238
+                0.03741104858899853,
+                0.06419290485857074
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3479,10 +3479,10 @@
             "LIABILITY:CURRENCY:PEN": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.5259075283748059,
+              "worst": 0.5252542053016669,
               "range": [
-                0.5259075283748059,
-                0.6046523230439512
+                0.5252542053016669,
+                0.60474846742055
               ],
               "min": 0.5,
               "max": 0.8,
@@ -3491,34 +3491,34 @@
             "LIABILITY:CURRENCY:USD": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.4740924716251941,
+              "worst": 0.4747457946983331,
               "range": [
-                0.3953476769560488,
-                0.4740924716251941
+                0.3952515325794499,
+                0.4747457946983331
               ],
               "min": 0.2,
               "max": 0.5,
               "cause": null
             },
             "LIABILITY:RATE_TYPE:FIXED": {
-              "count": 171,
-              "probability": 0.3355,
-              "worst": 0.405193141999036,
+              "count": 173,
+              "probability": 0.33930000000000005,
+              "worst": 0.4048160852114462,
               "range": [
-                0.405193141999036,
-                0.4855300348937397
+                0.4048160852114462,
+                0.4856198155920639
               ],
               "min": 0.45,
               "max": 0.8,
               "cause": "mercado"
             },
             "LIABILITY:RATE_TYPE:FLOAT": {
-              "count": 171,
-              "probability": 0.3355,
-              "worst": 0.594806858000964,
+              "count": 173,
+              "probability": 0.33930000000000005,
+              "worst": 0.5951839147885537,
               "range": [
-                0.5144699651062603,
-                0.594806858000964
+                0.514380184407936,
+                0.5951839147885537
               ],
               "min": 0.2,
               "max": 0.55,
@@ -3527,10 +3527,10 @@
             "LIABILITY:MATURITY:LE_12M": {
               "count": 504,
               "probability": 0.9999999999999998,
-              "worst": 0.380273479672688,
+              "worst": 0.3806877704829429,
               "range": [
-                0.3186574211223592,
-                0.380273479672688
+                0.31862989808104697,
+                0.3806877704829429
               ],
               "min": 0.0,
               "max": 0.25,
@@ -3539,22 +3539,22 @@
             "LIABILITY:MATURITY:GT_36M": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.49985870591347803,
+              "worst": 0.5002377379130265,
               "range": [
-                0.49985870591347803,
-                0.562657065855675
+                0.5002377379130265,
+                0.5636085659951492
               ],
               "min": 0.4,
               "max": 1.0,
               "cause": null
             },
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-              "count": 195,
-              "probability": 0.3705,
-              "worst": 0.380273479672688,
+              "count": 200,
+              "probability": 0.37999999999999995,
+              "worst": 0.3806877704829429,
               "range": [
-                0.3186574211223592,
-                0.380273479672688
+                0.31862989808104697,
+                0.3806877704829429
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3563,10 +3563,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.10705743521563957,
+              "worst": 0.10622120362033885,
               "range": [
-                0.10705743521563957,
-                0.1278456220788157
+                0.10622120362033885,
+                0.12699442260434365
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3587,22 +3587,22 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.08856459423048088,
+              "worst": 0.08886277129681613,
               "range": [
-                0.08856459423048088,
-                0.10451102895742935
+                0.08886277129681613,
+                0.10498620533357657
               ],
               "min": 0.0,
               "max": 0.35,
               "cause": null
             },
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
-              "count": 4,
-              "probability": 0.028800000000000003,
-              "worst": 0.3668445218717738,
+              "count": 5,
+              "probability": 0.0413,
+              "worst": 0.36785827966826024,
               "range": [
-                0.2853253275852022,
-                0.3668445218717738
+                0.28574159360741563,
+                0.36785827966826024
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3611,10 +3611,10 @@
             "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
               "count": 0,
               "probability": 0.0,
-              "worst": 0.0919429842817778,
+              "worst": 0.09151111698870358,
               "range": [
-                0.0919429842817778,
-                0.12956188657766143
+                0.09151111698870358,
+                0.1291413360025277
               ],
               "min": 0.0,
               "max": 0.35,
@@ -3629,94 +3629,94 @@
               "USD": 0.4
             },
             "LIABILITY": {
-              "PEN": 0.5689162405905825,
-              "USD": 0.4310837594094174
+              "PEN": 0.5683163694640314,
+              "USD": 0.43168363053596875
             }
           },
           "byType": {
             "ASSET": {
-              "BOND_FIXED": 0.2936109776028308,
-              "BOND_FLOAT": 0.4563890223971692,
+              "BOND_FIXED": 0.2935029229722447,
+              "BOND_FLOAT": 0.4564970770277553,
               "CASH": 0.2,
               "EQUITY": 0.05
             },
             "LIABILITY": {
-              "BOND_FIXED": 0.44999999999999996,
+              "BOND_FIXED": 0.45000000000000007,
               "LOAN_FLOAT": 0.55
             }
           },
           "byRateType": {
             "ASSET": {
-              "FIXED": 0.5436109776028307,
-              "FLOAT": 0.4563890223971692
+              "FIXED": 0.5435029229722448,
+              "FLOAT": 0.4564970770277553
             },
             "LIABILITY": {
-              "FIXED": 0.44999999999999996,
+              "FIXED": 0.45000000000000007,
               "FLOAT": 0.55
             }
           }
         },
         "positions": {
           "A01": 200.0,
-          "A02": 293.61097760283076,
-          "A03": 106.38902239716923,
+          "A02": 293.5029229722447,
+          "A03": 106.49707702775532,
           "A04": 0.0,
           "A05": 350.0,
           "A06": 50.0,
           "L01": 280.0,
-          "L02": 97.25867829855116,
+          "L02": 96.50984671966455,
           "L03": 0.0,
-          "L04": 77.87431417391494,
-          "L05": 262.7413217014488,
-          "L06": 82.12568582608512
+          "L04": 78.1432488515605,
+          "L05": 263.49015328033545,
+          "L06": 81.8567511484395
         }
       }
     ],
     "meanVarianceBenchmark": {
-      "minNetReturn": 3.10953787472855,
+      "minNetReturn": 2.8361336744661205,
       "lambda": 0.25,
       "status": "OPTIMAL",
-      "objective": 0.8030311846520632,
+      "objective": 0.6977576236352312,
       "metrics": {
-        "expectedAssetReturn": 0.06012627961938577,
-        "expectedLiabilityEconomicCost": 0.06795797995972234,
-        "expectedNetWorthChange": 5.759895651607877,
-        "expectedTerminalNetWorth": 203.10953787492767,
-        "netWorthVolatility": 6.402471810920075,
-        "var95Loss": 4.230536190114524,
-        "cvar95Loss": 9.226026761102862,
+        "expectedAssetReturn": 0.05937625190830519,
+        "expectedLiabilityEconomicCost": 0.06728759827282184,
+        "expectedNetWorthChange": 5.546173290047721,
+        "expectedTerminalNetWorth": 202.83613367460555,
+        "netWorthVolatility": 5.7378196254170595,
+        "var95Loss": 3.061295597046028,
+        "cvar95Loss": 8.55350420388117,
         "cvarAlpha": 0.95,
-        "transactionCosts": 2.6503577766800985,
+        "transactionCosts": 2.7100396154421977,
         "stressLosses": {
-          "C_STRESS_1": -7.816252361869346,
-          "C_STRESS_2": 17.729441586582062,
-          "C_STRESS_3": -5.863214543679941,
-          "C_STRESS_4": -15.866704309919006
+          "C_STRESS_1": -5.070851645438438,
+          "C_STRESS_2": 19.845773819370528,
+          "C_STRESS_3": -2.2100738056917244,
+          "C_STRESS_4": -12.746943611223433
         },
         "tailStressShare": 0.2499999999999998,
         "horizonBreaches": {
           "minNetWorth": {
             "count": 0,
             "probability": 0.0,
-            "worst": 179.62020063673776
+            "worst": 177.444186565187
           },
           "maxLiabilitiesToAssets": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.8299125386041896
+            "worst": 0.8314959088660764
           },
           "minCash": {
             "count": 0,
             "probability": 0.0,
-            "worst": 190.95801003308586
+            "worst": 195.6581592908681
           },
           "ASSET:CURRENCY:PEN": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.7621411390714464,
+            "worst": 0.789626801260413,
             "range": [
-              0.7105575351965273,
-              0.7621411390714464
+              0.7423613961259439,
+              0.789626801260413
             ],
             "min": 0.4,
             "max": 0.8,
@@ -3725,34 +3725,34 @@
           "ASSET:CURRENCY:USD": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.23785886092855366,
+            "worst": 0.21037319873958713,
             "range": [
-              0.23785886092855366,
-              0.2894424648034726
+              0.21037319873958713,
+              0.2576386038740561
             ],
             "min": 0.2,
             "max": 0.6,
             "cause": null
           },
           "ASSET:TYPE:CASH": {
-            "count": 19,
-            "probability": 0.0361,
-            "worst": 0.20896988828846236,
+            "count": 91,
+            "probability": 0.17290000000000003,
+            "worst": 0.21352225556038562,
             "range": [
-              0.18082355461460395,
-              0.20896988828846236
+              0.18580039697233133,
+              0.21352225556038562
             ],
             "min": 0.05,
             "max": 0.2,
             "cause": "mercado"
           },
           "ASSET:TYPE:FIXED_INCOME": {
-            "count": 264,
-            "probability": 0.544,
-            "worst": 0.770958657655436,
+            "count": 251,
+            "probability": 0.5193000000000001,
+            "worst": 0.7697427766878728,
             "range": [
-              0.7450740048781699,
-              0.770958657655436
+              0.7454703796808565,
+              0.7697427766878728
             ],
             "min": 0.4,
             "max": 0.75,
@@ -3761,10 +3761,10 @@
           "ASSET:TYPE:EQUITY": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.041301592186873626,
+            "worst": 0.037774560057343275,
             "range": [
-              0.041301592186873626,
-              0.07152951687936954
+              0.037774560057343275,
+              0.06583836806944958
             ],
             "min": 0.0,
             "max": 0.2,
@@ -3773,22 +3773,22 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.20896988828846236,
+            "worst": 0.21352225556038562,
             "range": [
-              0.18082355461460395,
-              0.20896988828846236
+              0.18580039697233133,
+              0.21352225556038562
             ],
             "min": 0.0,
             "max": 0.35,
             "cause": null
           },
           "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-            "count": 268,
-            "probability": 0.5198,
-            "worst": 0.36511471086563496,
+            "count": 277,
+            "probability": 0.5369000000000002,
+            "worst": 0.3643636157904135,
             "range": [
-              0.31727290341404035,
-              0.36511471086563496
+              0.31852297247978933,
+              0.3643636157904135
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3797,10 +3797,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.21210414376468734,
+            "worst": 0.2369022473513415,
             "range": [
-              0.18896768003776246,
-              0.21210414376468734
+              0.21278735139155552,
+              0.2369022473513415
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3809,10 +3809,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A04": {
             "count": 0,
             "probability": 0.0,
-            "worst": 1.2971099460330697e-11,
+            "worst": 1.1632017270686819e-11,
             "range": [
-              1.2971099460330697e-11,
-              1.7997424195268257e-11
+              1.1632017270686819e-11,
+              1.626998515117656e-11
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3821,10 +3821,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.23982612831304903,
+            "worst": 0.21184212427976953,
             "range": [
-              0.18447108459419306,
-              0.23982612831304903
+              0.16152531943115297,
+              0.21184212427976953
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3833,10 +3833,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.041301592186873626,
+            "worst": 0.037774560057343275,
             "range": [
-              0.041301592186873626,
-              0.07152951687936954
+              0.037774560057343275,
+              0.06583836806944958
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3845,10 +3845,10 @@
           "LIABILITY:CURRENCY:PEN": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.773179442215368,
+            "worst": 0.7809754177345116,
             "range": [
-              0.7162515609191387,
-              0.773179442215368
+              0.724209292689671,
+              0.7809754177345116
             ],
             "min": 0.5,
             "max": 0.8,
@@ -3857,10 +3857,10 @@
           "LIABILITY:CURRENCY:USD": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.2268205577846318,
+            "worst": 0.2190245822654883,
             "range": [
-              0.2268205577846318,
-              0.2837484390808613
+              0.2190245822654883,
+              0.27579070731032895
             ],
             "min": 0.2,
             "max": 0.5,
@@ -3869,10 +3869,10 @@
           "LIABILITY:RATE_TYPE:FIXED": {
             "count": 160,
             "probability": 0.3358,
-            "worst": 0.4091019044989747,
+            "worst": 0.40890887922289443,
             "range": [
-              0.4091019044989747,
-              0.4884310284399592
+              0.40890887922289443,
+              0.4888853313360833
             ],
             "min": 0.45,
             "max": 0.8,
@@ -3881,10 +3881,10 @@
           "LIABILITY:RATE_TYPE:FLOAT": {
             "count": 160,
             "probability": 0.3358,
-            "worst": 0.5908980955010252,
+            "worst": 0.5910911207771055,
             "range": [
-              0.5115689715600409,
-              0.5908980955010252
+              0.5111146686639167,
+              0.5910911207771055
             ],
             "min": 0.2,
             "max": 0.55,
@@ -3893,10 +3893,10 @@
           "LIABILITY:MATURITY:LE_12M": {
             "count": 504,
             "probability": 0.9999999999999998,
-            "worst": 0.3684574634143555,
+            "worst": 0.37607454869801055,
             "range": [
-              0.31159551566230936,
-              0.3684574634143555
+              0.31819227088798774,
+              0.37607454869801055
             ],
             "min": 0.0,
             "max": 0.25,
@@ -3905,22 +3905,22 @@
           "LIABILITY:MATURITY:GT_36M": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.5825636791960669,
+            "worst": 0.5749249449886825,
             "range": [
-              0.5825636791960669,
-              0.6394627205566744
+              0.5749249449886825,
+              0.632820443384214
             ],
             "min": 0.4,
             "max": 1.0,
             "cause": null
           },
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
-            "count": 57,
-            "probability": 0.10830000000000001,
-            "worst": 0.3684574634143555,
+            "count": 145,
+            "probability": 0.2967000000000001,
+            "worst": 0.37607454869801055,
             "range": [
-              0.31159551566230936,
-              0.3684574634143555
+              0.31819227088798774,
+              0.37607454869801055
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3929,10 +3929,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.04660802124528448,
+            "worst": 0.046674343884250395,
             "range": [
-              0.04660802124528448,
-              0.05169955176369768
+              0.046674343884250395,
+              0.051682889519289454
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3941,10 +3941,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.243500141719027,
+            "worst": 0.24372662784095825,
             "range": [
-              0.18751919536199646,
-              0.243500141719027
+              0.18778603333143554,
+              0.24372662784095825
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3953,10 +3953,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.1254321490776361,
+            "worst": 0.12554881694962494,
             "range": [
-              0.1254321490776361,
-              0.14666787748545898
+              0.12554881694962494,
+              0.14673270586982443
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3965,10 +3965,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.1510478031834211,
+            "worst": 0.15074071605621778,
             "range": [
-              0.1510478031834211,
-              0.19766780656770294
+              0.15074071605621778,
+              0.19794908591064805
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3977,10 +3977,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.06266796779396279,
+            "worst": 0.05643112771229198,
             "range": [
-              0.06266796779396279,
-              0.09238246885286953
+              0.05643112771229198,
+              0.08360455517803951
             ],
             "min": 0.0,
             "max": 0.35,
@@ -3991,97 +3991,97 @@
       "weights": {
         "byCurrency": {
           "ASSET": {
-            "PEN": 0.744792373996238,
-            "USD": 0.25520762600376207
+            "PEN": 0.7732673646649528,
+            "USD": 0.2267326353350471
           },
           "LIABILITY": {
-            "PEN": 0.7538382286145117,
-            "USD": 0.2461617713854883
+            "PEN": 0.7607407552859163,
+            "USD": 0.23925924471408375
           }
         },
         "byType": {
           "ASSET": {
-            "BOND_FIXED": 0.3500000000123794,
-            "BOND_FLOAT": 0.3999999999867177,
-            "CASH": 0.1946519491444168,
-            "EQUITY": 0.0553480508564861
+            "BOND_FIXED": 0.3500000000117916,
+            "BOND_FLOAT": 0.39999999998756924,
+            "CASH": 0.19911357335502283,
+            "EQUITY": 0.05088642664561627
           },
           "LIABILITY": {
-            "BOND_FIXED": 0.45000000015141334,
-            "LOAN_FLOAT": 0.5499999998485868
+            "BOND_FIXED": 0.4500000000269208,
+            "LOAN_FLOAT": 0.5499999999730794
           }
         },
         "byRateType": {
           "ASSET": {
-            "FIXED": 0.6000000000132824,
-            "FLOAT": 0.3999999999867177
+            "FIXED": 0.6000000000124307,
+            "FLOAT": 0.39999999998756924
           },
           "LIABILITY": {
-            "FIXED": 0.45000000015141334,
-            "FLOAT": 0.5499999998485868
+            "FIXED": 0.4500000000269208,
+            "FLOAT": 0.5499999999730794
           }
         }
       },
       "positions": {
-        "A01": 194.6519491444168,
-        "A02": 349.9999999970906,
-        "A03": 200.14042485473058,
-        "A04": 1.5288858608717862e-08,
-        "A05": 199.8595751319871,
-        "A06": 55.3480508564861,
-        "L01": 273.0705827919503,
-        "L02": 40.00000012259263,
-        "L03": 179.99999999840813,
-        "L04": 109.99999997865841,
-        "L05": 140.00000000012992,
-        "L06": 56.92941710826078
+        "A01": 199.11357335502282,
+        "A02": 349.99999999800934,
+        "A03": 224.15379131192068,
+        "A04": 1.378225610690997e-08,
+        "A05": 175.84620867564857,
+        "A06": 50.88642664561627,
+        "L01": 278.5926042199932,
+        "L02": 40.00000002276877,
+        "L03": 179.99999999867953,
+        "L04": 109.99999998729162,
+        "L05": 140.00000000008836,
+        "L06": 51.407395771178635
       }
     },
     "horizonMaturityVariant": {
       "mode": "ENFORCE",
       "lambda": 0.25,
       "status": "OPTIMAL",
-      "objective": 0.8679469823934252,
+      "objective": 0.6971472870566924,
       "metrics": {
-        "expectedAssetReturn": 0.060118438700872766,
-        "expectedLiabilityEconomicCost": 0.06908896569057017,
-        "expectedNetWorthChange": 4.847266148416621,
-        "expectedTerminalNetWorth": 202.70043884076227,
-        "netWorthVolatility": 5.507592265729098,
-        "var95Loss": 2.7726814564427755,
-        "cvar95Loss": 7.329967433475358,
+        "expectedAssetReturn": 0.059407204597125424,
+        "expectedLiabilityEconomicCost": 0.06859602383960085,
+        "expectedNetWorthChange": 4.5303855254447365,
+        "expectedTerminalNetWorth": 202.7013591474951,
+        "netWorthVolatility": 5.658721575171763,
+        "var95Loss": 2.7772833470216973,
+        "cvar95Loss": 8.016847441753713,
         "cvarAlpha": 0.95,
-        "transactionCosts": 2.1468273076543563,
+        "transactionCosts": 1.8290263779496159,
         "stressLosses": {
-          "C_STRESS_1": -10.904524689018501,
-          "C_STRESS_2": 17.44369376734943,
-          "C_STRESS_3": -7.826128670122358,
-          "C_STRESS_4": -19.384926169058026
+          "C_STRESS_1": -11.836251936647699,
+          "C_STRESS_2": 20.354578021664572,
+          "C_STRESS_3": -6.510330883980174,
+          "C_STRESS_4": -21.994110082999985
         },
         "tailStressShare": 0.2499999999999998,
         "horizonBreaches": {
           "minNetWorth": {
             "count": 0,
             "probability": 0.0,
-            "worst": 180.40947892499605
+            "worst": 177.81639560038582
           },
           "maxLiabilitiesToAssets": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.8301211813298692
+            "worst": 0.8325853868063605
           },
           "minCash": {
             "count": 0,
             "probability": 0.0,
-            "worst": 195.82722136976443
+            "worst": 195.96983972505242
           },
           "ASSET:CURRENCY:PEN": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.7292348713820097,
+            "worst": 0.7297698126602535,
             "range": [
-              0.670184709757797,
-              0.7292348713820097
+              0.6702144548206999,
+              0.7297698126602535
             ],
             "min": 0.4,
             "max": 0.8,
@@ -4090,34 +4090,34 @@
           "ASSET:CURRENCY:USD": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.27076512861799035,
+            "worst": 0.2702301873397464,
             "range": [
-              0.27076512861799035,
-              0.3298152902422031
+              0.2702301873397464,
+              0.32978554517930014
             ],
             "min": 0.2,
             "max": 0.6,
             "cause": null
           },
           "ASSET:TYPE:CASH": {
-            "count": 103,
-            "probability": 0.19570000000000007,
-            "worst": 0.21639674129842945,
+            "count": 107,
+            "probability": 0.2033,
+            "worst": 0.21663079171777375,
             "range": [
-              0.18439661390286619,
-              0.21639674129842945
+              0.18450612950742992,
+              0.21663079171777375
             ],
             "min": 0.05,
             "max": 0.2,
             "cause": "mercado"
           },
           "ASSET:TYPE:FIXED_INCOME": {
-            "count": 302,
-            "probability": 0.6162000000000001,
-            "worst": 0.772288446630595,
+            "count": 275,
+            "probability": 0.5649000000000002,
+            "worst": 0.7721847471639521,
             "range": [
-              0.7463393621206346,
-              0.772288446630595
+              0.7461761169537622,
+              0.7721847471639521
             ],
             "min": 0.4,
             "max": 0.75,
@@ -4126,10 +4126,10 @@
           "ASSET:TYPE:EQUITY": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.037263896580935964,
+            "worst": 0.03719309132846421,
             "range": [
-              0.037263896580935964,
-              0.06456000861728599
+              0.03719309132846421,
+              0.06444157900295111
             ],
             "min": 0.0,
             "max": 0.2,
@@ -4138,22 +4138,22 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A01": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.21639674129842945,
+            "worst": 0.21663079171777375,
             "range": [
-              0.18439661390286619,
-              0.21639674129842945
+              0.18450612950742992,
+              0.21663079171777375
             ],
             "min": 0.0,
             "max": 0.35,
             "cause": null
           },
           "ASSET:CONCENTRATION:SINGLE_POSITION:A02": {
-            "count": 269,
-            "probability": 0.5217,
-            "worst": 0.3664887514618613,
+            "count": 279,
+            "probability": 0.5407000000000002,
+            "worst": 0.36667182392764286,
             "range": [
-              0.31441263585038404,
-              0.3664887514618613
+              0.3143842799072015,
+              0.36667182392764286
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4162,10 +4162,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A03": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.1493849954549965,
+            "worst": 0.14937403855750533,
             "range": [
-              0.1493849954549965,
-              0.1693511371621241
+              0.14937403855750533,
+              0.16944856154742124
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4186,10 +4186,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A05": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.2853972517983599,
+            "worst": 0.2853715126666149,
             "range": [
-              0.22235448871962188,
-              0.2853972517983599
+              0.22191519066441787,
+              0.2853715126666149
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4198,10 +4198,10 @@
           "ASSET:CONCENTRATION:SINGLE_POSITION:A06": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.037263896580935964,
+            "worst": 0.03719309132846421,
             "range": [
-              0.037263896580935964,
-              0.06456000861728599
+              0.03719309132846421,
+              0.06444157900295111
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4210,10 +4210,10 @@
           "LIABILITY:CURRENCY:PEN": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.7336544426325698,
+            "worst": 0.7300663909179963,
             "range": [
-              0.6714901011396395,
-              0.7336544426325698
+              0.665646365432637,
+              0.7300663909179963
             ],
             "min": 0.5,
             "max": 0.8,
@@ -4222,10 +4222,10 @@
           "LIABILITY:CURRENCY:USD": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.2663455573674301,
+            "worst": 0.2699336090820037,
             "range": [
-              0.2663455573674301,
-              0.3285098988603605
+              0.2699336090820037,
+              0.33435363456736295
             ],
             "min": 0.2,
             "max": 0.5,
@@ -4234,10 +4234,10 @@
           "LIABILITY:RATE_TYPE:FIXED": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.46391071116320687,
+            "worst": 0.45853351457254243,
             "range": [
-              0.46391071116320687,
-              0.5338173332539923
+              0.45853351457254243,
+              0.5306255305391527
             ],
             "min": 0.45,
             "max": 0.8,
@@ -4246,22 +4246,22 @@
           "LIABILITY:RATE_TYPE:FLOAT": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.536089288836793,
+            "worst": 0.5414664854274576,
             "range": [
-              0.4661826667460076,
-              0.536089288836793
+              0.4693744694608473,
+              0.5414664854274576
             ],
             "min": 0.2,
             "max": 0.55,
             "cause": null
           },
           "LIABILITY:MATURITY:LE_12M": {
-            "count": 182,
-            "probability": 0.35640000000000005,
-            "worst": 0.2710652136613429,
+            "count": 191,
+            "probability": 0.37350000000000005,
+            "worst": 0.2715195692016061,
             "range": [
-              0.22688190814516268,
-              0.2710652136613429
+              0.2261800305487215,
+              0.2715195692016061
             ],
             "min": 0.0,
             "max": 0.25,
@@ -4270,10 +4270,10 @@
           "LIABILITY:MATURITY:GT_36M": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.6013391289972606,
+            "worst": 0.6319053751518414,
             "range": [
-              0.6013391289972606,
-              0.6469268836061608
+              0.6319053751518414,
+              0.678762726077881
             ],
             "min": 0.4,
             "max": 1.0,
@@ -4282,10 +4282,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L01": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.2710652136613429,
+            "worst": 0.2715195692016061,
             "range": [
-              0.22688190814516268,
-              0.2710652136613429
+              0.2261800305487215,
+              0.2715195692016061
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4294,10 +4294,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L02": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.12004778744933703,
+            "worst": 0.09084094914722526,
             "range": [
-              0.12004778744933703,
-              0.13459620079329604
+              0.09084094914722526,
+              0.10182043492071145
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4306,10 +4306,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L03": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.21278278835986056,
+            "worst": 0.24132771419557641,
             "range": [
-              0.16369183644102908,
-              0.21278278835986056
+              0.18649582362382722,
+              0.24132771419557641
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4318,10 +4318,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L04": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.12469885107426858,
+            "worst": 0.12431308505798935,
             "range": [
-              0.12469885107426858,
-              0.14732157664875828
+              0.12431308505798935,
+              0.14756851491740047
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4330,10 +4330,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L05": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.15172102365892032,
+            "worst": 0.15159935524634952,
             "range": [
-              0.15172102365892032,
-              0.19630598683944303
+              0.15159935524634952,
+              0.19658904955428355
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4342,10 +4342,10 @@
           "LIABILITY:CONCENTRATION:SINGLE_POSITION:L06": {
             "count": 0,
             "probability": 0.0,
-            "worst": 0.09728300948890077,
+            "worst": 0.10109488062199955,
             "range": [
-              0.09728300948890077,
-              0.14130515866275917
+              0.10109488062199955,
+              0.14684591136876776
             ],
             "min": 0.0,
             "max": 0.35,
@@ -4360,8 +4360,8 @@
             "USD": 0.29
           },
           "LIABILITY": {
-            "PEN": 0.7149505172690774,
-            "USD": 0.28504948273092257
+            "PEN": 0.7104868110251921,
+            "USD": 0.2895131889748079
           }
         },
         "byType": {
@@ -4372,8 +4372,8 @@
             "EQUITY": 0.05
           },
           "LIABILITY": {
-            "BOND_FIXED": 0.5024505172690774,
-            "LOAN_FLOAT": 0.49754948273092253
+            "BOND_FIXED": 0.4979868110251921,
+            "LOAN_FLOAT": 0.5020131889748078
           }
         },
         "byRateType": {
@@ -4382,8 +4382,8 @@
             "FLOAT": 0.4
           },
           "LIABILITY": {
-            "FIXED": 0.5024505172690774,
-            "FLOAT": 0.49754948273092253
+            "FIXED": 0.4979868110251921,
+            "FLOAT": 0.5020131889748078
           }
         }
       },
@@ -4395,13 +4395,13 @@
         "A05": 240.0,
         "A06": 50.0,
         "L01": 200.0,
-        "L02": 103.74230329476269,
-        "L03": 158.21811052049927,
+        "L02": 78.38944882015367,
+        "L03": 180.0,
         "L04": 110.0,
         "L05": 140.0,
-        "L06": 88.03958618473806
+        "L06": 91.61055117984633
       },
-      "objectiveCost": 0.28717995022240705
+      "objectiveCost": 0.2123315852006411
     }
   }
 }
