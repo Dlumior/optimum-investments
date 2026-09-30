@@ -14,16 +14,12 @@ máximo de renta variable (22\,\% contra 20\,\%).
 \subsection{Cartera óptima}
 Con la aversión al riesgo de referencia del caso, $\lambda = 0.25$, la reasignación óptima
 (Cuadros~\ref{tab:posiciones-optimas} y~\ref{tab:pesos-optimo}, Figura~\ref{fig:posiciones}) concentra los
-activos en soles:
-\begin{itemize}
-  \item La caja sube a \PEN200 mm, el máximo de 20\,\% de los activos. El piso de \PEN80 mm queda muy lejos.
-  \item El bono fijo en soles A02 llega a su tope individual de \PEN350 mm, y el flotante A03 sube a
-    \PEN185.5 mm.
-  \item En dólares, el bono flotante A05 crece 53\,\%, hasta \PEN214.5 mm, y el bono fijo A04 se liquida
-    por completo.
-  \item La renta variable A06 cae a \PEN50 mm, el 5\,\% de los activos. No es un límite del caso, sino el
-    mínimo que dejan los máximos de caja y de renta fija.
-\end{itemize}
+activos en soles. La caja sube a \PEN200 mm, el máximo de 20\,\% de los activos y muy por encima del piso de
+\PEN80 mm. El bono fijo en soles A02 llega a su tope individual de \PEN350 mm y el flotante A03 sube a
+\PEN185.5 mm. En dólares, el bono flotante A05 crece 53\,\%, hasta \PEN214.5 mm, y el bono fijo A04 se
+liquida por completo. La renta variable A06 cae a \PEN50 mm, el 5\,\% de los activos: no es un límite del
+caso, sino el mínimo que dejan los máximos de caja y de renta fija.
+
 En los pasivos, el préstamo corto en soles L01 sube a su tope de concentración (\PEN280 mm), el bono fijo
 L02 baja a \PEN41.6 mm y el préstamo en dólares L06 a \PEN48.4 mm. Los límites activos son los máximos de
 caja y renta fija, los topes individuales de A02 y L01 y la no negatividad de A04. La mezcla fija/flotante
@@ -51,16 +47,14 @@ menos expuesta a la cola, no de activos más rentables.
 
 \subsection{Barrido de la aversión al riesgo}
 Variar $\lambda$ entre 0 y 5 traza la frontera entre el resultado esperado neto y el $\CVaR_{95\%}$
-(Cuadro~\ref{tab:barrido-lambda} y Figura~\ref{fig:frontera}):
-\begin{itemize}
-  \item Con $\lambda = 0$ el objetivo ignora el riesgo y elige una esquina: 41\,\% de los activos en dólares
-    y 20\,\% en renta variable. Su $\CVaR_{95\%}$ (\PEN51.2 mm) supera al de la posición inicial.
-  \item Con $\lambda = 0.1$, el CVaR baja a \PEN30.9 mm y la renta variable a 16\,\%.
-  \item Con $\lambda = 0.25$, la renta variable llega a su piso de 5\,\%.
-  \item Desde $\lambda = 0.5$, el resultado esperado neto no pasa de \PEN0.98 mm. Desde $\lambda = 2$ es
-    negativo, y en $\lambda = 5$ llega a \mbox{$-$\PEN0.84} mm: evitar más cola cuesta más que el resultado
-    esperado que queda.
-\end{itemize}
+(Cuadro~\ref{tab:barrido-lambda} y Figura~\ref{fig:frontera}). Con $\lambda = 0$ el objetivo ignora el riesgo
+y elige una esquina, 41\,\% de los activos en dólares y 20\,\% en renta variable, con un $\CVaR_{95\%}$
+(\PEN51.2 mm) que supera al de la posición inicial. Subir $\lambda$ a 0.1 baja el CVaR a \PEN30.9 mm y la
+renta variable a 16\,\%, y en $\lambda = 0.25$ la renta variable ya llega a su piso de 5\,\%. Desde
+$\lambda = 0.5$ el resultado esperado neto no pasa de \PEN0.98 mm; desde $\lambda = 2$ es negativo, y en
+$\lambda = 5$ llega a \mbox{$-$\PEN0.84} mm, señal de que evitar más cola cuesta más que el resultado
+esperado que queda.
+
 Al subir $\lambda$, los pasivos en dólares pasan de 20--30\,\% a 43\,\%, y la razón es de calce de monedas.
 La posición neta en dólares (activos menos pasivos en USD) baja de \PEN170--209 mm con $\lambda \le 0.1$ a
 \PEN76 mm con $\lambda = 0.25$ y se estabiliza en torno a \PEN54 mm desde $\lambda = 0.5$. Los pasivos en

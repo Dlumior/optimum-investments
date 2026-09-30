@@ -17,16 +17,14 @@ costos de transacción. A cambio, la volatilidad del patrimonio baja a \PEN6.3 m
 \PEN7.7 mm, una caída de 85\,\%, y el resultado esperado neto solo cede \PEN0.45 mm (de \PEN3.29 mm a
 \PEN2.84 mm).
 
-El principal riesgo de esta recomendación es de modelo, no de mercado:
-\begin{itemize}
-  \item \textbf{Estrés cambiario en una sola dirección.} Los cuatro escenarios de estrés del caso deprecian
-    el sol. Si se agrega uno de apreciación, el CVaR de la cartera recomendada sube de \PEN7.7 mm a
-    \PEN10.6 mm (Sección~\ref{sec:sensibilidad}).
-  \item \textbf{Costos de transacción.} Con la mitad de los costos calibrados, el modelo encuentra una
-    cartera con más resultado esperado y menos de un tercio del CVaR.
-  \item \textbf{Proyección de cupones flotantes.} Cambiar la regla con que se proyectan no mueve el CVaR,
-    pero baja el resultado esperado neto de \PEN2.84 mm a \PEN1.80 mm.
-\end{itemize}
+El principal riesgo de esta recomendación es de modelo, no de mercado. El más grande es que los cuatro
+escenarios de estrés del caso deprecian el sol y ninguno lo aprecia: agregar uno que sí lo haga sube el CVaR
+de la cartera recomendada de \PEN7.7 mm a \PEN10.6 mm (Sección~\ref{sec:sensibilidad}). El segundo es la
+calibración de los costos de transacción, de la que depende buena parte de la protección que ofrece la
+cartera: con la mitad de los costos, el modelo encuentra una cartera con más resultado esperado y menos de
+un tercio del CVaR. El tercero es la regla con que se proyectan los cupones flotantes; cambiarla no mueve
+el CVaR, pero baja el resultado esperado neto de \PEN2.84 mm a \PEN1.80 mm.
+
 Por último, con L01 en su tope, el límite de vencimientos de hasta 12 meses se incumple con certeza al
 llegar al horizonte. Exigirlo también en esa fecha cuesta \PEN0.21 mm de objetivo (\PEN0.14 mm de
 resultado esperado neto), y aun así queda un 37\,\% de probabilidad de incumplirlo por movimientos de

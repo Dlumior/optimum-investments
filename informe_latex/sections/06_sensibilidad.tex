@@ -28,35 +28,37 @@ el dual solo aproxima bien relajaciones pequeñas.
 \input{tables/precios_sombra}
 
 \subsection{Costos, confianza, peso de la cola y semillas}
-Las sensibilidades S3 a S7 reoptimizan la cartera en variantes del caso base. Además, evalúan la cartera
+Las sensibilidades S3 a S7 reoptimizan la cartera en variantes del caso base y, además, evalúan la cartera
 base $x^*$ sin reoptimizar con el modelo de cada variante (Cuadro~\ref{tab:sens-resumen}).
 
-\textbf{Costos (S3).} El nivel de costos es un supuesto de primer orden. Sin costos, la rotación sube de
+El nivel de costos de transacción (S3) es un supuesto de primer orden. Sin costos, la rotación sube de
 \PEN960 mm a \PEN1{,}433 mm (+49\,\%). Con la mitad de los costos, la cartera reoptimizada tiene un
-$\CVaR_{95\%}$ de \PEN2.10 mm y un resultado esperado neto de \PEN3.97 mm, y supera a la base en las dos
-métricas. Con el doble o el cuádruple de los costos, la rotación baja 41--43\,\%, la cartera queda a unos
-\PEN400 mm de $x^*$ y el CVaR sube a \PEN8.7--9.1 mm. El CVaR de la cartera base depende de cuánta
-cobertura permiten pagar los costos calibrados.
+$\CVaR_{95\%}$ de \PEN2.10 mm y un resultado esperado neto de \PEN3.97 mm: supera a la base en las dos
+métricas. Con el doble o el cuádruple, la rotación baja 41--43\,\%, la cartera queda a unos \PEN400 mm de
+$x^*$ y el CVaR sube a \PEN8.7--9.1 mm. En el fondo, el CVaR de la cartera base depende de cuánta cobertura
+permiten pagar los costos calibrados.
 
-\textbf{Confianza (S4).} Con $\alpha$ de 97.5\,\% o 99\,\%, la cartera se mueve unos \PEN255 mm. Medida
-en esas colas, el CVaR de $x^*$ es de \PEN10.6 mm y \PEN13.9 mm.
+El nivel de confianza (S4) mueve la cartera menos: con $\alpha$ de 97.5\,\% o 99\,\%, se desplaza unos
+\PEN255 mm, y medido en esas colas más exigentes, el CVaR de $x^*$ sube a \PEN10.6 mm y \PEN13.9 mm.
 
-\textbf{Peso de la cola (S5).} Si la probabilidad conjunta de los cuatro estreses sube de 5\,\% a 20\,\%,
-los activos en dólares pasan de 26\,\% a 43\,\% y el CVaR sube a \PEN19.5 mm. Al quitar los estreses uno
-por uno, se ve que casi todo el riesgo de cola viene de uno solo. Sin C\_STRESS\_2, el CVaR de la cartera
-reoptimizada cae a \PEN0.58 mm; sin cualquiera de los otros tres, queda entre \PEN5.3 mm y \PEN7.0 mm.
+El peso de la cola (S5) sí importa. Si la probabilidad conjunta de los cuatro estreses sube de 5\,\% a
+20\,\%, los activos en dólares pasan de 26\,\% a 43\,\% y el CVaR sube a \PEN19.5 mm. Quitando los estreses
+uno por uno queda claro que casi todo ese riesgo de cola viene de uno solo: sin C\_STRESS\_2, el CVaR de la
+cartera reoptimizada cae a \PEN0.58 mm, y sin cualquiera de los otros tres queda entre \PEN5.3 mm y
+\PEN7.0 mm.
 
 \input{tables/sensibilidades_resumen}
 
-\textbf{Semillas (S6).} Evaluada con cinco muestras de escenarios distintas de la de optimización, $x^*$
-tiene un $\CVaR_{95\%}$ de \PEN7.1--7.7 mm (promedio 7.49; en la muestra, 7.71) y un resultado esperado neto
-de \PEN2.57--2.89 mm (promedio 2.78; en la muestra, 2.84). Fuera de muestra, la cartera no muestra un
-sobreajuste material. Reoptimizar con esas mismas muestras produce carteras que llegan a estar a
-\PEN249 mm de $x^*$: hay varias carteras casi equivalentes, y la composición exacta no es única.
+Cambiar la muestra de escenarios (S6) apenas mueve el resultado. Evaluada con cinco muestras distintas de la
+de optimización, $x^*$ tiene un $\CVaR_{95\%}$ de \PEN7.1--7.7 mm (promedio 7.49; en la muestra, 7.71) y un
+resultado esperado neto de \PEN2.57--2.89 mm (promedio 2.78; en la muestra, 2.84): fuera de muestra, la
+cartera no muestra un sobreajuste material. Reoptimizar con esas mismas muestras sí produce carteras algo
+distintas, a hasta \PEN249 mm de $x^*$: hay varias carteras casi equivalentes y la composición exacta no es
+única.
 
-\textbf{Deriva (S7).} Con deriva nula en los 24 factores, el resultado esperado neto de $x^*$ se vuelve
-negativo (\mbox{$-$\PEN0.23} mm) y su CVaR sube a \PEN9.6 mm. El resultado esperado del caso base depende
-de la prima de la renta variable y de la paridad de tasas en el tipo de cambio.
+Por último, sin deriva (S7) en los 24 factores, el resultado esperado neto de $x^*$ se vuelve negativo
+(\mbox{$-$\PEN0.23} mm) y su CVaR sube a \PEN9.6 mm. El resultado esperado del caso base depende, en buena
+medida, de la prima de la renta variable y de la paridad de tasas que se traslada al tipo de cambio.
 
 \subsection{Sesgo del conjunto de estrés y regla de cupones}\label{subsec:sesgo-estres}
 Los cuatro escenarios de estrés del caso deprecian el sol; ninguno lo aprecia. Para medir ese sesgo (S8)

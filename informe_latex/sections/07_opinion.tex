@@ -1,31 +1,27 @@
 \section{Opinión del analista}\label{sec:opinion}
 
-El modelo tiene tres fortalezas que justifican su costo computacional:
-\begin{itemize}
-  \item \textbf{Revalorización completa.} Revalorizar cada instrumento por sus flujos completos, en vez de
-    aproximar con duración o DV01, es lo que permite detectar que el riesgo de tasa corta de la cartera
-    óptima cambia de signo según la convención de proyección de cupones flotantes
-    (apartado~\ref{subsec:shocks-tasas}). Una aproximación lineal habría escondido ese riesgo de modelo.
-  \item \textbf{CVaR lineal.} La formulación de Rockafellar--Uryasev mantiene el problema como un programa
-    lineal, que se resuelve en milisegundos, y el CVaR del objetivo coincide con el que se reporta
-    \emph{ex post}.
-  \item \textbf{Sensibilidades.} Las nueve sensibilidades permiten separar qué parte del resultado viene de
-    la optimización y qué parte de supuestos que el enunciado no fija por completo.
-\end{itemize}
+El modelo tiene, a mi juicio, tres fortalezas que justifican su costo computacional. La primera es
+revalorizar cada instrumento por sus flujos completos en vez de aproximar con duración o DV01: es justamente
+lo que permite ver que el riesgo de tasa corta de la cartera óptima cambia de signo según la convención de
+proyección de cupones flotantes (apartado~\ref{subsec:shocks-tasas}). Una aproximación lineal habría dejado
+pasar ese riesgo de modelo sin que nadie lo notara. La segunda es que la formulación de
+Rockafellar--Uryasev mantiene el CVaR dentro de un programa lineal, que se resuelve en milisegundos, y hace
+que el CVaR del objetivo coincida con el que se reporta \emph{ex post}: no hay ruido entre lo que el solver
+optimiza y lo que el informe mide. La tercera son las nueve sensibilidades; sin ellas sería difícil separar
+qué parte del resultado viene de la optimización y qué parte de supuestos que el enunciado no fija por
+completo, y esa distinción termina siendo el aporte más útil de todo el ejercicio.
 
-Esas mismas sensibilidades muestran tres debilidades, de mayor a menor importancia:
-\begin{itemize}
-  \item \textbf{Sesgo del conjunto de estrés.} Es el mayor riesgo de modelo. Los cuatro escenarios
-    deprecian el sol, y un solo escenario de apreciación sube el CVaR de la cartera recomendada en 37\,\%
-    (apartado~\ref{subsec:sesgo-estres}). Un comité de riesgos debería agregar un escenario de apreciación
-    al conjunto base, no tratarlo solo como sensibilidad.
-  \item \textbf{Costos de transacción.} La cartera óptima depende mucho de ellos. Con la mitad de los costos
-    calibrados, el modelo encuentra una cartera mejor en resultado esperado y en CVaR, así que el CVaR
-    recomendado es tan confiable como esa calibración.
-  \item \textbf{Regla de cupones flotantes.} Ni los datos ni el enunciado fijan si los cupones se proyectan
-    con el nivel plano del factor de referencia o con la forward del período. La elección casi no mueve la
-    cola, pero cambia el resultado esperado neto en un tercio.
-\end{itemize}
+Esas mismas sensibilidades exponen tres debilidades, de mayor a menor importancia. La que más me preocupa
+es el sesgo del conjunto de estrés: los cuatro escenarios deprecian el sol, y un solo escenario de
+apreciación sube el CVaR de la cartera recomendada en 37\,\% (apartado~\ref{subsec:sesgo-estres}). Un
+comité de riesgos debería agregar un escenario de apreciación al conjunto base, no dejarlo como una
+sensibilidad aparte. La segunda son los costos de transacción, de los que la cartera óptima depende más de
+lo que uno querría: con la mitad de los costos calibrados, el modelo encuentra una cartera mejor en
+resultado esperado y en CVaR, de modo que el CVaR recomendado es, en el fondo, tan confiable como esa
+calibración. La tercera es la regla de proyección de los cupones flotantes. Ni los datos ni el enunciado
+dicen si deben proyectarse con el nivel plano del factor de referencia o con la forward del período, y esa
+elección casi no mueve la cola pero cambia el resultado esperado neto en un tercio.
+
 En cambio, la muestra de escenarios no preocupa: con otras semillas, el CVaR de la cartera recomendada se
 mantiene entre \PEN7.1 mm y \PEN7.7 mm. Lo que sí limita el análisis es que la historia cubre cinco años y
 un solo ciclo de alza de tasas.
