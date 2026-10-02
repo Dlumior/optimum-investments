@@ -1,173 +1,330 @@
-\section{Formulación completa}\label{app:formulacion}
-Este anexo reúne la formulación que implementa \texttt{src/optimum/} y amplía la de la
-Sección~\ref{sec:formulacion}. Ningún parámetro está codificado: todos se leen de \texttt{data/json/input.json},
-cuya clave se indica en cada caso. Los montos están en S/ millones, las tasas en decimales y el tiempo en ACT/365.
+\section{Formulación matemática}\label{app:formulacion}
+Este anexo desarrolla la formulación de la Sección~\ref{sec:formulacion}: el problema de optimización, el
+modelo de escenarios y de valorización que define sus coeficientes, las medidas que se reportan y los
+supuestos y decisiones de modelación en que se apoya. Los montos están en S/ millones, las tasas en
+decimales y el tiempo en años ACT/365.
 
-\subsection{Conjuntos y parámetros}
-Los instrumentos se leen de \texttt{instruments[]} según su lado: $\mathcal{A}$ (activos), $\mathcal{L}$ (pasivos)
-y $\mathcal{K} = \mathcal{A} \cup \mathcal{L}$. Los escenarios son $\mathcal{S} = \mathcal{S}^B \cup \mathcal{S}^E$,
-los de remuestreo y los de estrés. Cada restricción de pesos $g \in \mathcal{G}$ (\texttt{constraints.weights[]})
-tiene un lado $l(g) \in \{A, L\}$ y un conjunto de miembros $\mathcal{K}_g$. Para unificar la notación,
-$z_k$ es $x_k$ si $k \in \mathcal{A}$ e $y_k$ si $k \in \mathcal{L}$.
+\subsection{Notación}
+Sea $t_0$ la fecha de decisión y $t_H$ el horizonte, con $\tau_H = t_H - t_0 = 1$ año. Los instrumentos
+se dividen en activos $\mathcal{A}$ y pasivos $\mathcal{L}$, con $\mathcal{K} = \mathcal{A} \cup \mathcal{L}$.
+Para cada $k \in \mathcal{K}$ se conocen su moneda $\text{mon}(k) \in \{\text{PEN}, \text{USD}\}$, su tipo
+$\text{tipo}(k) \in \{\text{caja}, \text{renta variable}, \text{bono fijo}, \text{bono flotante}\}$, su
+vencimiento $T_k$, el factor de referencia de sus cupones si es flotante y su valor de mercado inicial
+$z_k^0 > 0$. Para escribir las restricciones de ambos lados con una sola expresión se usa
+\[
+  z_k = \begin{cases} x_k & k \in \mathcal{A},\\ y_k & k \in \mathcal{L}, \end{cases}
+  \qquad
+  \epsilon_k = \begin{cases} +1 & k \in \mathcal{A},\\ -1 & k \in \mathcal{L}, \end{cases}
+\]
+de modo que $\Delta\PN_s = \sum_{k} \epsilon_k\, z_k\, r_{k,s}$.
+
+El mercado en la fecha $t$ es un vector $F_t \in \R^{24}$: las curvas cero de cada moneda en los nodos ON,
+1, 3, 5, 10 y 20 años, sus cinco forwards entre nodos consecutivos, el tipo de cambio
+$S_t$ (soles por dólar) y el índice de renta variable $E_t$. Los escenarios forman el conjunto finito
+$\mathcal{S} = \mathcal{S}^B \cup \mathcal{S}^E$, con $|\mathcal{S}^B| = N_B$ escenarios de remuestreo y
+$|\mathcal{S}^E|$ escenarios de estrés, y una medida de probabilidad $p_s \ge 0$, $\sum_{s} p_s = 1$.
 
 \begin{center}
 \small
-\begin{tabular}{l>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.40\textwidth}}
+\begin{tabular}{lp{0.55\textwidth}l}
 \toprule
-Símbolo & Descripción & Clave en \texttt{input.json} \\
+Símbolo & Parámetro & Valor del caso \\
 \midrule
-$z_k^0$ & posición inicial a valor de mercado & \texttt{instruments[].market\_value\_pen} \\
-$B_A,\ B_L$ & presupuestos de activos y pasivos & \texttt{common.assetBudget}, \texttt{common.liabilityBudget} \\
-$\underline{\PN}$ & patrimonio mínimo & \texttt{common.minNetWorth} \\
-$\overline{\rho}$ & cociente máximo pasivos/activos & \texttt{common.maxLiabilitiesToAssets} \\
-$\underline{C}$ & caja mínima & \texttt{common.minCash} \\
-$\underline{w}_g,\ \overline{w}_g$ & pesos mínimo y máximo del grupo $g$ & \texttt{weights[].min\_weight}, \texttt{weights[].max\_weight} \\
-$c_k$ & costo de reestructuración por sol movido & \texttt{transactionCosts[]}\allowbreak\texttt{.restructuring\_cost} \\
-$\alpha$ & nivel de confianza del CVaR & \texttt{cp.cvarAlpha} \\
-$\lambda$ & aversión al riesgo & \texttt{cp.riskAversionLambda} \\
-$N_B,\ b,\ m$ & escenarios de remuestreo, largo del bloque y bloques por escenario & \texttt{cp.bootstrapCount}, \texttt{cp.bootstrapBlockLength}, \texttt{cp.bootstrapBlocksPerScenario} \\
-$p_s$ & probabilidad del escenario & \texttt{cp.bootstrapProbability}, \texttt{stressScenarios[].probability} \\
-$r_{k,s}$ & resultado por sol invertido & derivado por revalorización (\ref{app:form-revalorizacion}) \\
-$\sigma_k$ & spread de valorización & recalibrado para que $V_k(t_0) = z_k^0$ \\
+$B_A,\ B_L$ & presupuestos de activos y pasivos & 1,000 y 800 \\
+$\underline{\PN}$ & patrimonio neto mínimo & 120 \\
+$\overline{\rho}$ & cociente máximo pasivos/activos & 0.85 \\
+$\underline{C}$ & caja mínima & 80 \\
+$\underline{w}_g,\ \overline{w}_g$ & pesos mínimo y máximo del grupo $g$ & Cuadro~4 del enunciado \\
+$c_k$ & costo de reestructuración por sol movido & según instrumento \\
+$\alpha$ & nivel de confianza del CVaR & 0.95 \\
+$\lambda$ & aversión al riesgo & 0.25 \\
+$N_B,\ b,\ m$ & escenarios de remuestreo, meses por bloque, bloques por escenario & 500, 6, 2 \\
+$P^B,\ P^E$ & probabilidad conjunta del remuestreo y del estrés & 0.95, 0.05 \\
 \bottomrule
 \end{tabular}
-
-\footnotesize Prefijos: \texttt{common} = \texttt{constraints.common}, \texttt{weights} = \texttt{constraints.weights},
-\texttt{cp} = \texttt{caseParameters}.
 \end{center}
 
 \subsection{Problema de optimización}
-Con $r_{k,s}$ calculado de antemano, el problema es lineal:
+Dada la matriz de resultados $r \in \R^{|\mathcal{K}| \times |\mathcal{S}|}$, el problema es el programa
+lineal
 \begin{align}
-  \max_{x,\,y,\,\Delta^{\pm},\,\zeta,\,u}\quad
-    & \sum_{s \in \mathcal{S}} p_s\, \Delta\PN_s
+  \max_{x,\,y,\,\Delta^{+},\,\Delta^{-},\,\zeta,\,u}\quad
+    & \sum_{s \in \mathcal{S}} p_s \sum_{k \in \mathcal{K}} \epsilon_k\, z_k\, r_{k,s}
       \;-\; \lambda\Big(\zeta + \frac{1}{1-\alpha}\sum_{s \in \mathcal{S}} p_s\, u_s\Big)
       \;-\; \sum_{k \in \mathcal{K}} c_k\,(\Delta_k^+ + \Delta_k^-) \label{eq:lp-obj}\\
   \text{s.a.}\quad
-    & \Delta\PN_s = \sum_{i \in \mathcal{A}} x_i\, r_{i,s} - \sum_{j \in \mathcal{L}} y_j\, r_{j,s}
-      && \forall s \in \mathcal{S} \\
-    & u_s \ge -\Delta\PN_s - \zeta,\quad u_s \ge 0 && \forall s \in \mathcal{S} \\
-    & \textstyle\sum_{i \in \mathcal{A}} x_i = B_A,\qquad \sum_{j \in \mathcal{L}} y_j = B_L \\
+    & u_s \ge -\textstyle\sum_{k} \epsilon_k\, z_k\, r_{k,s} - \zeta\qquad \forall s \in \mathcal{S} \label{eq:lp-cola}\\
+    & \textstyle\sum_{k \in \mathcal{A}} x_k = B_A,\qquad \sum_{k \in \mathcal{L}} y_k = B_L \label{eq:lp-presup}\\
     & \underline{w}_g\, B_{l(g)} \le \textstyle\sum_{k \in \mathcal{K}_g} z_k \le \overline{w}_g\, B_{l(g)}
-      && \forall g \in \mathcal{G} \label{eq:lp-pesos}\\
-    & \textstyle\sum_{i} x_i - \sum_{j} y_j \ge \underline{\PN},\qquad
-      \sum_{j} y_j \le \overline{\rho}\,\sum_{i} x_i \\
-    & \textstyle\sum_{i \in \mathcal{A}^{\text{CASH}}} x_i \ge \underline{C} \\
-    & z_k - z_k^0 = \Delta_k^+ - \Delta_k^- && \forall k \in \mathcal{K} \\
-    & x_i,\ y_j,\ \Delta_k^+,\ \Delta_k^-,\ u_s \ge 0,\qquad \zeta \in \R.
+\qquad \forall g \in \mathcal{G} \label{eq:lp-pesos}\\
+    & \textstyle\sum_{k \in \mathcal{A}} x_k - \sum_{k \in \mathcal{L}} y_k \ge \underline{\PN},\qquad
+      \sum_{k \in \mathcal{L}} y_k \le \overline{\rho}\,\sum_{k \in \mathcal{A}} x_k \label{eq:lp-pn}\\
+    & \textstyle\sum_{k \in \mathcal{A}:\ \text{tipo}(k) = \text{caja}} x_k \ge \underline{C} \label{eq:lp-caja}\\
+    & z_k - z_k^0 = \Delta_k^+ - \Delta_k^-\qquad \forall k \in \mathcal{K} \label{eq:lp-reest}\\
+    & z_k,\ \Delta_k^+,\ \Delta_k^- \ge 0\quad \forall k,\qquad u_s \ge 0\quad \forall s,\qquad \zeta \in \R.
 \end{align}
-Con $|\mathcal{K}|$ instrumentos y $|\mathcal{S}|$ escenarios hay $3|\mathcal{K}| + |\mathcal{S}| + 1$ variables.
-En una solución óptima con $c_k > 0$ a lo más una de $\Delta_k^+$ o $\Delta_k^-$ es positiva, de modo que
-$\Delta_k^+ + \Delta_k^- = |z_k - z_k^0|$ sin variables binarias. Se resuelve con \texttt{cvxpy}; los duales de
-\eqref{eq:lp-pesos} son los precios sombra de la Sección~\ref{sec:sensibilidad}.
+Cada restricción de pesos $g \in \mathcal{G}$ pertenece a un lado $l(g) \in \{A, L\}$ y actúa sobre un
+conjunto de miembros $\mathcal{K}_g$ de ese lado:
+\[
+\begin{aligned}
+  \mathcal{K}_g^{\text{mon} = c} &= \{k : \text{mon}(k) = c\}, &
+  \mathcal{K}_g^{\text{flotante}} &= \{k : k \text{ tiene factor de referencia}\},\\
+  \mathcal{K}_g^{\text{renta fija}} &= \{k : \text{tipo}(k) \in \{\text{bono fijo}, \text{bono flotante}\}\}, &
+  \mathcal{K}_g^{\le 12} &= \{k : M_k(t_0) \le 12\},\\
+  & & \mathcal{K}_g^{> 36} &= \{k : M_k(t_0) > 36\},
+\end{aligned}
+\]
+donde $M_k(t)$ es el plazo remanente en meses calendario de $k$ en la fecha $t$. Los grupos de caja y renta
+variable se definen igual por tipo, y el de concentración genera una restricción $z_k \le \overline{w}_g\,
+B_{l(g)}$ por instrumento. Una vez fijados los presupuestos \eqref{eq:lp-presup}, los pesos
+$z_k / B_{l}$ tienen denominador constante y \eqref{eq:lp-pesos} es lineal.
 
-Las restricciones de patrimonio mínimo y de cociente pasivos/activos son redundantes cuando los presupuestos son
-fijos, pero se mantienen para que el solver las verifique si el profesor cambia los datos.
-Si un grupo con $\underline{w}_g > 0$ no tiene miembros, el programa se detiene con un error explícito, sin
-intentar resolver.
+\paragraph{Propiedades.} Tres resultados justifican esta forma del problema.
+\begin{enumerate}
+  \item \emph{CVaR lineal.} Para $L_s = -\Delta\PN_s$, \textcite{rockafellar2000} muestran que
+  \[
+    \CVaR_\alpha(L) = \min_{\zeta \in \R}\ \Big\{\zeta + \frac{1}{1-\alpha}\sum_s p_s\,(L_s - \zeta)^+\Big\},
+  \]
+  y que el conjunto de minimizadores contiene al $\VaR_\alpha(L)$. Las variables $u_s$ con
+  \eqref{eq:lp-cola} y $u_s \ge 0$ representan $(L_s - \zeta)^+$ de forma exacta en el óptimo, porque el
+  objetivo penaliza $u_s$ con coeficiente $\lambda p_s/(1-\alpha) \ge 0$. Para $\lambda > 0$, maximizar
+  \eqref{eq:lp-obj} equivale a maximizar $\E[\Delta\PN] - \lambda\,\CVaR_\alpha(L) - TC$ sobre las carteras
+  factibles.
+  \item \emph{Valor absoluto sin binarias.} Si $c_k > 0$, en todo óptimo $\min(\Delta_k^+, \Delta_k^-) = 0$:
+  si ambas fueran positivas, restar $\min(\Delta_k^+, \Delta_k^-)$ a cada una mantiene \eqref{eq:lp-reest} y
+  mejora el objetivo en $2 c_k \min(\Delta_k^+, \Delta_k^-)$. Por lo tanto
+  $\Delta_k^+ + \Delta_k^- = |z_k - z_k^0|$ y $TC = \sum_k c_k\, |z_k - z_k^0|$.
+  \item \emph{Linealidad en las posiciones.} El resultado por sol invertido $r_{k,s}$ no depende de $z_k$
+  (supuesto de escala, \ref{app:supuestos}), así que $\Delta\PN_s$ es lineal en $(x, y)$. El problema tiene
+  $3|\mathcal{K}| + |\mathcal{S}| + 1$ variables y su conjunto factible es un poliedro. Si es no vacío, el
+  objetivo está acotado porque las posiciones lo están por los presupuestos.
+\end{enumerate}
+Las restricciones \eqref{eq:lp-pn} son redundantes con los presupuestos del caso
+($\PN_0 = B_A - B_L = 200$ y $B_L/B_A = 0.80$), pero se mantienen para que el modelo siga siendo válido si
+los presupuestos cambian. Con $\lambda = 0$ el problema maximiza el resultado esperado neto de costos y su
+solución es, en general, un vértice del poliedro; al crecer $\lambda$ la solución se acerca a la de mínimo
+$\CVaR_\alpha$.
 
-\subsection{Pertenencia a los grupos de pesos}
-La pertenencia se deduce de los atributos de cada instrumento, nunca de su identificador:
+\subsection{Modelo de escenarios}\label{app:form-escenarios}
+\paragraph{Cambios mensuales.} Para los meses $t = 1, \dots, T$ de la historia anterior a $t_0$, el cambio
+del factor $f$ es
+\[
+  \Delta F_{t,f} = \begin{cases}
+    F_{t,f} - F_{t-1,f} & f \text{ tasa (cambio absoluto)},\\
+    \ln F_{t,f} - \ln F_{t-1,f} & f \in \{S, E\}\ \text{(log-retorno)}.
+  \end{cases}
+\]
 
-\begin{center}
-\small
-\begin{tabular}{llp{0.5\textwidth}}
-\toprule
-Dimensión & Categoría & Regla \\
-\midrule
-CURRENCY & PEN, USD & campo \texttt{currency} \\
-TYPE & CASH, EQUITY & \texttt{instrument\_type} igual a la categoría \\
-TYPE & FIXED\_INCOME & \texttt{instrument\_type} $\in$ \{BOND\_FIXED, BOND\_FLOAT\} \\
-RATE\_TYPE & FIXED, FLOAT & \texttt{reference\_factor} nulo o no nulo \\
-MATURITY & LE\_12M, GT\_36M & plazo remanente en $t_0$ de a lo más 12 meses o de más de 36 meses \\
-CONCENTRATION & SINGLE\_POSITION & una fila por instrumento: $z_k \le \overline{w}_g\, B_{l(g)}$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Generación de escenarios}\label{app:form-escenarios}
-\paragraph{Remuestreo por bloques.} Sea $\Delta F_t \in \R^{24}$ el cambio mensual de los factores (diferencia
-absoluta en tasas, log-retorno en tipo de cambio y renta variable). Para cada una de las $T-b+1$ ventanas de $b$
-meses consecutivos se calcula la suma $W_v = \sum_{t=v}^{v+b-1} \Delta F_t$ y se centra,
-$\tilde W_v = W_v - \overline{W}$. Se centran las ventanas, no los meses: sin vuelta circular, los meses de los
-extremos aparecen en menos ventanas, y centrar los meses dejaría un sesgo en la media. El shock anual del
-escenario $s \in \mathcal{S}^B$ es
+\paragraph{Remuestreo por bloques.} Para cada inicio $v = 1, \dots, T-b+1$ se define la suma de una
+ventana de $b$ meses consecutivos y su versión centrada,
+\[
+  W_v = \sum_{t=v}^{v+b-1} \Delta F_t, \qquad
+  \tilde W_v = W_v - \frac{1}{T-b+1}\sum_{v'=1}^{T-b+1} W_{v'}.
+\]
+El escenario $s \in \mathcal{S}^B$ suma $m$ ventanas con inicios independientes y uniformes y una deriva
+anual $\mu$:
 \begin{equation}
-  \Delta F_s = \sum_{q=1}^{m} \tilde W_{v_{s,q}} + \mu, \qquad v_{s,q} \sim \text{Uniforme},
+  \Delta F_s = \sum_{q=1}^{m} \tilde W_{v_{s,q}} + \mu, \qquad
+  v_{s,q} \overset{\text{iid}}{\sim} \mathcal{U}\{1, \dots, T-b+1\}, \qquad b\,m = 12 .
 \end{equation}
-con el inicio de cada ventana sorteado con la semilla \texttt{cp.seed} y
-$p_s = \texttt{cp.bootstrapProbability}/N_B$. La deriva $\mu$ (\texttt{cp.drift}) es nula en las tasas,
-$\ln\frac{1+z_{PEN}(1Y)}{1+z_{USD}(1Y)}$ en el tipo de cambio y $12\,\overline{\Delta \ln E}$ en la renta variable.
-Al final, el log-shock cambiario de todos los escenarios de remuestreo se desplaza por
+Como cada $\tilde W_v$ tiene media cero bajo la distribución uniforme, $\E[\Delta F_s] = \mu$ exactamente.
+La deriva es nula en las tasas; en el tipo de cambio es la paridad cubierta de tasas,
+$\mu_S = \ln\frac{1 + z^{PEN}_{t_0}(\tau_H)}{1 + z^{USD}_{t_0}(\tau_H)}$; y en la renta variable es la
+media histórica anualizada, $\mu_E = \frac{12}{T}\sum_t \Delta F_{t,E}$. Como
+$\E[e^{X}] \neq e^{\E[X]}$, después de sumar $\mu_S$ todos los log-shocks cambiarios del remuestreo se
+desplazan por una constante,
 \begin{equation}
-  c = \ln\frac{F}{S} - \ln\Big(\frac{1}{N_B}\sum_{s \in \mathcal{S}^B} e^{\Delta \ln FX_s}\Big),
+  \Delta \ln S_s \leftarrow \Delta \ln S_s + c, \qquad
+  c = \ln\frac{F^{S}}{S_{t_0}} - \ln\Big(\frac{1}{N_B}\sum_{s' \in \mathcal{S}^B} e^{\Delta \ln S_{s'}}\Big),
 \end{equation}
-para que la media muestral de $FX_H/FX_0$ sea exactamente la forward de paridad $F/S$.
+donde $F^{S}/S_{t_0} = \frac{1 + z^{PEN}_{t_0}(\tau_H)}{1 + z^{USD}_{t_0}(\tau_H)}$. Así la media de
+$S_{t_H}/S_{t_0}$ en la muestra es exactamente la forward de paridad. Cada escenario de remuestreo tiene
+probabilidad $p_s = P^B / N_B$.
 
-\paragraph{Escenarios de estrés.} Cada escenario de \texttt{stressScenarios[]} aplica, por moneda, un
-desplazamiento paralelo de la curva spot. Si el escenario define un desplazamiento para un tramo
-(\texttt{cp.stressTenors}), ese valor reemplaza al paralelo en los nodos del tramo. En los nodos de
-transición entre dos nodos fijos $t_a < t < t_b$ se interpola linealmente el producto $t\,s(t)$:
+\paragraph{Escenarios de estrés.} Cada escenario $s \in \mathcal{S}^E$ define, por moneda, un
+desplazamiento paralelo $\delta_s$ y, opcionalmente, desplazamientos $\delta_s^{\text{corto}}$ y
+$\delta_s^{\text{largo}}$ que reemplazan al paralelo en los nodos de cada tramo,
+$\mathcal{N}^{\text{corto}} = \{\text{ON}, 1\}$ y $\mathcal{N}^{\text{largo}} = \{10, 20\}$. En un nodo de
+transición $t$ entre los nodos fijos vecinos $t_a < t < t_b$, con desplazamientos $\delta_a$ y $\delta_b$, se
+interpola linealmente el producto $t\,\delta(t)$:
 \begin{equation}
-  t\,s(t) = t_a s_a + (t_b s_b - t_a s_a)\,\frac{t - t_a}{t_b - t_a},
+  t\,\delta(t) = t_a \delta_a + (t_b \delta_b - t_a \delta_a)\,\frac{t - t_a}{t_b - t_a}.
 \end{equation}
-de modo que la forward implícita cambia lo mismo en todos los segmentos de la transición. En tipo de cambio y renta
-variable, $\Delta \ln FX = \ln(1 + \texttt{fx\_pct})$ y $\Delta \ln E = \ln(1 + \texttt{equity\_pct})$, sin
-deriva. El programa valida que $\sum_{s \in \mathcal{S}^E} p_s = \texttt{stressProbability}$ y que
-$\sum_{s \in \mathcal{S}} p_s = 1$.
+Con capitalización continua, $t\,z(t)$ es el logaritmo del factor de capitalización, de modo que esta regla
+reparte por igual entre los segmentos de la transición el cambio de la forward media
+$\frac{t_b \delta_b - t_a \delta_a}{t_b - t_a}$; con capitalización efectiva anual la igualdad es aproximada.
+Ese cambio medio lo fijan los datos del escenario y ninguna regla de transición puede evitarlo. En tipo de
+cambio y renta variable, $\Delta \ln S_s = \ln(1 + \phi_s)$ y $\Delta \ln E_s = \ln(1 + \eta_s)$, con
+$\phi_s$ y $\eta_s$ las variaciones porcentuales del escenario, sin deriva. Cada estrés recibe su
+probabilidad, y $\sum_{s \in \mathcal{S}^E} p_s = P^E$.
 
-En todos los escenarios, las curvas forward se recalculan como implícitas de la curva spot desplazada, y no se
-impone un piso a las tasas.
+\paragraph{Coherencia del mercado.} En todo escenario, las forwards se recalculan como implícitas de la
+curva cero desplazada,
+\[
+  f(t_1, t_2) = \left(\frac{(1 + z(t_2))^{t_2}}{(1 + z(t_1))^{t_1}}\right)^{1/(t_2 - t_1)} - 1,
+\]
+con $z(\cdot)$ interpolada linealmente entre nodos. No se impone un piso a las tasas.
 
-\subsection{Revalorización por instrumento}\label{app:form-revalorizacion}
-El resultado de cada instrumento es
+\subsection{Valorización y resultado por instrumento}\label{app:form-revalorizacion}
+\paragraph{Descuento y calibración.} Un instrumento con flujos $\{CF_{k,n}\}$ en las fechas $\tau_n$ y moneda
+$c$ vale, en la fecha $t$ y con el mercado $F$,
+\[
+  V_k(t; F) = S_c(F) \sum_{n:\ \tau_n > t} CF_{k,n}\,\big(1 + z^{c}_F(\tau_n - t) + \sigma_k\big)^{-(\tau_n - t)},
+\]
+donde $S_c$ convierte a soles ($S_{\text{PEN}} = 1$). El spread $\sigma_k$ es la única solución de
+$V_k(t_0; F_{t_0}) = z_k^0$ (el valor presente es estrictamente decreciente en $\sigma_k$) y se mantiene
+constante hasta el horizonte.
+
+\paragraph{Trayectoria dentro del año.} Entre $t_0$ y $t_H$ el mercado del escenario $s$ se mueve
+linealmente:
+\[
+  F_s(\tau) = F_{t_0} + \theta(\tau)\,\Delta F_s, \qquad \theta(\tau) = \frac{\tau - t_0}{t_H - t_0} \in [0, 1].
+\]
+Un cupón flotante con fecha de fijación $\tau^{\text{fix}}$ y spread contractual $\kappa_k$ paga, sobre el
+nocional $N_k$ y con frecuencia $\omega_k$,
+\[
+  CF_{k,n} = \frac{N_k}{\omega_k}\,\big(R_k(\tau^{\text{fix}}_n) + \kappa_k\big), \qquad
+  R_k(\tau) = \begin{cases}
+    R_k^{\text{base}}(\tau) & \tau \le t_0,\\
+    R_k\big(F_s(\min(\tau, t_H))\big) & \tau > t_0,
+  \end{cases}
+\]
+donde $R_k^{\text{base}}$ es la proyección base, que no cambia para los cupones ya fijados, y $R_k(F)$ es el
+valor del factor de referencia de $k$ en el mercado $F$.
+
+\paragraph{Resultado al horizonte.} El resultado por sol invertido es
 \begin{equation}
-  r_{k,s} = \frac{V_k^{PEN}(t_H;\,\text{mercado}_s) + CF_k^{PEN}(t_0, t_H]_s}{V_k^{PEN}(t_0)} - 1,
+  r_{k,s} = \underbrace{\frac{V_k(t_H; F_s(t_H))}{z_k^0} - 1}_{\text{revalorización}}
+  \;+\; \underbrace{\frac{1}{z_k^0} \sum_{n:\ t_0 < \tau_n \le t_H} S_c\big(F_s(\tau_n)\big)\, CF_{k,n}}_{\text{flujos del año}},
 \end{equation}
-sin duración ni DV01. Dentro del año, los factores siguen la trayectoria lineal
-$F(\tau) = F_0 + \theta(\tau)\,\Delta F_s$, con $\theta(\tau) = (\tau - t_0)/(t_H - t_0)$:
+donde los flujos del año se convierten al tipo de cambio de su fecha de pago y no se reinvierten. La caja y
+la renta variable no tienen flujos:
+\[
+  r_{k,s}^{\text{caja}} = \Big(1 + \big(z^c_{t_0}(\text{ON}) + \tfrac{1}{2}\Delta z^c_s(\text{ON})\big)\,\tau_H\Big)\frac{S_c(F_s(t_H))}{S_c(F_{t_0})} - 1,
+  \qquad
+  r_{k,s}^{\text{RV}} = e^{\Delta \ln E_s}\,\frac{S_c(F_s(t_H))}{S_c(F_{t_0})} - 1 .
+\]
+La caja devenga la tasa ON media de la trayectoria lineal en tasa simple, y la renta variable no paga
+dividendos. Para un pasivo, un $r_{k,s}$ mayor (más intereses pagados o un mayor valor de la deuda) reduce
+$\Delta\PN_s$ por el signo $\epsilon_k = -1$.
 
-\begin{center}
-\small
-\begin{tabular}{p{0.32\textwidth}p{0.58\textwidth}}
-\toprule
-Elemento & Tratamiento \\
-\midrule
-Cupón flotante fijado hasta $t_0$ & proyección base, igual en todos los escenarios \\
-Cupón flotante fijado en $(t_0, t_H]$ & factor de referencia en $F(\tau_{fix})$ más el spread contractual \\
-Flujos posteriores a $t_H$ & reproyectados y descontados a $t_H$ con la curva $F(t_H)$ más $\sigma_k$ \\
-Caja & devenga la tasa ON media de la trayectoria, $ON_0 + \tfrac{1}{2}\Delta ON_s$, en tasa simple \\
-Flujos en USD del año & convertidos a soles con $FX(\tau_{pago})$, sin reinversión \\
-Renta variable & $V_0\, e^{\Delta \ln E_s}$, multiplicado por $FX_s/FX_0$ si está en USD; sin dividendos \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-El spread $\sigma_k$ se recalibra en $t_0$ para que el valor presente de los flujos sea igual a
-\texttt{market\_value\_pen}, y se mantiene constante hasta el horizonte. Como $r_{k,s}$ no depende de $z_k$,
-cambiar una posición equivale a comprar o emitir más del mismo contrato.
-
-\subsection{Métricas \emph{ex post}}
-La variable $\zeta$ es el VaR solo si $\lambda > 0$ y el cuantil es único. Con átomos de probabilidad en los
-escenarios de estrés, el VaR y el CVaR se recalculan sobre la distribución completa de $L_s = -\Delta\PN_s$:
-\begin{equation}
-  \VaR_\alpha = \min\Big\{\ell : \sum_{L_s \le \ell} p_s \ge \alpha\Big\},\qquad
-  \CVaR_\alpha = \frac{1}{1-\alpha}\Big[\sum_{L_s > \VaR_\alpha} p_s L_s
+\subsection{Medidas que se reportan}
+\paragraph{VaR y CVaR \emph{ex post}.} Con $L_s = -\Delta\PN_s$ y la distribución discreta $\{(L_s, p_s)\}$,
+\begin{align}
+  \VaR_\alpha &= \min\Big\{\ell : \sum_{s:\ L_s \le \ell} p_s \ge \alpha\Big\},\\
+  \CVaR_\alpha &= \frac{1}{1-\alpha}\Big[\sum_{L_s > \VaR_\alpha} p_s L_s
     + \VaR_\alpha\Big(1-\alpha-\sum_{L_s > \VaR_\alpha} p_s\Big)\Big].
-\end{equation}
-Además se reportan, por escenario y sin imponerlos en el problema base, los incumplimientos al horizonte:
-$\PN_{H,s} \ge \underline{\PN}$, $P/A \le \overline{\rho}$, caja en $t_H$ (instrumentos de caja más flujos netos
-del año menos $TC$) de al menos $\underline{C}$, y cada grupo de \eqref{eq:lp-pesos} medido con las tenencias y
-los plazos remanentes en $t_H$.
+\end{align}
+El segundo término asigna al átomo del $\VaR$ solo la fracción de su probabilidad que completa la cola de
+masa $1-\alpha$. Se calcula así, y no leyendo $\zeta$, porque con $\lambda = 0$ el valor de $\zeta$ es
+arbitrario y con átomos de probabilidad el cuantil puede no ser único.
 
-\subsection{Variantes de comparación}
-\paragraph{Mínima varianza.} Con las mismas restricciones y escenarios, se resuelve el problema cuadrático
-\begin{equation}
-  \min\ \sum_s p_s\big(\Delta\PN_s - \E[\Delta\PN]\big)^2
+\paragraph{Resultados esperados.}
+\[
+  \E[\Delta\PN] = \sum_s p_s\,\Delta\PN_s,\qquad
+  \E[\PN_H] = \PN_0 - TC + \E[\Delta\PN],
+\]
+\[
+  \bar r_A = \frac{\sum_{k \in \mathcal{A}} x_k\, \bar r_k}{B_A},\qquad
+  \bar r_L = \frac{\sum_{k \in \mathcal{L}} y_k\, \bar r_k}{B_L},
+\]
+con $\bar r_k = \sum_s p_s r_{k,s}$. La volatilidad es la desviación estándar de $\Delta\PN_s$ bajo $p$.
+
+\paragraph{Restricciones al horizonte.} Las restricciones se imponen en $t_0$, sobre la estructura que sale
+de la decisión, y en $t_H$ se reporta la probabilidad de incumplirlas. La caja al horizonte acumula los
+flujos netos del año y descuenta el costo de transacción pagado en $t_0$:
+\[
+  C_{H,s} = \sum_{k:\ \text{tipo}(k) = \text{caja}} x_k\,(1 + r_{k,s})
+  + \sum_{k} \epsilon_k\, \frac{z_k}{z_k^0} \sum_{t_0 < \tau_n \le t_H} S_c(F_s(\tau_n))\, CF_{k,n} - TC,
+\]
+lo que asegura que $A_{H,s} - L_{H,s} = \PN_0 - TC + \Delta\PN_s$. Para cada escenario se verifican
+$\PN_{H,s} \ge \underline{\PN}$, $L_{H,s} \le \overline{\rho}\,A_{H,s}$, $C_{H,s} \ge \underline{C}$ y cada
+grupo \eqref{eq:lp-pesos} con las tenencias en $t_H$ y la pertenencia $M_k(t_H)$. Un incumplimiento es
+\emph{estructural} si ocurre aun con los montos de $t_0$, es decir, por el solo paso del tiempo, y \emph{de
+mercado} si se debe a la variación de los valores.
+
+\paragraph{Variantes de comparación.} La cartera de mínima varianza resuelve, con las mismas restricciones y
+escenarios, el programa cuadrático
+\[
+  \min_{x,\,y,\,\Delta^\pm}\ \sum_s p_s\big(\Delta\PN_s - \E[\Delta\PN]\big)^2
   \quad\text{s.a.}\quad \E[\Delta\PN] - TC \ge \E[\Delta\PN^*] - TC^*,
-\end{equation}
-donde el lado derecho es el resultado esperado neto de costos de la cartera óptima de \eqref{eq:lp-obj}.
+\]
+donde el lado derecho corresponde a la solución de \eqref{eq:lp-obj}. La variante de vencimientos al horizonte
+agrega a \eqref{eq:lp-pesos} los grupos de vencimiento con la pertenencia $M_k(t_H)$, y su costo es la
+diferencia de valor óptimo frente al problema base.
 
-\paragraph{Vencimientos al horizonte.} Se agregan a \eqref{eq:lp-pesos} los grupos MATURITY con la pertenencia
-medida desde $t_H$ y los montos de $t_0$ (\texttt{horizonMaturityLimits: ENFORCE}); el informe reporta el costo de
-esta variante en el objetivo.
+\subsection{Supuestos y decisiones de modelación}\label{app:supuestos}
+\paragraph{Alcance de la decisión.}
+\begin{enumerate}
+  \item \emph{Decisión estática.} Se decide una vez en $t_0$ y no se rebalancea dentro del año. Es lo que pide el
+  caso y mantiene el problema en una sola etapa.
+  \item \emph{Solo los instrumentos existentes.} Se optimizan los seis activos y los seis pasivos; la deuda nueva
+  no entra, porque el caso asignado se limita a reestructurar el balance existente.
+  \item \emph{Escala.} Cambiar $z_k$ equivale a comprar o emitir más del mismo contrato, con el mismo spread y sin
+  impacto de precio. Este supuesto hace que $r_{k,s}$ no dependa de $z_k$ y el problema sea lineal.
+  \item \emph{Sin posiciones cortas}: $z_k \ge 0$, porque el caso no ofrece esa alternativa.
+\end{enumerate}
+
+\paragraph{Objetivo y costos.}
+\begin{enumerate}\setcounter{enumi}{4}
+  \item \emph{Riesgo como penalización.} El CVaR entra en el objetivo ponderado por $\lambda$, como pide el
+  enunciado. Imponerlo como restricción, o maximizar el cociente $\E/\CVaR$, genera la misma frontera eficiente;
+  la frontera completa se obtiene variando $\lambda$.
+  \item \emph{Costo simétrico y único.} Solo se aplica el costo de reestructuración, a subidas y bajadas por igual.
+  Sumarle el costo de prepago a las reducciones de pasivos cobraría dos veces el mismo movimiento.
+  \item \emph{Costos fuera de la pérdida.} $TC$ es cierto y se paga en $t_0$: se resta una sola vez en el objetivo y
+  no entra en $L_s$, de modo que el CVaR mide solo el riesgo de mercado.
+  \item \emph{Límites en $t_0$.} Las restricciones se imponen sobre la estructura que sale de la decisión, como
+  dice el enunciado, y en $t_H$ se reportan. Imponerlas también al horizonte obligaría a cubrir la deriva de
+  mercado de todos los límites; en su lugar se cuantifica el costo de exigir los vencimientos en $t_H$.
+\end{enumerate}
+
+\paragraph{Escenarios.}
+\begin{enumerate}\setcounter{enumi}{8}
+  \item \emph{Bloques de seis meses.} Los cambios mensuales son muy persistentes: la autocorrelación de orden uno
+  es 0.94 en la tasa ON en soles, 0.96 en la de dólares, 0.91 en la renta variable y 0.56 en el tipo de cambio.
+  Doce meses independientes subestimarían la varianza anual. Dos bloques de seis meses conservan esa persistencia
+  y ofrecen $(T-b+1)^2$ combinaciones, frente a solo $T-11$ con un bloque único de doce meses.
+  \item \emph{Centrar las ventanas, no los meses.} Sin vuelta circular, los meses de los extremos aparecen en menos
+  ventanas, y centrar los meses dejaría a $\Delta F_s$ con media distinta de $\mu$. Unir el fin de la muestra con
+  su inicio (remuestreo circular) crearía saltos artificiales.
+  \item \emph{Deriva mixta.} Centrar todo eliminaría la prima de la renta variable y la del tipo de cambio, y la renta
+  variable quedaría en su mínimo permitido. Mantener la media histórica de las tasas proyectaría el ciclo alcista
+  de 2021--2025. Por eso las tasas se centran, el tipo de cambio sigue la paridad de tasas y la renta variable
+  conserva su media histórica.
+  \item \emph{Ajuste del tipo de cambio a la forward.} Sin el desplazamiento $c$, la convexidad de $e^{X}$ y el error
+  de muestreo de la media dejarían el tipo de cambio esperado por encima de la forward, a favor de estar largo en
+  dólares.
+  \item \emph{Tramos del estrés.} El enunciado no define los nodos del tramo corto ni del largo; se toman
+  $\{\text{ON}, 1\}$ y $\{10, 20\}$. Los desplazamientos de cada tramo se interpretan como cambios que reemplazan al
+  paralelo, no como niveles de tasa: leídos como nivel, un 4\,\% casi no movería el tramo corto en soles, lo que
+  contradice la descripción del escenario.
+  \item \emph{Transición por $t\,\delta(t)$.} Un escalón entre tramos, o promediar los desplazamientos en los nodos
+  intermedios, produce forwards que se mueven en sentido contrario a las tasas. Interpolar $t\,\delta(t)$ reparte el
+  cambio de forward que imponen los datos de manera pareja.
+  \item \emph{Forwards implícitas y sin piso.} Las forwards se derivan de la curva cero desplazada para que el
+  mercado de cada escenario no admita arbitraje entre plazos. No se impone un piso a las tasas, para no
+  truncar la distribución; la tasa mínima de cada escenario se revisa como control.
+\end{enumerate}
+
+\paragraph{Valorización.}
+\begin{enumerate}\setcounter{enumi}{15}
+  \item \emph{Revalorización completa.} Los resultados se obtienen revalorizando los flujos de cada instrumento, no
+  con duración o DV01, para capturar la convexidad y los efectos no paralelos de los escenarios.
+  \item \emph{Trayectoria lineal.} Una misma regla para la caja, los cupones flotantes y la conversión de flujos en
+  dólares evita tratar los activos y los pasivos de forma asimétrica dentro del año.
+  \item \emph{Cupón flotante al nivel del factor de referencia.} Cada cupón paga el valor del factor que indexa el
+  contrato en su fecha de fijación, más el spread contractual. Es la convención con la que se construyó la
+  proyección base del caso. La alternativa, la forward implícita del período de cada cupón, se evalúa como
+  sensibilidad (Sección~\ref{sec:sensibilidad}).
+  \item \emph{Spread constante.} No hay datos sobre la dinámica de los spreads de crédito; el spread se calibra
+  al valor de mercado en $t_0$ y se mantiene fijo.
+  \item \emph{Sin reinversión ni dividendos.} Los flujos del año quedan en caja sin rendir intereses, y la renta
+  variable no paga dividendos. Ambos efectos son de segundo orden frente a los shocks del escenario.
+\end{enumerate}
+
+\paragraph{Alternativas descartadas.} Remuestreo independiente mes a mes (subestima la varianza anual);
+remuestreo estacionario con bloques de largo aleatorio (más difícil de verificar); simulación paramétrica
+desde la covarianza, que es singular porque las forwards se derivan de las curvas cero; el estrés como
+restricción dura; costos fijos de transacción, que requerirían variables binarias; y el CVaR a varios
+niveles de confianza a la vez.
