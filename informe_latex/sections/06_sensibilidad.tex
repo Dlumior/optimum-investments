@@ -1,5 +1,11 @@
 \section{Validación y análisis de sensibilidad}\label{sec:sensibilidad}
 
+El modelo se validó con 170 pruebas automáticas (Anexo~\ref{app:pruebas}), y ocho equivalentes corren en
+el notebook de entrega. Las principales reproducen la solución analítica de un caso simple (objetivo 0.112),
+verifican que el CVaR del programa lineal coincide con el CVaR \emph{ex post}, que un alza de 500 pb en la
+tasa corta desplaza la cartera hacia instrumentos cortos y que los límites contradictorios se informan como
+\texttt{INFEASIBLE}. El notebook de entrega reproduce además \texttt{output.json} sin diferencias.
+
 \subsection{Shocks instantáneos de tasas}\label{subsec:shocks-tasas}
 Se aplicaron shocks paralelos de $\pm 200$ pb en $t_0$, sin reoptimizar. Ninguna de las tres carteras es
 neutral a tasas (Cuadro~\ref{tab:sens-tasas}). La cartera óptima gana \PEN10.05 mm con un alza conjunta de
@@ -33,8 +39,8 @@ base $x^*$ sin reoptimizar con el modelo de cada variante (Cuadro~\ref{tab:sens-
 
 El nivel de costos de transacción (S3) es un supuesto de primer orden. Sin costos, la rotación sube de
 \PEN960 mm a \PEN1{,}433 mm (+49\,\%). Con la mitad de los costos, la cartera reoptimizada tiene un
-$\CVaR_{95\%}$ de \PEN2.10 mm y un resultado esperado neto de \PEN3.97 mm: supera a la base en las dos
-métricas. Con el doble o el cuádruple, la rotación baja 41--43\,\%, la cartera queda a unos \PEN400 mm de
+$\CVaR_{95\%}$ de \PEN2.10 mm, frente a \PEN7.71 mm de $x^*$ con esos mismos costos, y cede solo \PEN0.23 mm
+de resultado esperado neto (\PEN3.97 mm frente a \PEN4.20 mm). Con el doble o el cuádruple, la rotación baja 41--43\,\%, la cartera queda a unos \PEN400 mm de
 $x^*$ y el CVaR sube a \PEN8.7--9.1 mm. En el fondo, el CVaR de la cartera base depende de cuánta cobertura
 permiten pagar los costos calibrados.
 

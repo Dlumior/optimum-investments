@@ -25,6 +25,15 @@ L02 baja a \PEN41.6 mm y el préstamo en dólares L06 a \PEN48.4 mm. Los límite
 caja y renta fija, los topes individuales de A02 y L01 y la no negatividad de A04. La mezcla fija/flotante
 de los pasivos (45.2\,\%/54.8\,\%) queda al borde de sus límites, pero sin tocarlos.
 
+La lógica se ve instrumento por instrumento. L01 es el pasivo más barato (costo esperado de 5.73\,\%,
+volatilidad de 0.80\,\%) y, por su plazo corto, casi no se revaloriza en C\_STRESS\_2 (4.7\,\%), mientras
+que L02 y L06 cuestan 7.47\,\% y 6.68\,\% y en ese escenario llegan a 14.2\,\% y 20.0\,\%. En los activos,
+A02 tiene el mayor rendimiento esperado de la renta fija (6.84\,\%) y gana 15.9\,\% en C\_STRESS\_2, cuando
+bajan las tasas en soles: cubre el escenario que domina la cola. A04 rinde lo mismo que A05 (5.98\,\% contra
+6.07\,\%) y, aunque gana más en los estreses, es más volátil en el remuestreo, que pesa el 95\,\% (6.75\,\%
+contra 5.64\,\%). La renta variable es la más volátil (12.1\,\%) y pierde 8\,\% en C\_STRESS\_2; con la renta
+fija en su máximo, el 25\,\% restante de los activos va a caja hasta su tope y el resto a renta variable.
+
 \input{tables/posiciones_optimas}
 \input{tables/pesos_optimo}
 
@@ -54,6 +63,13 @@ renta variable a 16\,\%, y en $\lambda = 0.25$ la renta variable ya llega a su p
 $\lambda = 0.5$ el resultado esperado neto no pasa de \PEN0.98 mm; desde $\lambda = 2$ es negativo, y en
 $\lambda = 5$ llega a \mbox{$-$\PEN0.84} mm, señal de que evitar más cola cuesta más que el resultado
 esperado que queda.
+
+La recomendación usa $\lambda = 0.25$, la referencia del caso, pero la frontera muestra el precio de más
+protección. Pasar a $\lambda = 0.5$ baja el $\CVaR_{95\%}$ de \PEN7.71 mm a \PEN2.62 mm y el resultado
+esperado neto de \PEN2.84 mm a \PEN0.98 mm: unos \PEN0.36 mm de resultado por cada \PEN1 mm de CVaR. Casi
+todo ese costo es rotación adicional, pagada una sola vez (los costos suben de \PEN2.72 mm a \PEN6.15 mm);
+el resultado esperado bruto incluso sube. Un comité que valore \PEN1 mm de CVaR en más de \PEN0.36 mm de
+resultado esperado debería elegir $\lambda = 0.5$; con el apetito de riesgo del caso, conviene 0.25.
 
 Al subir $\lambda$, los pasivos en dólares pasan de 20--30\,\% a 43\,\%, y la razón es de calce de monedas.
 La posición neta en dólares (activos menos pasivos en USD) baja de \PEN170--209 mm con $\lambda \le 0.1$ a

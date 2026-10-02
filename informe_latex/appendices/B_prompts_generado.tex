@@ -23,7 +23,7 @@
 \item[P06 · 2026-09-28 · Modelo de riesgo (risk.py) y notebook 03] \hfill\\
 \textit{Prompt:} \enquote{vamos con el plan de risk}; \enquote{estoy de acuerdo con las recomendaciones}; \enquote{continuemos con la implementación}.\\
 \textit{Resultado:} Aceptado con corrección\\
-\textit{Detalle:} Plan, decisiones D-14 a D-16, 29 pruebas y \texttt{risk.py} (504 escenarios). La IA detectó un sesgo de media en su bootstrap (E04) y se centraron las ventanas (D-09 v3). Posición inicial: VaR95 = 42.5, CVaR95 = 50.1 S/ mm.\\
+\textit{Detalle:} Plan, decisiones D-14 a D-16, 29 pruebas y \texttt{risk.py} (504 escenarios). La IA detectó un sesgo de media en su bootstrap (E04) y se centraron las ventanas (D-09 v3). Posición inicial, antes de la corrección D-24 (P14): VaR95 = 42.5 y CVaR95 = 50.1 S/ mm.\\
 \item[P07 · 2026-09-28 · Auditoría de la capa (iii) y correcciones] \hfill\\
 \textit{Prompt:} \enquote{lanza la auditoria}; elección de la regla de transición del estrés (dos rondas).\\
 \textit{Resultado:} Aceptado con corrección\\
@@ -47,7 +47,7 @@
 \item[P12 · 2026-09-28 · Sensibilidades S1-S9: formulación, pruebas primero e implementación] \hfill\\
 \textit{Prompt:} \enquote{propón las sensibilidades}; \enquote{dale, implementa}.\\
 \textit{Resultado:} Aceptado (el alumno eligió evaluación instantánea para ±200 pb, switch de cupones, salida separada y estrés espejo)\\
-\textit{Detalle:} Nueve sensibilidades (S1–S9, D-21, D-22) con 23 pruebas antes del código. S2 solo reporta cotas de peso porque el dual del presupuesto no coincide con subir \$B\_A\$.\\
+\textit{Detalle:} Nueve sensibilidades (S1–S9, D-21, D-22) con 23 pruebas antes del código. S2 solo reporta cotas de peso porque el dual del presupuesto no coincide con subir \texttt{B\_A}.\\
 \item[P13 · 2026-09-28 · Notebook 05 (resultados y sensibilidad)] \hfill\\
 \textit{Prompt:} \enquote{haz el commit y vamos con el notebook 05\_resultados\_sensibilidad}.\\
 \textit{Resultado:} Aceptado (lectura pendiente de validación del alumno)\\
