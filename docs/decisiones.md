@@ -250,3 +250,20 @@ el estrés y los demás factores no cambian. Con deriva FX `ZERO` o `HISTORICAL`
 Alternativa descartada: solo restar σ²/2 (deja el error de muestreo de la media).
 Además (auditoría final I-1): `cleaning.clean_stress_scenarios` ya no exige Σp = 0.05; esa validación la hace
 `risk.build_scenarios` contra `caseParameters.stressProbability`.
+
+## D-25 · 2026-09-30 · Notebook de entrega autocontenido generado desde `src/`
+El zip de entrega solo lleva el informe, `input.json`, `output.json` y un notebook que recibe el input y produce el
+output; el notebook no puede importar `src/optimum/`. **Decisión (alumno):** `scripts/build_notebook_entrega.py`
+genera `notebooks/entrega/OP01_optimum_investments.ipynb` copiando cada módulo del modelo **sin cambios** en una celda
+`%%writefile` hacia un paquete `optimum` temporal que se agrega a `sys.path`. Así los imports internos funcionan
+igual que en el proyecto y el código del notebook es el mismo que prueban los tests. De `cleaning.py` y
+`io/json_contract.py` solo se extraen (por AST) las constantes de factores, `compute_factor_changes`, `_clean` y las
+validaciones: lo demás depende del Excel y de parquet.
+- El input se toma de `INPUT_PATH` (por defecto `input.json` junto al notebook); si no existe, se pide con `input()`.
+- `RUN_SENSITIVITY = False` por defecto: S1–S9 tardan 6–8 min y no forman parte de `output.json`.
+- `tests/test_notebook_entrega.py` exige que el notebook esté al día con `src/` y (marker `slow`) que, ejecutado en
+  una carpeta aislada, reproduzca `data/json/output.json` (salvo el tiempo del solver).
+- `make notebook-entrega` lo regenera y ejecuta en `entrega/build/`; `make entrega` arma el zip con los cuatro
+  archivos. El zip con todo el proyecto queda como `make entrega-completa`.
+Alternativa descartada: reescribir los imports para pegar todo en un solo espacio de nombres (frágil: hay nombres
+repetidos entre módulos, como `_check` o `coupon_rule`).

@@ -84,6 +84,11 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Resultado:** Corregido (el alumno eligió corregir la deriva FX en el código en vez de documentarla como supuesto)
 **Detalle:** Dos subagentes de solo lectura revisaron el modelo y el informe por separado. Según el auditor, el código es correcto (reprodujo el objetivo de output.json con 162 tests en verde), pero encontró un parámetro del caso escrito en `cleaning.py` (Σp de estrés = 0.05) y un sesgo de la deriva FX (E08). El revisor calculó que el cuerpo del informe ocupaba 13 páginas y encontró cifras mal leídas (E09). Se corrigió la deriva FX con tests primero (D-24), se eliminó el 0.05, se regeneraron output.json y sensitivity.json, las tablas se pasaron al español con el cuadro de pesos por moneda y tipo, y se reescribió el texto con las cifras nuevas.
 
+## P15 · 2026-09-30 · Notebook de entrega autocontenido
+**Prompt:** "Lo que realmente se va a subir como zip va a ser el informe, el input.json, el output.json y un notebook que reciba el input lo procese y nos de el output. Para ello condensa todo lo necesario del proyecto en un nuevo notebook..."
+**Resultado:** Aceptado
+**Detalle:** La IA planteó tres decisiones y el alumno eligió: ruta `INPUT_PATH` con `input()` si no existe, notebook generado desde `src/` por un script (no copiado a mano) y sensibilidades S1–S9 opcionales. `scripts/build_notebook_entrega.py` copia los módulos sin cambios en celdas `%%writefile` hacia un paquete temporal (D-25). El notebook muestra los datos de entrada (balance, curvas, FX y equity, flujos, correlaciones), el modelo de riesgo y los resultados (posiciones, métricas, ΔPN, límites, barrido de λ). Ejecutado en una carpeta aislada, reprodujo `data/json/output.json` (solo cambió el tiempo del solver). Una prueba exige que el notebook esté al día con `src/` y `make entrega` arma el zip con los cuatro archivos.
+
 # Errores y simplificaciones de la IA detectados (mínimo 2 para la entrega)
 
 <!-- ## E01 · fecha · Tema

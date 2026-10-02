@@ -49,3 +49,7 @@ extend-include = ["*.ipynb"]
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "NPY"]
 ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Notebook de entrega: el paquete temporal se agrega a sys.path antes de importarlo (D-25)
+"notebooks/entrega/*.ipynb" = ["E402"]
