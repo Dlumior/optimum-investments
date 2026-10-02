@@ -21,8 +21,20 @@ ESC = {
 }
 
 
-def esc(s: str) -> str:
+def _esc_plain(s: str) -> str:
     return "".join(ESC.get(c, c) for c in s)
+
+
+def esc(s: str) -> str:
+    """Escapa LaTeX; `código` -> \\texttt y "texto" -> \\enquote (las comillas rectas salen como ” en LuaLaTeX)."""
+    out = []
+    for part in re.split(r"(`[^`]+`)", s):
+        if part.startswith("`") and part.endswith("`") and len(part) > 2:
+            out.append(r"\texttt{" + _esc_plain(part[1:-1]) + "}")
+        else:
+            part = _esc_plain(part)
+            out.append(re.sub(r'"([^"]*)"', r"\\enquote{\1}", part))
+    return "".join(out)
 
 
 text = re.sub(r"<!--.*?-->", "", SRC.read_text(encoding="utf-8"), flags=re.S)
@@ -33,6 +45,9 @@ for title, body in entries:
     fields = dict(re.findall(r"\*\*(\w+):\*\*\s*(.+)", body))
     lines.append(rf"\item[{esc(title.strip())}] \hfill\\")
     for key in ("Prompt", "Resultado", "Detalle"):
+        if key == "Detalle" and "Resumen" in fields:
+            lines.append(rf"\textit{{Detalle:}} {esc(fields['Resumen'].strip())}\\")
+            continue
         if key in fields:
             lines.append(rf"\textit{{{key}:}} {esc(fields[key].strip())}\\")
 lines.append(r"\end{description}")
