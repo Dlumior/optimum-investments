@@ -1,12 +1,27 @@
 \section{Instrucciones de ejecución}\label{app:instrucciones}
-Requiere Python $\ge$ 3.11 y \texttt{uv}; el informe se compila con LuaLaTeX (\texttt{latexmk}).
+\newcommand{\repourl}{https://github.com/Dlumior/optimum-investments}
+La entrega consta de cuatro archivos: este informe, \texttt{input.json}, \texttt{output.json} y el notebook
+\texttt{OP01\_\allowbreak optimum\_\allowbreak investments.ipynb}. El notebook es autocontenido: incluye el código fuente
+del modelo (curvas, valorización por flujos, escenarios, CVaR y optimizador) y una sección de pruebas mínimas, y no
+requiere instalar el paquete del proyecto.
+
+Requiere Python $\ge$ 3.11 con \texttt{numpy}, \texttt{pandas}, \texttt{scipy}, \texttt{cvxpy}, \texttt{highspy},
+\texttt{clarabel} y \texttt{matplotlib}.
 \begin{lstlisting}[language=bash]
-make setup        # .venv con el paquete en modo editable
-make all          # Excel -> tablas limpias -> input.json -> output.json
-make sensitivity  # sensibilidades S1-S9 -> sensitivity.json (5-8 min)
-make test         # pruebas automaticas (Anexo C)
-make notebooks    # ejecuta los notebooks: tablas y figuras del informe
-make report       # compila el informe
+pip install numpy pandas scipy cvxpy highspy clarabel matplotlib
+jupyter lab OP01_optimum_investments.ipynb
 \end{lstlisting}
-Sin \texttt{make}, los mismos pasos son \texttt{python -m optimum \{data,json,run,sensitivity\}}. Todos los
-parámetros (límites, $\lambda$, $\alpha$, costos, semilla y escenarios) se leen de \texttt{data/json/input.json}.
+\begin{enumerate}
+  \item Dejar \texttt{input.json} en la misma carpeta que el notebook (o indicar su ruta en \texttt{INPUT\_PATH}).
+  \item Ejecutar todas las celdas (\emph{Run All}); toma entre 2 y 4 minutos, pruebas incluidas. Con
+        \texttt{RUN\_SENSITIVITY = True} se añaden unos 6--8 minutos para las sensibilidades.
+  \item El resultado se escribe en \texttt{output.json}, junto al notebook.
+  \item La Sección~8 del notebook corre ocho pruebas reproducibles: el caso simple resuelto a mano, el CVaR del LP
+        frente al \emph{ex post}, presupuestos y límites, el shock de $+500$~pb, restricciones infactibles,
+        parámetros leídos del input, monotonía en $\lambda$ y calibración. Muestra una tabla con el resultado y
+        se detiene si alguna falla.
+\end{enumerate}
+Todos los parámetros (límites, $\lambda$, $\alpha$, costos, semilla y escenarios) se leen de \texttt{input.json}.
+
+El código completo del proyecto (paquete \texttt{src/optimum}, batería completa de pruebas del Anexo~\ref{app:pruebas},
+datos de origen, notebooks de exploración y fuentes de este informe) está en el repositorio \url{\repourl}.

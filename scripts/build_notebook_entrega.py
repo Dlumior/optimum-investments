@@ -137,7 +137,7 @@ Rockafellar–Uryasev sobre escenarios a un año (bootstrap por bloques + estré
 **Cómo usarlo**
 1. Deje `input.json` en la misma carpeta que este notebook (o escriba su ruta en `INPUT_PATH`; si no existe,
    el notebook la pide).
-2. *Run All*. Tarda 1–3 minutos; con `RUN_SENSITIVITY = True`, unos 6–8 minutos más.
+2. *Run All*. Tarda 2–4 minutos (pruebas incluidas); con `RUN_SENSITIVITY = True`, unos 6–8 minutos más.
 3. El resultado queda en `OUTPUT_PATH` (por defecto `output.json`, junto al notebook).
 
 **Requisitos:** Python ≥ 3.11 con `numpy pandas scipy cvxpy highspy clarabel matplotlib`
@@ -652,6 +652,240 @@ print(f"Modo de vencimientos al horizonte: {horizon_mode(out['horizonMaturityLim
 breaches[breaches["Prob. (%)"] > 0].round(3)
 """
 
+TESTS_SETUP = """
+import copy
+
+TOL = 1e-6
+test_results = []
+
+
+def run_test(name: str, what: str, fn) -> None:
+    # Ejecuta una prueba (función sin argumentos con asserts) y guarda el resultado; no detiene el notebook
+    t_start = time.perf_counter()
+    try:
+        detail = fn() or ""
+        ok = True
+    except Exception as exc:  # noqa: BLE001 - se reporta cualquier falla en la tabla
+        detail, ok = f"{type(exc).__name__}: {exc}", False
+    test_results.append({"Prueba": name, "Qué verifica": what, "Resultado": "pasa" if ok else "FALLA",
+                         "Detalle": detail, "s": round(time.perf_counter() - t_start, 1)})
+    print(f"[{'pasa' if ok else 'FALLA'}] {name} · {detail}")
+
+
+def with_changes(fn) -> dict:
+    # Copia profunda de `doc` con una modificación; el input original no se toca
+    d = copy.deepcopy(doc)
+    fn(d)
+    return d
+
+
+def set_weight(d: dict, side: str, dimension: str, category: str, **vals) -> None:
+    rows = [w for w in d["constraints"]["weights"] if (w["side"], w["dimension"], w["category"]) == (side, dimension, category)]
+    assert rows, f"no existe el grupo {side}/{dimension}/{category} en input.json"
+    for w in rows:
+        w.update(vals)
+"""
+
+TEST_TOY = """
+# Balance de juguete: caja C1 y bono B1 (activos, B_A = 100) y un pasivo L1 fijo en 80; cinco escenarios.
+# La única decisión es la caja c ∈ [10, 60]. La cola del 10 % son S4 y S5, así que, a mano:
+#   E[ΔPN] = 2.88 − 0.0228 c,  CVaR_0.90 = 7.6 − 0.082 c,  TC = 0.002 |c − 30|.
+# Con λ = 0.5 la pendiente para c > 30 es −0.0248 + 0.041 > 0  ⇒  c* = 60 (tope de caja).
+#   E = 1.512, CVaR = 2.68, TC = 0.06, objetivo = 1.512 − 0.5·2.68 − 0.06 = 0.112.
+TOY_SCEN = ["S1", "S2", "S3", "S4", "S5"]
+TOY_PROBS = np.array([0.40, 0.30, 0.20, 0.06, 0.04])
+TOY_R_BOND = np.array([0.08, 0.06, 0.04, -0.02, -0.10])
+TOY_BOND_FLOWS = np.array([0.05, 0.05, 0.05, 0.05, 0.0])
+
+
+def toy_doc(min_cash: float = 8.0) -> dict:
+    def inst_(iid, side, typ, mv, maturity):
+        return {"id": iid, "side": side, "name": iid, "instrument_type": typ, "currency": "PEN",
+                "market_value_pen": mv, "notional_native": mv, "fixed_coupon": None, "frequency": None,
+                "maturity": maturity, "reference_factor": None, "spread": None, "reset_months": None,
+                "other_market_ref": None, "notes": ""}
+
+    weights = [("ASSET", "TYPE", "CASH", 0.10, 0.60), ("ASSET", "TYPE", "FIXED_INCOME", 0.40, 0.90),
+               ("ASSET", "CURRENCY", "PEN", 0.0, 1.0), ("LIABILITY", "CURRENCY", "PEN", 0.0, 1.0),
+               ("LIABILITY", "RATE_TYPE", "FIXED", 0.0, 1.0)]
+    return {
+        "schemaVersion": "1.0", "caseId": "TOY", "valuationDate": "2025-12-31", "horizonDate": "2026-12-31",
+        "baseCurrency": "PEN",
+        "instruments": [inst_("C1", "ASSET", "CASH", 30.0, None), inst_("B1", "ASSET", "BOND_FIXED", 70.0, "2030-12-31"),
+                        inst_("L1", "LIABILITY", "BOND_FIXED", 80.0, "2030-12-31")],
+        "constraints": {
+            "weights": [{"index": k, "side": s, "dimension": dm, "category": c, "min_weight": lo, "max_weight": hi,
+                         "note": ""} for k, (s, dm, c, lo, hi) in enumerate(weights)],
+            "common": {"minNetWorth": 15.0, "maxLiabilitiesToAssets": 0.85, "minCash": min_cash, "assetBudget": 100.0,
+                       "liabilityBudget": 80.0, "allowShort": False},
+        },
+        "transactionCosts": {
+            "C1": {"side": "ASSET", "restructuring_cost": 0.0, "reduction_prepayment_cost": 0.0},
+            "B1": {"side": "ASSET", "restructuring_cost": 0.002, "reduction_prepayment_cost": 0.0},
+            "L1": {"side": "LIABILITY", "restructuring_cost": 0.01, "reduction_prepayment_cost": 0.01},
+        },
+        "fundingAlternatives": [], "stressScenarios": [],
+        "caseParameters": {"horizonDate": "2026-12-31", "cvarAlpha": 0.90, "riskAversionLambda": 0.5,
+                           "lambdaGrid": [0.0, 0.5], "riskMeasure": "CVAR", "bootstrapCount": 4,
+                           "bootstrapProbability": 0.96, "stressProbability": 0.04, "seed": 1},
+    }
+
+
+def toy_components():
+    # Rendimientos por S/ (reval + flujos): caja 3 %, bono TOY_R_BOND, pasivo 3 % en todos los escenarios
+    ids = ["C1", "B1", "L1"]
+    reval = pd.DataFrame([np.full(5, 0.03), TOY_R_BOND - TOY_BOND_FLOWS, np.full(5, 0.03 - 0.04)], index=ids,
+                         columns=TOY_SCEN)
+    flows = pd.DataFrame([np.zeros(5), TOY_BOND_FLOWS, np.full(5, 0.04)], index=ids, columns=TOY_SCEN)
+    scen_ = risk.ScenarioSet(ids=list(TOY_SCEN), deltas=pd.DataFrame(0.0, index=TOY_SCEN, columns=risk.FACTORS),
+                             probs=TOY_PROBS.copy(), kind=["bootstrap"] * 4 + ["stress"])
+    return reval, flows, scen_
+
+
+def test_toy_by_hand():
+    res = opt.solve_data(opt.prepare(toy_doc(), components=toy_components()))
+    assert res["status"] == "OPTIMAL", res["status"]
+    got = {k: float(res["positions"][k]) for k in ["C1", "B1", "L1"]}
+    for k, v in {"C1": 60.0, "B1": 40.0, "L1": 80.0}.items():
+        assert abs(got[k] - v) < TOL, (k, got[k])
+    assert abs(res["objective"] - 0.112) < TOL, res["objective"]
+    assert abs(res["cvar_lp"] - 2.68) < TOL, res["cvar_lp"]
+    assert abs(res["transaction_cost"] - 0.06) < TOL, res["transaction_cost"]
+    return f"caja {got['C1']:.4f}, bono {got['B1']:.4f}, objetivo {res['objective']:.6f} (a mano 0.112)"
+
+
+run_test("1. Caso simple resuelto a mano", "Juguete de 2 activos, 1 pasivo y 5 escenarios: posiciones, CVaR, TC "
+         "y objetivo iguales a la solución analítica (tol. 1e-6)", test_toy_by_hand)
+"""
+
+TEST_REAL = """
+def test_lp_cvar_ex_post():
+    # El CVaR del LP (ζ + Σ p u / (1 − α)) coincide con el CVaR recalculado ex post, en el óptimo y en el barrido
+    ev_opt = opt.evaluate(data, pos["optimal"])
+    gaps = [abs(ev_opt["cvar"] - out["metrics"][f"cvar{tag}Loss"])]
+    for lam_k in doc["caseParameters"]["lambdaGrid"]:
+        if lam_k > 0:
+            res = opt.solve_data(data, lam=lam_k)
+            gaps.append(abs(res["cvar_lp"] - opt.evaluate(data, res["positions"])["cvar"]))
+    assert max(gaps) < 1e-5, gaps
+    return f"máx. diferencia {max(gaps):.1e} S/ mm en {len(gaps)} soluciones"
+
+
+def test_budgets_and_limits():
+    # Presupuestos, no negatividad y todos los límites del input en la solución óptima
+    x = pos["optimal"]
+    side = inst["side"].reindex(x.index)
+    gap_a = abs(x[side == "ASSET"].sum() - com["assetBudget"])
+    gap_l = abs(x[side == "LIABILITY"].sum() - com["liabilityBudget"])
+    assert gap_a < TOL and gap_l < TOL, (gap_a, gap_l)
+    assert (x >= -TOL).all(), x[x < -TOL]
+    bad = [c["name"] for c in out["constraintChecks"] if not c["ok"]]
+    assert not bad, bad
+    return f"Σ activos = {com['assetBudget']:g}, Σ pasivos = {com['liabilityBudget']:g}, mín. posición {x.min():.2e}, " \\
+           f"{len(out['constraintChecks'])} límites ok"
+
+
+def test_short_rate_shock():
+    # +500 pb en los nodos cortos (stressTenors.short) de PEN y USD en todos los escenarios: la exposición neta a la
+    # tasa corta (caja + activos indexados al tramo corto − pasivos indexados a él) debe subir
+    short_nodes = doc["caseParameters"]["stressTenors"]["short"]["nodes"]
+    short_factors = [f for f in risk.FACTORS if "_SPOT_" in f and f.split("_SPOT_")[1] in short_nodes]
+    segs = {s["id"] for s in doc["curveSegments"] if s["fromNode"] in short_nodes and s["toNode"] in short_nodes}
+    ref_seg = inst["reference_factor"].map(lambda r: r.split("_")[-1] if isinstance(r, str) else None)
+    short = (inst["instrument_type"] == "CASH") | ref_seg.isin(segs)
+    deltas = scen.deltas.copy()
+    deltas[short_factors] += 0.05
+    reval_s, flows_s = risk.scenario_components(doc, deltas)
+    scen_s = risk.ScenarioSet(scen.ids, deltas, scen.probs, scen.kind)
+    shocked = opt.solve_data(opt.prepare(doc, components=(reval_s, flows_s, scen_s)))
+    assert shocked["status"] == "OPTIMAL", shocked["status"]
+
+    def agg(x, s):
+        return float(x.reindex(inst.index[short & (inst["side"] == s)]).sum())
+
+    a0, l0 = agg(pos["optimal"], "ASSET"), agg(pos["optimal"], "LIABILITY")
+    a1, l1 = agg(shocked["positions"], "ASSET"), agg(shocked["positions"], "LIABILITY")
+    assert a1 >= a0 - TOL and l1 <= l0 + TOL, (a0, a1, l0, l1)
+    assert (a1 - l1) >= (a0 - l0) + 1.0, (a0 - l0, a1 - l1)
+    return f"activos cortos {a0:.1f} → {a1:.1f}; pasivos cortos {l0:.1f} → {l1:.1f} S/ mm"
+
+
+def test_infeasible():
+    # Límites contradictorios: el programa informa INFEASIBLE, sin excepción y con un output que cumple el contrato
+    cash_max = next(w["max_weight"] for w in doc["constraints"]["weights"]
+                    if (w["side"], w["dimension"], w["category"]) == ("ASSET", "TYPE", "CASH"))
+    cases = {
+        "caja mínima > caja máxima": lambda d: d["constraints"]["common"].update(
+            minCash=1.25 * cash_max * com["assetBudget"]),
+        "mínimos de moneda suman 110 %": lambda d: (set_weight(d, "ASSET", "CURRENCY", "PEN", min_weight=0.90),
+                                                    set_weight(d, "ASSET", "CURRENCY", "USD", min_weight=0.20)),
+    }
+    for label, mutate in cases.items():
+        bad = with_changes(mutate)
+        res = opt.solve(bad, components=comps)
+        assert res["status"] == "INFEASIBLE", (label, res["status"])
+        assert validate_output(res) == [], (label, validate_output(res))
+    toy = opt.solve_data(opt.prepare(toy_doc(min_cash=70.0), components=toy_components()))
+    assert toy["status"] == "INFEASIBLE" and toy["positions"] is None, toy["status"]
+    return f"{len(cases) + 1} casos → INFEASIBLE con output válido"
+
+
+def test_no_hardcoded_parameters():
+    # Cambiar datos de input.json cambia la solución: concentración máx. de activos 30 % y λ = 5
+    b_a = com["assetBudget"]
+    conc = with_changes(lambda d: set_weight(d, "ASSET", "CONCENTRATION", "SINGLE_POSITION", max_weight=0.30))
+    r1 = opt.solve_data(opt.prepare(conc, components=comps))
+    assets = inst.index[inst["side"] == "ASSET"]
+    assert r1["positions"][assets].max() <= 0.30 * b_a + TOL, r1["positions"][assets].max()
+    d1 = (r1["positions"] - pos["optimal"]).abs().max()
+    r2 = opt.solve_data(opt.prepare(with_changes(lambda d: d["caseParameters"].update(riskAversionLambda=5.0)),
+                                    components=comps))
+    d2 = (r2["positions"] - pos["optimal"]).abs().max()
+    assert d1 > 1.0 and d2 > 1.0, (d1, d2)
+    return f"concentración 30 %: máx. activo {r1['positions'][assets].max():.1f} (≤ {0.30 * b_a:g}); " \\
+           f"cambio máx. {d1:.1f} y {d2:.1f} (λ = 5) S/ mm"
+
+
+def test_lambda_monotonicity():
+    # Más aversión al riesgo ⇒ CVaR y E[ΔPN] − TC no crecen (preferencia revelada)
+    sw = [s for s in an["lambdaSweep"] if s["status"] in opt.OPTIMAL]
+    cvar = [s["metrics"][f"cvar{tag}Loss"] for s in sw]
+    net = [s["metrics"]["expectedNetWorthChange"] - s["metrics"]["transactionCosts"] for s in sw]
+    assert len(sw) == len(an["lambdaSweep"]), "hay λ sin solución óptima"
+    assert all(b <= a + 1e-5 for a, b in zip(cvar, cvar[1:], strict=False)), cvar
+    assert all(b <= a + 1e-5 for a, b in zip(net, net[1:], strict=False)), net
+    return f"CVaR {cvar[0]:.1f} → {cvar[-1]:.1f}; E − TC {net[0]:.2f} → {net[-1]:.2f} ({len(sw)} valores de λ)"
+
+
+def test_calibration():
+    # Los spreads calibrados reproducen el valor de mercado en t0
+    err = float(cal["Error (S/ mm)"].abs().max())
+    assert err < TOL, err
+    return f"máx. |V0 − mercado| = {err:.1e} S/ mm"
+
+
+run_test("2. CVaR del LP = CVaR ex post", "ζ + Σ p u/(1 − α) del LP coincide con el CVaR recalculado, en el óptimo "
+         "y en cada λ del barrido", test_lp_cvar_ex_post)
+run_test("3. Presupuestos y límites", "Σ activos = B_A, Σ pasivos = B_L, sin cortos y todos los límites cumplidos",
+         test_budgets_and_limits)
+run_test("4. Shock extremo de tasas (+500 pb)", "Con +500 pb en los nodos cortos de ambas curvas sube la exposición "
+         "neta a la tasa corta", test_short_rate_shock)
+run_test("5. Restricciones infactibles", "Límites contradictorios ⇒ INFEASIBLE sin excepción y output válido",
+         test_infeasible)
+run_test("6. Sin parámetros en el código", "Cambiar la concentración máxima o λ en el input cambia la solución",
+         test_no_hardcoded_parameters)
+run_test("7. Monotonía en λ", "Al subir λ, CVaR y E[ΔPN] − TC no crecen", test_lambda_monotonicity)
+run_test("8. Calibración de spreads", "V0 del modelo = valor de mercado en t0 (tol. 1e-6)", test_calibration)
+"""
+
+TESTS_SUMMARY = """
+tests_tab = pd.DataFrame(test_results).set_index("Prueba")
+display(tests_tab)
+n_fail = int((tests_tab["Resultado"] != "pasa").sum())
+print(f"{len(tests_tab) - n_fail} de {len(tests_tab)} pruebas pasan")
+assert n_fail == 0, f"{n_fail} pruebas fallan: revisar la tabla"
+"""
+
 SENS = """
 if RUN_SENSITIVITY:
     sens = sensitivity.run_all(doc)
@@ -836,7 +1070,27 @@ def build() -> nbf.NotebookNode:
             "### Incumplimientos al horizonte\n\nSe reportan, no se imponen: el balance se revaloriza en $t_H$."
         ),
         code(HORIZON),
-        md("## 8. Sensibilidades (opcional)\n\nSe corren solo si `RUN_SENSITIVITY = True`."),
+        md(
+            "## 8. Pruebas mínimas\n\n"
+            "Pruebas reproducibles del modelo, adaptadas de la batería del proyecto (`tests/`, pytest) para que "
+            "corran aquí sin instalar nada más. Usan el mismo `input.json` y no modifican `output.json`: cada "
+            "variante trabaja sobre una copia del input. Al final, una tabla resume el resultado y la celda falla "
+            "si alguna prueba no pasa. Tardan menos de un minuto."
+        ),
+        code(TESTS_SETUP),
+        md(
+            "### Caso simple resuelto a mano\n\nBalance de juguete con solución analítica (detalle en los "
+            "comentarios de la celda)."
+        ),
+        code(TEST_TOY),
+        md(
+            "### Pruebas sobre el input real\n\nCVaR del LP, presupuestos y límites, shock extremo de tasas, "
+            "restricciones infactibles, parámetros leídos del input, monotonía en λ y calibración."
+        ),
+        code(TEST_REAL),
+        md("### Resumen"),
+        code(TESTS_SUMMARY),
+        md("## 9. Sensibilidades (opcional)\n\nSe corren solo si `RUN_SENSITIVITY = True`."),
         code(SENS),
         code(SENS_S1),
         code(SENS_S2),
