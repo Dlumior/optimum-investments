@@ -462,7 +462,7 @@ if out["status"] == "OPTIMAL_INACCURATE":
     print("ADVERTENCIA: solución inexacta; revisar constraintChecks.")
 an = out["analysis"]
 ini, mv, hv = an["initialPosition"], an["meanVarianceBenchmark"], an["horizonMaturityVariant"]
-label_opt, label_mv, label_hv = f"Óptimo (λ = {lam:g})", "Media-varianza", "Venc. exigidos al horizonte"
+label_opt, label_mv, label_hv = f"Óptimo (λ = {lam:g})", "Mínima varianza", "Venc. exigidos al horizonte"
 """
 
 POSITIONS = """
@@ -904,7 +904,7 @@ if sens:
     cfg = cp_["sensitivities"]
     base_rule = cp_.get("floatingCouponRule") or "FLAT"
     rs = pd.DataFrame(sens["rateShocks"])
-    names = {"initial": "Inicial", "optimal": label_opt, "meanVariance": "Media-varianza"}
+    names = {"initial": "Inicial", "optimal": label_opt, "meanVariance": "Mínima varianza"}
     order = [s["id"] for s in cfg["rateShocks"]]
     s1 = (rs[rs["rule"] == base_rule].pivot(index="shock", columns="portfolio", values="netWorth")
           .reindex(index=order, columns=[c for c in names if c in set(rs["portfolio"])]).rename(columns=names))

@@ -95,7 +95,7 @@ $z_k / B_{l}$ tienen denominador constante y \eqref{eq:lp-pesos} es lineal.
   mejora el objetivo en $2 c_k \min(\Delta_k^+, \Delta_k^-)$. Por lo tanto
   $\Delta_k^+ + \Delta_k^- = |z_k - z_k^0|$ y $TC = \sum_k c_k\, |z_k - z_k^0|$.
   \item \emph{Linealidad en las posiciones.} El resultado por sol invertido $r_{k,s}$ no depende de $z_k$
-  (supuesto de escala, \ref{app:supuestos}), así que $\Delta\PN_s$ es lineal en $(x, y)$. El problema tiene
+  (supuesto de escala, Anexo~\ref{app:supuestos}), así que $\Delta\PN_s$ es lineal en $(x, y)$. El problema tiene
   $3|\mathcal{K}| + |\mathcal{S}| + 1$ variables y su conjunto factible es un poliedro. Si es no vacío, el
   objetivo está acotado porque las posiciones lo están por los presupuestos.
 \end{enumerate}
@@ -268,8 +268,8 @@ diferencia de valor óptimo frente al problema base.
 \paragraph{Objetivo y costos.}
 \begin{enumerate}\setcounter{enumi}{4}
   \item \emph{Riesgo como penalización.} El CVaR entra en el objetivo ponderado por $\lambda$, como pide el
-  enunciado. Imponerlo como restricción, o maximizar el cociente $\E/\CVaR$, genera la misma frontera eficiente;
-  la frontera completa se obtiene variando $\lambda$.
+  enunciado. Imponerlo como restricción ($\CVaR \le c$) y variar $c$ traza la misma frontera eficiente que
+  variar $\lambda$; maximizar el cociente $\E/\CVaR$, en cambio, entrega un solo punto de ella.
   \item \emph{Costo simétrico y único.} Solo se aplica el costo de reestructuración, a subidas y bajadas por igual.
   Sumarle el costo de prepago a las reducciones de pasivos cobraría dos veces el mismo movimiento.
   \item \emph{Costos fuera de la pérdida.} $TC$ es cierto y se paga en $t_0$: se resta una sola vez en el objetivo y

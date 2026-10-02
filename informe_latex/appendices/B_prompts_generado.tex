@@ -1,99 +1,99 @@
 % Generado por scripts/ia_log_to_tex.py — no editar a mano
 \begin{description}
-\item[P01 · 2026-09-27 · Estructura del proyecto] \hfill\\
-\textit{Prompt:} Estructurar un proyecto Python con notebooks, datos crudos/intermedios/procesados, utilidades de figuras, informe LaTeX con Docker y un espacio para Claude Code con skills y arneses.\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} Se generó el andamiaje, el pipeline de limpieza con validaciones y el contrato JSON. La lógica financiera (valorización, riesgo, optimizador) quedó sin implementar a propósito.\\
-\item[P02 · 2026-09-27 · uv, git init y corrección del caso asignado] \hfill\\
-\textit{Prompt:} \enquote{usemos uv para el proyecto}; \enquote{inicializa git}; \enquote{El caso que me toca resolver es el C}.\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} \texttt{make setup} pasó a \texttt{uv}; se inicializó git. Se corrigió el caso asignado a C.\\
-\item[P03 · 2026-09-27 · Formulación base del Caso C (CVaR)] \hfill\\
-\textit{Prompt:} \enquote{Dado que me tocó el caso C, cómo debo empezar}; \enquote{qué me recomiendas para la formulación}; \enquote{qué otras maneras hay de formularlo}; \enquote{vamos con lo acordado (versión base)}.\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} La IA propuso un LP con CVaR (Rockafellar–Uryasev) sobre resultados por revalorización completa, más alternativas; el alumno eligió la versión base (D-06 a D-12). El auditor halló los errores E01–E03.\\
-\item[P04 · 2026-09-27 · Valorizador por flujos (valuation.py)] \hfill\\
-\textit{Prompt:} \enquote{sigamos con la valorización, muéstrame el plan}; \enquote{sí, vamos con (a), escribe los tests}; \enquote{sí, implementa valuation.py}.\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} Plan, 18 pruebas antes del código e implementación de \texttt{valuation.py}. V0 = valor de mercado en los 12 instrumentos; flotantes con proyección plana (D-13).\\
-\item[P05 · 2026-09-27 · Cierre de los notebooks 00, 01 y 02] \hfill\\
-\textit{Prompt:} \enquote{y los notebooks en que momento se realiza?}; \enquote{cierra primero los notebooks 00, 01 y 02}.\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} Cierre de los notebooks 00–02 sin lógica fuera de \texttt{src/}. La IA corrigió una frase propia que atribuía sin verificar la diferencia de spreads a la convención de días.\\
-\item[P06 · 2026-09-28 · Modelo de riesgo (risk.py) y notebook 03] \hfill\\
-\textit{Prompt:} \enquote{vamos con el plan de risk}; \enquote{estoy de acuerdo con las recomendaciones}; \enquote{continuemos con la implementación}.\\
-\textit{Resultado:} Aceptado con corrección\\
-\textit{Detalle:} Plan, decisiones D-14 a D-16, 29 pruebas y \texttt{risk.py} (504 escenarios). La IA detectó un sesgo de media en su bootstrap (E04) y se centraron las ventanas (D-09 v3). Posición inicial, antes de la corrección D-24 (P14): VaR95 = 42.5 y CVaR95 = 50.1 S/ mm.\\
-\item[P07 · 2026-09-28 · Auditoría de la capa (iii) y correcciones] \hfill\\
-\textit{Prompt:} \enquote{lanza la auditoria}; elección de la regla de transición del estrés (dos rondas).\\
-\textit{Resultado:} Aceptado con corrección\\
-\textit{Detalle:} Auditoría sin errores críticos. Hallazgos sobre la transición del estrés (E05, D-11 v2), riesgo de modelo de D-13 y sesgo de los estrés hacia USD; 14 pruebas nuevas. VaR y CVaR sin cambio.\\
-\item[P08 · 2026-09-28 · Lectura del notebook 03] \hfill\\
-\textit{Prompt:} \enquote{agrega la lectura al notebook}.\\
-\textit{Resultado:} Aceptado con corrección\\
-\textit{Detalle:} Borrador de lectura del notebook 03. Antes de entregarlo, la IA corrigió tres afirmaciones; la principal: la cola del bootstrap es el régimen de 2022 (tasas al alza), no una caída de tasas.\\
-\item[P09 · 2026-09-28 · Optimizador (optimizer.py): plan, pruebas primero e implementación] \hfill\\
-\textit{Prompt:} \enquote{vamos con el plan del optimmizer}; \enquote{dale, usa el generador-pruebas}; \enquote{dale, implementa}.\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} Plan del optimizador (LP R–U y benchmark media-varianza). La IA preguntó las ambigüedades (D-18, D-19, LE\_12M). \texttt{generador-pruebas} escribió 44 casos sin ver el código; la implementación pasó las 123 pruebas.\\
-\item[P10 · 2026-09-28 · Auditoría del optimizador y límites al horizonte] \hfill\\
-\textit{Prompt:} \enquote{o es mejor primero ejecutar el auditor financiero para saber que hacer?}; decisiones del alumno sobre LE\_12M, reporte al horizonte y sensibilidad D-13.\\
-\textit{Resultado:} Aceptado con corrección\\
-\textit{Detalle:} El alumno propuso auditar antes de decidir LE\_12M. La auditoría halló el reporte al horizonte incompleto (E06); se eligió base con reporte más variante ENFORCE (D-20).\\
-\item[P11 · 2026-09-28 · Notebook 04 (optimización)] \hfill\\
-\textit{Prompt:} \enquote{vamos con el notebook 04}.\\
-\textit{Resultado:} Aceptado (lectura pendiente de validación del alumno)\\
-\textit{Detalle:} Notebook 04: 4 figuras, 5 tablas y verificación de que E[ΔPN] y CVaR de \texttt{output.json} se reproducen. Lectura pendiente de validación del alumno.\\
-\item[P12 · 2026-09-28 · Sensibilidades S1-S9: formulación, pruebas primero e implementación] \hfill\\
-\textit{Prompt:} \enquote{propón las sensibilidades}; \enquote{dale, implementa}.\\
-\textit{Resultado:} Aceptado (el alumno eligió evaluación instantánea para ±200 pb, switch de cupones, salida separada y estrés espejo)\\
-\textit{Detalle:} Nueve sensibilidades (S1–S9, D-21, D-22) con 23 pruebas antes del código. S2 solo reporta cotas de peso porque el dual del presupuesto no coincide con subir \texttt{B\_A}.\\
-\item[P13 · 2026-09-28 · Notebook 05 (resultados y sensibilidad)] \hfill\\
-\textit{Prompt:} \enquote{haz el commit y vamos con el notebook 05\_resultados\_sensibilidad}.\\
-\textit{Resultado:} Aceptado (lectura pendiente de validación del alumno)\\
-\textit{Detalle:} Notebook 05 sobre \texttt{sensitivity.json} y \texttt{output.json}, sin recalcular. Robustos: cobertura PEN y CVaR; frágiles: posición USD y resultado esperado. Lectura pendiente de validación.\\
-\item[P14 · 2026-09-28 · Revisión final: auditoría, revisión del informe y correcciones] \hfill\\
-\textit{Prompt:} \enquote{Antes de escribir los anexos, lancemos el auditor financiero y también el revisor del informe}; \enquote{a, corrígelo en el código y sigue con el plan}.\\
-\textit{Resultado:} Corregido (el alumno eligió corregir la deriva FX en el código en vez de documentarla como supuesto)\\
-\textit{Detalle:} Auditor y revisor hallaron un parámetro fijo en \texttt{cleaning.py}, el sesgo de la deriva FX (E08) y cifras mal leídas (E09). Se corrigió en el código (D-24) y se reescribió el informe.\\
-\item[P15 · 2026-09-30 · Notebook de entrega autocontenido] \hfill\\
-\textit{Prompt:} \enquote{Lo que realmente se va a subir como zip va a ser el informe, el input.json, el output.json y un notebook que reciba el input lo procese y nos de el output. Para ello condensa todo lo necesario del proyecto en un nuevo notebook...}\\
-\textit{Resultado:} Aceptado\\
-\textit{Detalle:} Notebook de entrega generado desde \texttt{src/} por script (D-25). Ejecutado aislado, reprodujo \texttt{output.json}; una prueba lo mantiene al día y \texttt{make entrega} arma el zip.\\
-\item[E01 · 2026-09-27 · Bootstrap i.i.d. de 12 meses (D-09)] \hfill\\
-\textit{Prompt:} Formulación base del Caso C.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} La IA sumó 12 meses i.i.d. y descartó el bootstrap por bloques con un argumento falso. La autocorrelación (0.94–0.96) hace que el i.i.d. subestime la dispersión anual. Lo detectó el auditor.\\
-\item[E02 · 2026-09-27 · Doble cobro de costos al reducir pasivos (D-08)] \hfill\\
-\textit{Prompt:} Formulación base del Caso C.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} Cada reducción de pasivos pagaba restructuring y prepago a la vez. Lo detectó el auditor; se aplica solo el costo que corresponde a cada caso.\\
-\item[E03 · 2026-09-27 · Justificación inexacta del centrado (S1) y tratamiento asimétrico de la tasa corta] \hfill\\
-\textit{Prompt:} Formulación base del Caso C.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} Justificó mal el centrado (el carry no explica E[ΔPN]) y trató asimétricamente la tasa corta de la caja y los flotantes, sesgando contra la deuda flotante. Lo detectó el auditor.\\
-\item[E04 · 2026-09-28 · Centrado mensual en un bootstrap por bloques (D-09 v3)] \hfill\\
-\textit{Prompt:} \enquote{continuemos con la implementación} (risk.py).\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} Asumió que centrar los cambios mensuales daba media cero en el bootstrap por bloques; no es así (+1.2 \% en equity). Se vio al revisar resultados y se centraron las ventanas, con 2 tests nuevos.\\
-\item[E05 · 2026-09-28 · Justificación falsa de la transición del estrés (D-11 v2)] \hfill\\
-\textit{Prompt:} Formulación base (D-11) y respuesta a la auditoría I-1.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} Justificó la transición del estrés con un argumento falso y recomendó una alternativa sin calcularla. El auditor lo mostró, la IA lo verificó antes de programar y el alumno eligió interpolar t·s(t).\\
-\item[E06 · 2026-09-28 · Reporte al horizonte incompleto y plazos por días/365 en el optimizador] \hfill\\
-\textit{Prompt:} \enquote{dale, implementa} (optimizer.py).\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} Revisaba al horizonte solo los grupos MATURITY y medía plazos en días/365. Se reportan todos los grupos con tenencias en t\_H y se usan meses calendario (D-20).\\
-\item[E07 · 2026-09-28 · Cifras de estrés mal atribuidas y precios sombra engañosos] \hfill\\
-\textit{Prompt:} \enquote{vamos con el notebook 04}; \enquote{propón las sensibilidades} / \enquote{dale, implementa}.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} Atribuyó a la cartera base cifras de estrés de la reoptimizada y relajó por separado cotas gemelas en S2, lo que sugería costo cero. Se corrigió el texto y se relajan juntas (D-23).\\
-\item[E08 · 2026-09-28 · Deriva FX por paridad sin corrección de convexidad (D-24)] \hfill\\
-\textit{Prompt:} Formulación base (D-06 v2) e implementación de risk.py.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} La deriva FX por paridad omitía la convexidad (≈ 25 pb/año a favor de estar largo en USD). El test no lo detectaba. Se corrigió con \texttt{risk.match\_forward} (D-24).\\
-\item[E09 · 2026-09-28 · Cifras del informe mal leídas de las tablas] \hfill\\
-\textit{Prompt:} \enquote{Vamos a escribir el informe...}; \enquote{/humaniser hay que reescribir el informe...}.\\
-\textit{Resultado:} Corregido\\
-\textit{Detalle:} En el informe, la IA leyó mal ocho cifras de los JSON (signos, rotación, escenario más severo, entre otras). Los subagentes las detectaron y se contrastó cada cifra con el JSON.\\
+\item[P01 · 2026-09-27 · Estructura del proyecto] \mbox{}\par
+\textit{Prompt:} Estructurar un proyecto Python con notebooks, datos crudos/intermedios/procesados, utilidades de figuras, informe LaTeX con Docker y un espacio para Claude Code con skills y arneses.\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} Se generó el andamiaje, el pipeline de limpieza con validaciones y el contrato JSON. La lógica financiera (valorización, riesgo, optimizador) quedó sin implementar a propósito.\par
+\item[P02 · 2026-09-27 · uv, git init y corrección del caso asignado] \mbox{}\par
+\textit{Prompt:} \enquote{usemos uv para el proyecto}; \enquote{inicializa git}; \enquote{El caso que me toca resolver es el C}.\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} \texttt{make setup} pasó a \texttt{uv}; se inicializó git. Se corrigió el caso asignado a C.\par
+\item[P03 · 2026-09-27 · Formulación base del Caso C (CVaR)] \mbox{}\par
+\textit{Prompt:} \enquote{Dado que me tocó el caso C, cómo debo empezar}; \enquote{qué me recomiendas para la formulación}; \enquote{qué otras maneras hay de formularlo}; \enquote{vamos con lo acordado (versión base)}.\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} La IA propuso un LP con CVaR (Rockafellar–Uryasev) sobre resultados por revalorización completa, más alternativas; el alumno eligió la versión base (D-06 a D-12). El auditor halló los errores E01–E03.\par
+\item[P04 · 2026-09-27 · Valorizador por flujos (valuation.py)] \mbox{}\par
+\textit{Prompt:} \enquote{sigamos con la valorización, muéstrame el plan}; \enquote{sí, vamos con (a), escribe los tests}; \enquote{sí, implementa valuation.py}.\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} Plan, 18 pruebas antes del código e implementación de \texttt{valuation.py}. V0 = valor de mercado en los 12 instrumentos; flotantes con proyección plana (D-13).\par
+\item[P05 · 2026-09-27 · Cierre de los notebooks 00, 01 y 02] \mbox{}\par
+\textit{Prompt:} \enquote{y los notebooks en que momento se realiza?}; \enquote{cierra primero los notebooks 00, 01 y 02}.\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} Cierre de los notebooks 00–02 sin lógica fuera de \texttt{src/}. La IA corrigió una frase propia que atribuía sin verificar la diferencia de spreads a la convención de días.\par
+\item[P06 · 2026-09-28 · Modelo de riesgo (risk.py) y notebook 03] \mbox{}\par
+\textit{Prompt:} \enquote{vamos con el plan de risk}; \enquote{estoy de acuerdo con las recomendaciones}; \enquote{continuemos con la implementación}.\par
+\textit{Resultado:} Aceptado con corrección\par
+\textit{Detalle:} Plan, decisiones D-14 a D-16, 29 pruebas y \texttt{risk.py} (504 escenarios). La IA detectó un sesgo de media en su bootstrap (E04) y se centraron las ventanas (D-09 v3). Posición inicial, antes de la corrección D-24 (P14): VaR95 = 42.5 y CVaR95 = 50.1 S/ mm.\par
+\item[P07 · 2026-09-28 · Auditoría de la capa (iii) y correcciones] \mbox{}\par
+\textit{Prompt:} \enquote{lanza la auditoria}; elección de la regla de transición del estrés (dos rondas).\par
+\textit{Resultado:} Aceptado con corrección\par
+\textit{Detalle:} Auditoría sin errores críticos. Hallazgos sobre la transición del estrés (E05, D-11 v2), riesgo de modelo de D-13 y sesgo de los estrés hacia USD; 14 pruebas nuevas. VaR y CVaR sin cambio.\par
+\item[P08 · 2026-09-28 · Lectura del notebook 03] \mbox{}\par
+\textit{Prompt:} \enquote{agrega la lectura al notebook}.\par
+\textit{Resultado:} Aceptado con corrección\par
+\textit{Detalle:} Borrador de lectura del notebook 03. Antes de entregarlo, la IA corrigió tres afirmaciones; la principal: la cola del bootstrap es el régimen de 2022 (tasas al alza), no una caída de tasas.\par
+\item[P09 · 2026-09-28 · Optimizador (optimizer.py): plan, pruebas primero e implementación] \mbox{}\par
+\textit{Prompt:} \enquote{vamos con el plan del optimmizer}; \enquote{dale, usa el generador-pruebas}; \enquote{dale, implementa}.\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} Plan del optimizador (LP R–U y benchmark media-varianza). La IA preguntó las ambigüedades (D-18, D-19, LE\_12M). \texttt{generador-pruebas} escribió 44 casos sin ver el código; la implementación pasó las 123 pruebas.\par
+\item[P10 · 2026-09-28 · Auditoría del optimizador y límites al horizonte] \mbox{}\par
+\textit{Prompt:} \enquote{o es mejor primero ejecutar el auditor financiero para saber que hacer?}; decisiones del alumno sobre LE\_12M, reporte al horizonte y sensibilidad D-13.\par
+\textit{Resultado:} Aceptado con corrección\par
+\textit{Detalle:} El alumno propuso auditar antes de decidir LE\_12M. La auditoría halló el reporte al horizonte incompleto (E06); se eligió base con reporte más variante ENFORCE (D-20).\par
+\item[P11 · 2026-09-28 · Notebook 04 (optimización)] \mbox{}\par
+\textit{Prompt:} \enquote{vamos con el notebook 04}.\par
+\textit{Resultado:} Aceptado (lectura pendiente de validación del alumno)\par
+\textit{Detalle:} Notebook 04: 4 figuras, 5 tablas y verificación de que E[ΔPN] y CVaR de \texttt{output.json} se reproducen. Lectura pendiente de validación del alumno.\par
+\item[P12 · 2026-09-28 · Sensibilidades S1-S9: formulación, pruebas primero e implementación] \mbox{}\par
+\textit{Prompt:} \enquote{propón las sensibilidades}; \enquote{dale, implementa}.\par
+\textit{Resultado:} Aceptado (el alumno eligió evaluación instantánea para ±200 pb, switch de cupones, salida separada y estrés espejo)\par
+\textit{Detalle:} Nueve sensibilidades (S1–S9, D-21, D-22) con 23 pruebas antes del código. S2 solo reporta cotas de peso porque el dual del presupuesto no coincide con subir \texttt{B\_A}.\par
+\item[P13 · 2026-09-28 · Notebook 05 (resultados y sensibilidad)] \mbox{}\par
+\textit{Prompt:} \enquote{haz el commit y vamos con el notebook 05\_resultados\_sensibilidad}.\par
+\textit{Resultado:} Aceptado (lectura pendiente de validación del alumno)\par
+\textit{Detalle:} Notebook 05 sobre \texttt{sensitivity.json} y \texttt{output.json}, sin recalcular. Robustos: cobertura PEN y CVaR; frágiles: posición USD y resultado esperado. Lectura pendiente de validación.\par
+\item[P14 · 2026-09-28 · Revisión final: auditoría, revisión del informe y correcciones] \mbox{}\par
+\textit{Prompt:} \enquote{Antes de escribir los anexos, lancemos el auditor financiero y también el revisor del informe}; \enquote{a, corrígelo en el código y sigue con el plan}.\par
+\textit{Resultado:} Corregido (el alumno eligió corregir la deriva FX en el código en vez de documentarla como supuesto)\par
+\textit{Detalle:} Auditor y revisor hallaron un parámetro fijo en \texttt{cleaning.py}, el sesgo de la deriva FX (E08) y cifras mal leídas (E09). Se corrigió en el código (D-24) y se reescribió el informe.\par
+\item[P15 · 2026-09-30 · Notebook de entrega autocontenido] \mbox{}\par
+\textit{Prompt:} \enquote{Lo que realmente se va a subir como zip va a ser el informe, el input.json, el output.json y un notebook que reciba el input lo procese y nos de el output. Para ello condensa todo lo necesario del proyecto en un nuevo notebook...}\par
+\textit{Resultado:} Aceptado\par
+\textit{Detalle:} Notebook de entrega generado desde \texttt{src/} por script (D-25). Ejecutado aislado, reprodujo \texttt{output.json}; una prueba lo mantiene al día y \texttt{make entrega} arma el zip.\par
+\item[E01 · 2026-09-27 · Bootstrap i.i.d. de 12 meses (D-09)] \mbox{}\par
+\textit{Prompt:} Formulación base del Caso C.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} La IA sumó 12 meses i.i.d. y descartó el bootstrap por bloques con un argumento falso. La autocorrelación (0.94–0.96) hace que el i.i.d. subestime la dispersión anual. Lo detectó el auditor.\par
+\item[E02 · 2026-09-27 · Doble cobro de costos al reducir pasivos (D-08)] \mbox{}\par
+\textit{Prompt:} Formulación base del Caso C.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} Cada reducción de pasivos pagaba restructuring y prepago a la vez. Lo detectó el auditor; se aplica solo el costo que corresponde a cada caso.\par
+\item[E03 · 2026-09-27 · Centrado (S1) mal justificado y tasa corta tratada de forma asimétrica] \mbox{}\par
+\textit{Prompt:} Formulación base del Caso C.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} Justificó mal el centrado (el carry no explica E[ΔPN]) y trató asimétricamente la tasa corta de la caja y los flotantes, sesgando contra la deuda flotante. Lo detectó el auditor.\par
+\item[E04 · 2026-09-28 · Centrado mensual en un bootstrap por bloques (D-09 v3)] \mbox{}\par
+\textit{Prompt:} \enquote{continuemos con la implementación} (risk.py).\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} Asumió que centrar los cambios mensuales daba media cero en el bootstrap por bloques; no es así (+1.2 \% en equity). Se vio al revisar resultados y se centraron las ventanas, con 2 tests nuevos.\par
+\item[E05 · 2026-09-28 · Justificación falsa de la transición del estrés (D-11 v2)] \mbox{}\par
+\textit{Prompt:} Formulación base (D-11) y respuesta a la auditoría I-1.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} Justificó la transición del estrés con un argumento falso y recomendó una alternativa sin calcularla. El auditor lo mostró, la IA lo verificó antes de programar y el alumno eligió interpolar t·s(t).\par
+\item[E06 · 2026-09-28 · Reporte al horizonte incompleto y plazos por días/365 en el optimizador] \mbox{}\par
+\textit{Prompt:} \enquote{dale, implementa} (optimizer.py).\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} Revisaba al horizonte solo los grupos MATURITY y medía plazos en días/365. Se reportan todos los grupos con tenencias en t\_H y se usan meses calendario (D-20).\par
+\item[E07 · 2026-09-28 · Cifras de estrés mal atribuidas y precios sombra engañosos] \mbox{}\par
+\textit{Prompt:} \enquote{vamos con el notebook 04}; \enquote{propón las sensibilidades} / \enquote{dale, implementa}.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} Atribuyó a la cartera base cifras de estrés de la reoptimizada y relajó por separado cotas gemelas en S2, lo que sugería costo cero. Se corrigió el texto y se relajan juntas (D-23).\par
+\item[E08 · 2026-09-28 · Deriva FX por paridad sin corrección de convexidad (D-24)] \mbox{}\par
+\textit{Prompt:} Formulación base (D-06 v2) e implementación de risk.py.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} La deriva FX por paridad omitía la convexidad (≈ 25 pb/año a favor de estar largo en USD). El test no lo detectaba. Se corrigió con \texttt{risk.match\_forward} (D-24).\par
+\item[E09 · 2026-09-28 · Cifras del informe mal leídas de las tablas] \mbox{}\par
+\textit{Prompt:} \enquote{Vamos a escribir el informe...}; \enquote{/humaniser hay que reescribir el informe...}.\par
+\textit{Resultado:} Corregido\par
+\textit{Detalle:} En el informe, la IA leyó mal ocho cifras de los JSON (signos, rotación, escenario más severo, entre otras). Los subagentes las detectaron y se contrastó cada cifra con el JSON.\par
 \end{description}

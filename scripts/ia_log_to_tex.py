@@ -43,13 +43,13 @@ entries = re.findall(r"^## (.+?)\n(.*?)(?=^## |^# |\Z)", text, flags=re.S | re.M
 lines = ["% Generado por scripts/ia_log_to_tex.py — no editar a mano", r"\begin{description}"]
 for title, body in entries:
     fields = dict(re.findall(r"\*\*(\w+):\*\*\s*(.+)", body))
-    lines.append(rf"\item[{esc(title.strip())}] \hfill\\")
+    lines.append(rf"\item[{esc(title.strip())}] \mbox{{}}\par")
     for key in ("Prompt", "Resultado", "Detalle"):
         if key == "Detalle" and "Resumen" in fields:
-            lines.append(rf"\textit{{Detalle:}} {esc(fields['Resumen'].strip())}\\")
+            lines.append(rf"\textit{{Detalle:}} {esc(fields['Resumen'].strip())}\par")
             continue
         if key in fields:
-            lines.append(rf"\textit{{{key}:}} {esc(fields[key].strip())}\\")
+            lines.append(rf"\textit{{{key}:}} {esc(fields[key].strip())}\par")
 lines.append(r"\end{description}")
 OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
 print(f"{len(entries)} entradas -> {OUT.relative_to(ROOT)}")

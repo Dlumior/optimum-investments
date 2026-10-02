@@ -8,22 +8,17 @@ patrimonio inicial en el 5\,\% de escenarios más adversos. Buena parte de esa c
 escenario de estrés, C\_STRESS\_2: una depreciación del sol acompañada de caídas de tasas y de renta
 variable. Con apenas 1.25\,\% de probabilidad, ocupa el 25\,\% de la probabilidad de la cola, aporta cerca
 del 23\,\% del CVaR y cuesta \PEN45.6 mm. En ningún escenario el patrimonio cae por debajo del mínimo de
-\PEN120 mm. La única restricción del Cuadro~4 del enunciado que la posición inicial incumple es el peso
-máximo de renta variable (22\,\% contra 20\,\%).
+\PEN120 mm, pero el cociente P/A supera su máximo de 0.85 en el 1.4\,\% de los escenarios al horizonte (peor
+valor, 0.852). En $t_0$, la única restricción del Cuadro~4 del enunciado que la posición inicial incumple es
+el peso máximo de renta variable (22\,\% contra 20\,\%).
 
 \subsection{Cartera óptima}
-Con la aversión al riesgo de referencia del caso, $\lambda = 0.25$, la reasignación óptima
-(Cuadros~\ref{tab:posiciones-optimas} y~\ref{tab:pesos-optimo}, Figura~\ref{fig:posiciones}) concentra los
-activos en soles. La caja sube a \PEN200 mm, el máximo de 20\,\% de los activos y muy por encima del piso de
-\PEN80 mm. El bono fijo en soles A02 llega a su tope individual de \PEN350 mm y el flotante A03 sube a
-\PEN185.5 mm. En dólares, el bono flotante A05 crece 53\,\%, hasta \PEN214.5 mm, y el bono fijo A04 se
-liquida por completo. La renta variable A06 cae a \PEN50 mm, el 5\,\% de los activos: no es un límite del
-caso, sino el mínimo que dejan los máximos de caja y de renta fija.
-
-En los pasivos, el préstamo corto en soles L01 sube a su tope de concentración (\PEN280 mm), el bono fijo
-L02 baja a \PEN41.6 mm y el préstamo en dólares L06 a \PEN48.4 mm. Los límites activos son los máximos de
-caja y renta fija, los topes individuales de A02 y L01 y la no negatividad de A04. La mezcla fija/flotante
-de los pasivos (45.2\,\%/54.8\,\%) queda al borde de sus límites, pero sin tocarlos.
+Con $\lambda = 0.25$, la referencia del caso, la reasignación óptima (Cuadros~\ref{tab:posiciones-optimas}
+y~\ref{tab:pesos-optimo}, Figura~\ref{fig:posiciones}) concentra los activos en soles: la caja sube a su
+máximo de \PEN200 mm, A02 llega a su tope de \PEN350 mm y A03 sube a \PEN185.5 mm. En dólares, A05 crece
+53\,\% y A04 se liquida. La renta variable cae a \PEN50 mm, el piso que dejan los máximos de caja y renta
+fija. En los pasivos, L01 sube a su tope (\PEN280 mm) y L02 y L06 bajan a \PEN41.6 mm y \PEN48.4 mm. La
+mezcla fija/flotante de los pasivos (45.2\,\%/54.8\,\%) queda al borde de sus límites, sin tocarlos.
 
 La lógica se ve instrumento por instrumento. L01 es el pasivo más barato (costo esperado de 5.73\,\%,
 volatilidad de 0.80\,\%) y, por su plazo corto, casi no se revaloriza en C\_STRESS\_2 (4.7\,\%), mientras

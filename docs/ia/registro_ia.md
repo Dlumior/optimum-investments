@@ -123,7 +123,7 @@ defecto en `Case_Assumptions`, mínimo exigido: 100) — documentado en `docs/de
 **Detalle:** La IA sumó `restructuring_cost` sobre |Δ| y `reduction_prepayment_cost` sobre las reducciones de pasivos, con lo que cada reducción pagaba ambos costos. La hoja Transaction_Costs indica usar el costo de prepago en los Casos A/E y el restructuring como penalización simétrica en los Casos B/C. Con el doble cobro, los pasivos quedaban inmóviles en la solución aproximada. Lo detectó el auditor-financiero.
 **Resumen:** Cada reducción de pasivos pagaba restructuring y prepago a la vez. Lo detectó el auditor; se aplica solo el costo que corresponde a cada caso.
 
-## E03 · 2026-09-27 · Justificación inexacta del centrado (S1) y tratamiento asimétrico de la tasa corta
+## E03 · 2026-09-27 · Centrado (S1) mal justificado y tasa corta tratada de forma asimétrica
 **Prompt:** Formulación base del Caso C.
 **Resultado:** Corregido
 **Detalle:** La IA afirmó que, con cambios centrados, E[ΔPN] "sale del carry y de las forwards". En realidad, la curva esperada al horizonte es la de t0 (roll-down) y el centrado elimina toda prima de equity y FX. Además propuso que la caja devengue la ON de t0 mientras los cupones flotantes del año se reproyectan con el escenario, incluido el cupón ya fijado antes de t0. Esa asimetría sesga la solución contra la deuda flotante. Lo detectó el auditor-financiero.

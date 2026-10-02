@@ -13,8 +13,8 @@ jupyter lab OP01_optimum_investments.ipynb
 \end{lstlisting}
 \begin{enumerate}
   \item Dejar \texttt{input.json} en la misma carpeta que el notebook (o indicar su ruta en \texttt{INPUT\_PATH}).
-  \item Ejecutar todas las celdas (\emph{Run All}); toma entre 2 y 4 minutos, pruebas incluidas. Con
-        \texttt{RUN\_SENSITIVITY = True} se añaden unos 6--8 minutos para las sensibilidades.
+  \item Ejecutar todas las celdas (\emph{Run All}). Con las pruebas incluidas toma entre 2 y 4 minutos; si
+        además se activa \texttt{RUN\_SENSITIVITY = True}, las sensibilidades suman unos 6--8 minutos.
   \item El resultado se escribe en \texttt{output.json}, junto al notebook.
   \item La Sección~8 del notebook corre ocho pruebas reproducibles: el caso simple resuelto a mano, el CVaR del LP
         frente al \emph{ex post}, presupuestos y límites, el shock de $+500$~pb, restricciones infactibles,
